@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import { RGBA } from "../types/RGBA";
 import { HsvColorPicker, RgbaColor, RgbaColorPicker } from "react-colorful";
-import { formatRGBA } from "../_utils";
 import { Popover, PopoverTrigger } from "../../components/ui/popover";
 import { PopoverContent } from "@radix-ui/react-popover";
+import { formatRGBA } from "../_utils";
 
 interface Props {
   color: RgbaColor;
@@ -18,9 +18,7 @@ export const ColorPicker = ({ color, setColor }: Props) => {
       <PopoverTrigger
         className="size-8"
         style={{
-          background: formatRGBA(
-            new RGBA(color?.r, color?.g, color?.b, (color.a || 1) * 255)
-          ),
+          background: formatRGBA(color),
         }}
       />
       <PopoverContent>

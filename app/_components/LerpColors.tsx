@@ -1,11 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { formatRGBA, lerpHSV, lerpRGBA } from "../_utils";
 import { RGBA } from "../types/RGBA";
-import { HSV } from "../types/HSV";
-import { rgba2hsv } from "../_utils/rgba2hsv";
-import { hsv2rgba } from "../_utils/hsv2rgba";
 import { RgbaColor, RgbaColorPicker } from "react-colorful";
 import { ColorPicker } from "./ColorPicker";
 import chroma from "chroma-js";
@@ -38,18 +34,18 @@ export const LerpColors = () => {
   const [rightColor, setRightColor] = useState<RgbaColor>(initializeRightColor);
   const [saturation, setSaturation] = useState<number>(0);
   const [colorSpace, setColorSpace] = useState<chroma.InterpolationMode>("rgb");
-  let a = new RGBA(
-    leftColor.r,
-    leftColor.g,
-    leftColor.b,
-    (leftColor.a || 1) * 255
-  );
-  let b = new RGBA(
-    rightColor.r,
-    rightColor.g,
-    rightColor.b,
-    (rightColor.a || 1) * 255
-  );
+  let a = {
+    r: leftColor.r,
+    g: leftColor.g,
+    b: leftColor.b,
+    a: (leftColor.a || 1) * 255,
+  };
+  let b = {
+    r: rightColor.r,
+    g: rightColor.g,
+    b: rightColor.b,
+    a: (rightColor.a || 1) * 255,
+  };
   let steps = 20;
 
   // todo: set pointer and fix the saturation
