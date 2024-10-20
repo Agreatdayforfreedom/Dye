@@ -9,6 +9,13 @@ import { hsv2rgba } from "../_utils/hsv2rgba";
 import { RgbaColor, RgbaColorPicker } from "react-colorful";
 import { ColorPicker } from "./ColorPicker";
 import chroma from "chroma-js";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../../components/ui/select";
 
 let initializeLeftColor = (): RgbaColor => {
   return {
@@ -30,7 +37,7 @@ export const LerpColors = () => {
   const [leftColor, setLeftColor] = useState<RgbaColor>(initializeLeftColor);
   const [rightColor, setRightColor] = useState<RgbaColor>(initializeRightColor);
   const [saturation, setSaturation] = useState<number>(0);
-  const [saturationFactor, setSaturationFactor] = useState(1);
+  const [colorSpace, setColorSpace] = useState<chroma.InterpolationMode>("rgb");
   let a = new RGBA(
     leftColor.r,
     leftColor.g,
@@ -48,7 +55,7 @@ export const LerpColors = () => {
   // todo: set pointer and fix the saturation
   let last = chroma
     .scale([chroma.rgb(a.r, a.g, a.b), chroma.rgb(b.r, b.g, b.b)])
-    .mode("rgb")
+    .mode(colorSpace)
     .colors(steps)
     .map((x) => chroma.hex(x).saturate(saturation));
 
@@ -77,6 +84,21 @@ export const LerpColors = () => {
           value={saturation}
           onChange={(e) => setSaturation(parseInt(e.target.value))}
         />
+        <Select
+          onValueChange={(val) =>
+            setColorSpace(val as chroma.InterpolationMode)
+          }
+          value={colorSpace}
+        >
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Space" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="rgb">Rgb</SelectItem>
+            <SelectItem value="hsv">Hsv</SelectItem>
+            <SelectItem value="oklch">Oklch</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
     </div>
   );
