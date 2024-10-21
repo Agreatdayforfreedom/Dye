@@ -39,7 +39,7 @@ export const ColorPicker = ({ color, setColor, label }: Props) => {
             size={15}
           />
           <Input
-            className="pl-5 pb-[6px] font-semibold bg-slate-50 text-gray-700"
+            className="pl-5 pb-[6px]"
             id={label.toLowerCase().replace(/ /g, "_")}
             onChange={(e) => {
               let hex = e.target.value;

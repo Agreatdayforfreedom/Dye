@@ -1,16 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
-import { RgbaColor, RgbaColorPicker } from "react-colorful";
-import { ColorPicker } from "./ColorPicker";
 import chroma from "chroma-js";
+
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../components/ui/select";
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+
+import { ColorPicker } from "./ColorPicker";
 import { ColorContainer } from "./ColorContainer";
 
 export const LerpColors = () => {
@@ -44,7 +46,7 @@ export const LerpColors = () => {
           />
         </div>
 
-        <input
+        <Input
           type="number"
           value={saturation}
           onChange={(e) => setSaturation(parseInt(e.target.value))}
