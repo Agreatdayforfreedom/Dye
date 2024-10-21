@@ -72,3 +72,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+.box-focused:focus-visible {
+  outline: 0;
+  box-shadow: 0px 0px 0px 2px #a333ff31;
+  border: 1px solid #a677ff;
+}
