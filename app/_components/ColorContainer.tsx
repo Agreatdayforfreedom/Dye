@@ -7,25 +7,12 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { tw_color_scale } from "../constants";
 
 interface Props {
   colors: chroma.Color[];
   steps: number;
 }
-
-let tw_color_scale = [
-  "50",
-  "100",
-  "200",
-  "300",
-  "400",
-  "500",
-  "600",
-  "700",
-  "800",
-  "900",
-  "950",
-];
 
 export const ColorContainer = ({ colors, steps }: Props) => {
   return (

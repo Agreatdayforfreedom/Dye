@@ -19,14 +19,14 @@ interface Props {
 export const SpaceSelector = ({ colorSpace, setColorSpace }: Props) => {
   return (
     <div className="flex flex-col">
-      <Label htmlFor="" className="font-bold text-gray-700 ml-2">
+      <Label htmlFor="space" className="font-bold text-gray-700 ml-2">
         Space
       </Label>
       <Select
         onValueChange={(val) => setColorSpace(val as chroma.InterpolationMode)}
         value={colorSpace}
       >
-        <SelectTrigger className="m-1 w-[180px]">
+        <SelectTrigger id="space" className="m-1 w-[180px]">
           <SelectValue placeholder="Space" />
         </SelectTrigger>
         <SelectContent>

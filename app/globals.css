@@ -73,15 +73,16 @@
   }
 }
 
-.box-focused:focus-visible,
+/* .box-focused:focus-visible,
 .box-focused[data-state="open"] {
   outline: 0;
   box-shadow: 0px 0px 0px 2px #a333ff31;
   border: 1px solid #a677ff;
-}
+} */
 
-.box-focused[data-state="closed"] {
-  outline: none;
-  box-shadow: none;
-  border: 1px solid hsl(var(--input));
+.box-focused[data-state="closed"],
+.box-focused:not(button, :focus-visible) {
+  outline: none !important;
+  box-shadow: none !important;
+  border: 1px solid hsl(var(--input)) !important;
 }
