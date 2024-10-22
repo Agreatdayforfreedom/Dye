@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import chroma from "chroma-js";
 
 import { Input } from "@/components/ui/input";
@@ -19,6 +19,7 @@ export const LerpColors = () => {
   const [name, setName] = useState<string>("Autumn");
   const [colorSpace, setColorSpace] = useState<chroma.InterpolationMode>("rgb");
 
+  const dye = useGlobalDyes((state) => state.dye3);
   const setDye = useGlobalDyes((state) => state.setDye);
   let steps = 11;
   const dyes: string[] = [];
@@ -34,7 +35,9 @@ export const LerpColors = () => {
       }
       return hex;
     });
+
   useEffect(() => {
+    console.log(dyes);
     setDye({
       dye1: dyes[0],
       dye2: dyes[1],
@@ -42,11 +45,6 @@ export const LerpColors = () => {
       dye4: dyes[3],
       dye5: dyes[4],
     });
-    globalThis.__box_focused = {
-      outline: 0,
-      boxShadow: `0px 0px 0px 2px ${chroma(dyes[4]).alpha(0.4).hex()}`,
-      borderColor: dyes[4],
-    };
   }, [rightColor, colorSpace, leftColor]);
   return (
     <>
@@ -59,6 +57,17 @@ export const LerpColors = () => {
             <Input
               id="name"
               className="w-64 m-1"
+              style={
+                dye
+                  ? {
+                      outline: 0,
+                      boxShadow: `0px 0px 0px 2px ${chroma(dye)
+                        .alpha(0.4)
+                        .hex()}`,
+                      borderColor: dye,
+                    }
+                  : {}
+              }
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -74,6 +83,17 @@ export const LerpColors = () => {
             <Input
               id="saturation"
               className="max-w-48 m-1"
+              style={
+                dye
+                  ? {
+                      outline: 0,
+                      boxShadow: `0px 0px 0px 2px ${chroma(dye)
+                        .alpha(0.4)
+                        .hex()}`,
+                      borderColor: dye,
+                    }
+                  : {}
+              }
               type="number"
               value={saturation}
               onChange={(e) => setSaturation(parseInt(e.target.value))}
