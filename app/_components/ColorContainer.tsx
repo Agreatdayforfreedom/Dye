@@ -1,11 +1,13 @@
 import chroma from "chroma-js";
 import React from "react";
+
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "../../components/ui/tooltip";
+} from "@/components/ui/tooltip";
+
 import { formatRGBA } from "../_utils";
 
 interface Props {
@@ -30,16 +32,15 @@ let tw_color_scale = [
 export const ColorContainer = ({ colors, steps }: Props) => {
   return (
     <div className="flex w-fit mx-auto space-x-2">
-      {colors.map((c: any, i: number) => {
-        console.log(c);
+      {colors.map((c: chroma.Color, i: number) => {
         return (
-          <TooltipProvider>
+          <TooltipProvider key={tw_color_scale[i]}>
             <Tooltip delayDuration={0.2}>
               <TooltipTrigger className="cursor-pointer" asChild>
                 <div>
                   <div
                     style={{
-                      background: c,
+                      background: c.hex(),
                     }}
                     className="h-12 w-16 rounded"
                   />
@@ -51,14 +52,14 @@ export const ColorContainer = ({ colors, steps }: Props) => {
               <TooltipContent
                 style={{
                   background: `${formatRGBA({
-                    r: chroma.hex(c).rgb()[0] * 0.4,
-                    g: chroma.hex(c).rgb()[1] * 0.4,
-                    b: chroma.hex(c).rgb()[2] * 0.4,
+                    r: c.rgb()[0] * 0.4,
+                    g: c.rgb()[1] * 0.4,
+                    b: c.rgb()[2] * 0.4,
                     a: 255,
                   })}`,
                 }}
               >
-                {chroma.hex(c).hex()}
+                {c.hex()}
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>

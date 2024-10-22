@@ -42,10 +42,13 @@ export const ColorPicker = ({ color, setColor, label }: Props) => {
             id={label.toLowerCase().replace(/ /g, "_")}
             onChange={(e) => {
               let hex = e.target.value;
+              if (hex[0] !== "#") {
+                hex = "#".concat(hex);
+              }
               if (chroma.valid(hex)) {
                 setColor(hex);
               }
-              setColorInput(hex);
+              setColorInput(hex.slice(1));
             }}
             value={colorInput}
           />
@@ -54,7 +57,7 @@ export const ColorPicker = ({ color, setColor, label }: Props) => {
           <PopoverTrigger
             className="size-8 rounded-sm border box-focused"
             style={{
-              background: color,
+              background: chroma.hex(color).hex(),
               borderColor: `${formatRGBA({
                 r: chroma.hex(color).rgb()[0] * 0.8,
                 g: chroma.hex(color).rgb()[1] * 0.8,
@@ -69,8 +72,14 @@ export const ColorPicker = ({ color, setColor, label }: Props) => {
             <HexColorPicker
               color={color}
               onChange={(v) => {
-                setColor(v);
-                setColorInput(v);
+                let hex = v;
+                if (hex[0] !== "#") {
+                  hex = "#".concat(hex);
+                }
+                if (chroma.valid(hex)) {
+                  setColor(hex);
+                }
+                setColorInput(hex.slice(1));
               }}
             />
           </PopoverContent>

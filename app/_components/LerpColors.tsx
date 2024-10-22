@@ -10,8 +10,8 @@ import { ColorContainer } from "./ColorContainer";
 import { SpaceSelector } from "./SpaceSelector";
 
 export const LerpColors = () => {
-  const [leftColor, setLeftColor] = useState<string>("#ffffff");
-  const [rightColor, setRightColor] = useState<string>("#00ffff");
+  const [leftColor, setLeftColor] = useState<string>("ffffff");
+  const [rightColor, setRightColor] = useState<string>("00ffff");
   const [saturation, setSaturation] = useState<number>(0);
   const [colorSpace, setColorSpace] = useState<chroma.InterpolationMode>("rgb");
 
