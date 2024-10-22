@@ -8,8 +8,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-import { formatRGBA } from "../_utils";
-
 interface Props {
   colors: chroma.Color[];
   steps: number;
@@ -32,7 +30,7 @@ let tw_color_scale = [
 export const ColorContainer = ({ colors, steps }: Props) => {
   return (
     <div className="flex w-fit mx-auto space-x-2">
-      {colors.map((c: chroma.Color, i: number) => {
+      {colors.map((color: chroma.Color, i: number) => {
         return (
           <TooltipProvider key={tw_color_scale[i]}>
             <Tooltip delayDuration={0.2}>
@@ -40,9 +38,10 @@ export const ColorContainer = ({ colors, steps }: Props) => {
                 <div>
                   <div
                     style={{
-                      background: c.hex(),
+                      background: color.hex(),
+                      borderColor: color.darken(0.1).hex(),
                     }}
-                    className="h-12 w-16 rounded"
+                    className="h-12 w-16 rounded border"
                   />
                   <span className="text-slate-700 font-semibold text-sm">
                     {tw_color_scale[i]}
@@ -51,15 +50,10 @@ export const ColorContainer = ({ colors, steps }: Props) => {
               </TooltipTrigger>
               <TooltipContent
                 style={{
-                  background: `${formatRGBA({
-                    r: c.rgb()[0] * 0.4,
-                    g: c.rgb()[1] * 0.4,
-                    b: c.rgb()[2] * 0.4,
-                    a: 255,
-                  })}`,
+                  background: chroma(color).darken(2).hex(),
                 }}
               >
-                {c.hex()}
+                {color.hex()}
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>

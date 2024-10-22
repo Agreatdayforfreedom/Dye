@@ -12,7 +12,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-import { formatRGBA } from "../_utils";
 import { useState } from "react";
 
 interface Props {
@@ -57,13 +56,8 @@ export const ColorPicker = ({ color, setColor, label }: Props) => {
           <PopoverTrigger
             className="size-8 rounded-sm border box-focused"
             style={{
-              background: chroma.hex(color).hex(),
-              borderColor: `${formatRGBA({
-                r: chroma.hex(color).rgb()[0] * 0.8,
-                g: chroma.hex(color).rgb()[1] * 0.8,
-                b: chroma.hex(color).rgb()[2] * 0.8,
-                a: 255,
-              })}`,
+              background: chroma(color).hex(),
+              borderColor: chroma(color).darken(1).hex(),
             }}
           />
           <PopoverContent>
