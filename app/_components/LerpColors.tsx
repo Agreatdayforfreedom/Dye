@@ -15,7 +15,7 @@ export const LerpColors = () => {
   const [saturation, setSaturation] = useState<number>(0);
   const [colorSpace, setColorSpace] = useState<chroma.InterpolationMode>("rgb");
 
-  let steps = 20;
+  let steps = 11;
 
   // todo: set pointer and fix the saturation
   let last = chroma
@@ -25,29 +25,34 @@ export const LerpColors = () => {
     .map((x) => chroma.hex(x).saturate(saturation));
 
   return (
-    <div className="size-full flex flex-col items-center justify-center">
-      <div>
-        <div>
-          <ColorPicker
-            color={leftColor}
-            setColor={setLeftColor}
-            label="Left color"
-          />
-          <ColorPicker
-            color={rightColor}
-            setColor={setRightColor}
-            label="Right color"
-          />
-        </div>
-
+    <>
+      <div className="flex w-11/12 h-1/3 py-8 justify-between mx-auto">
         <Input
+          className="max-w-48"
           type="number"
           value={saturation}
           onChange={(e) => setSaturation(parseInt(e.target.value))}
         />
-        <SpaceSelector colorSpace={colorSpace} setColorSpace={setColorSpace} />
+        <div className="flex items-end">
+          <SpaceSelector
+            colorSpace={colorSpace}
+            setColorSpace={setColorSpace}
+          />
+          <div>
+            <ColorPicker
+              color={leftColor}
+              setColor={setLeftColor}
+              label="Left color"
+            />
+            <ColorPicker
+              color={rightColor}
+              setColor={setRightColor}
+              label="Right color"
+            />
+          </div>
+        </div>
       </div>
       <ColorContainer colors={last} steps={steps} />
-    </div>
+    </>
   );
 };

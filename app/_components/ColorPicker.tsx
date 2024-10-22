@@ -22,7 +22,6 @@ interface Props {
 }
 
 export const ColorPicker = ({ color, setColor, label }: Props) => {
-  console.log(color);
   const [colorInput, setColorInput] = useState<string>((() => color)());
   return (
     <div className="flex flex-col">
@@ -53,7 +52,7 @@ export const ColorPicker = ({ color, setColor, label }: Props) => {
         </div>
         <Popover>
           <PopoverTrigger
-            className="size-8 rounded-sm border"
+            className="size-8 rounded-sm border box-focused"
             style={{
               background: color,
               borderColor: `${formatRGBA({
