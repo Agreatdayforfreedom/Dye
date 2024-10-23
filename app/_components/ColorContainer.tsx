@@ -1,5 +1,5 @@
 import chroma from "chroma-js";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   Tooltip,
@@ -7,7 +7,19 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+
 import { tw_color_scale } from "../constants";
+import { Pointer } from "./Pointer";
+import { usePointers } from "../store/pointers";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "../../components/ui/popover";
+import { HexColorPicker } from "react-colorful";
+import { Input } from "../../components/ui/input";
+import { HashIcon } from "lucide-react";
+import { ColorPicker } from "./ColorPicker";
 
 interface Props {
   colors: chroma.Color[];
@@ -15,48 +27,37 @@ interface Props {
 }
 
 export const ColorContainer = ({ colors, steps }: Props) => {
+  const setPointer = usePointers((state) => state.setPointer);
+  const pointers = usePointers((state) => state.pointers);
+
   return (
     <div className="flex w-fit mx-auto space-x-2">
       {colors.map((color: chroma.Color, i: number) => {
         return (
-          <TooltipProvider key={tw_color_scale[i]}>
-            <Tooltip delayDuration={0.2}>
-              <TooltipTrigger className="cursor-pointer" asChild>
-                <div>
-                  <div
-                    style={{
-                      background: color.hex(),
-                      borderColor: color.darken(0.1).hex(),
-                    }}
-                    className="h-12 w-16 rounded border"
-                  />
-                  <span className="text-slate-700 font-semibold text-sm">
-                    {tw_color_scale[i]}
-                  </span>
-                </div>
-              </TooltipTrigger>
-              <TooltipContent
-                style={{
-                  background: chroma(color).darken(2).hex(),
-                }}
-              >
-                {color.hex()}
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <div
+            key={tw_color_scale[i]}
+            className="flex flex-col items-center relative"
+          >
+            {pointers[i] !== "" ? <Pointer color={color} index={i} /> : null}
+            <TooltipProvider>
+              <Tooltip delayDuration={0.2}>
+                <TooltipTrigger className="cursor-pointer" asChild>
+                  <div>
+                    <ColorPicker color={chroma(color).hex()} index={i} />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent
+                  style={{
+                    background: chroma(color).darken(2).hex(),
+                  }}
+                >
+                  {color.hex()}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
         );
       })}
-      {/* {colors.map((c: any) => {
-        return (
-          <div
-            style={{
-              background: c,
-              width: `${500 / steps}px`,
-            }}
-            className="h-16"
-          />
-        );
-      })} */}
     </div>
   );
 };

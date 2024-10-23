@@ -11,6 +11,7 @@ import { SpaceSelector } from "./SpaceSelector";
 import { Label } from "../../components/ui/label";
 import { useGlobalDyes } from "../store/global_dyes";
 import { cn } from "../../lib/utils";
+import { usePointers, usePointersDomain } from "../store/pointers";
 
 export const LerpColors = () => {
   const [leftColor, setLeftColor] = useState<string>("ffffff");
@@ -18,15 +19,15 @@ export const LerpColors = () => {
   const [saturation, setSaturation] = useState<number>(0);
   const [name, setName] = useState<string>("Autumn");
   const [colorSpace, setColorSpace] = useState<chroma.InterpolationMode>("rgb");
-
+  const { indices, hex } = usePointersDomain();
   const dye = useGlobalDyes((state) => state.dye3);
   const setDye = useGlobalDyes((state) => state.setDye);
   let steps = 11;
   const dyes: string[] = [];
-  // todo: set pointer and fix the saturation
   let last = chroma
-    .scale([chroma.hex(leftColor), chroma.hex(rightColor)])
+    .scale([...hex])
     .mode(colorSpace)
+    .domain([...indices])
     .colors(steps)
     .map((x, i) => {
       let hex = chroma.hex(x).saturate(saturation);
@@ -37,7 +38,6 @@ export const LerpColors = () => {
     });
 
   useEffect(() => {
-    console.log(dyes);
     setDye({
       dye1: dyes[0],
       dye2: dyes[1],
