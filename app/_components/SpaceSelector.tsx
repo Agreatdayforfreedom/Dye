@@ -1,4 +1,4 @@
-import React, { useActionState } from "react";
+import React from "react";
 
 import chroma from "chroma-js";
 
@@ -10,15 +10,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { useGlobalDyes } from "../store/global_dyes";
+import { useGlobalDyes } from "@/app/store/global_dyes";
+import { useVariables } from "@/app/store/variables";
 
-interface Props {
-  colorSpace: chroma.InterpolationMode;
-  setColorSpace: (space: chroma.InterpolationMode) => void;
-}
-
-export const SpaceSelector = ({ colorSpace, setColorSpace }: Props) => {
+export const SpaceSelector = () => {
   const dye = useGlobalDyes((state) => state.dye3);
+  const colorSpace = useVariables((state) => state.colorSpace);
+  const setColorSpace = useVariables((state) => state.setColorSpace);
+
   return (
     <div className="flex flex-col">
       <Label htmlFor="space" className="font-bold text-gray-700 ml-2">

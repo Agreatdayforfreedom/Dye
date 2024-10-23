@@ -10,7 +10,7 @@ import {
 
 import { tw_color_scale } from "../constants";
 import { Pointer } from "./Pointer";
-import { usePointers } from "../store/pointers";
+import { usePointers, usePointersDomain } from "../store/pointers";
 import {
   Popover,
   PopoverContent,
@@ -20,16 +20,13 @@ import { HexColorPicker } from "react-colorful";
 import { Input } from "../../components/ui/input";
 import { HashIcon } from "lucide-react";
 import { ColorPicker } from "./ColorPicker";
+import { useVariables } from "../store/variables";
+import { useGlobalDyes } from "../store/global_dyes";
+import { useLerpColors } from "../_hooks/useLerpColors";
 
-interface Props {
-  colors: chroma.Color[];
-  steps: number;
-}
-
-export const ColorContainer = ({ colors, steps }: Props) => {
-  const setPointer = usePointers((state) => state.setPointer);
+export const ColorContainer = () => {
   const pointers = usePointers((state) => state.pointers);
-
+  const colors = useLerpColors();
   return (
     <div className="flex w-fit mx-auto space-x-2">
       {colors.map((color: chroma.Color, i: number) => {
