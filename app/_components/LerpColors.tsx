@@ -1,27 +1,26 @@
 "use client";
 
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import chroma from "chroma-js";
 
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
-import { ColorPicker } from "./ColorPicker";
 import { ColorContainer } from "./ColorContainer";
 import { SpaceSelector } from "./SpaceSelector";
-import { Label } from "../../components/ui/label";
 import { useGlobalDyes } from "../store/global_dyes";
-import { cn } from "../../lib/utils";
-import { usePointers, usePointersDomain } from "../store/pointers";
+import { usePointersDomain } from "../store/pointers";
 
 export const LerpColors = () => {
-  const [leftColor, setLeftColor] = useState<string>("ffffff");
-  const [rightColor, setRightColor] = useState<string>("00ffff");
   const [saturation, setSaturation] = useState<number>(0);
   const [name, setName] = useState<string>("Autumn");
   const [colorSpace, setColorSpace] = useState<chroma.InterpolationMode>("rgb");
+
   const { indices, hex } = usePointersDomain();
+
   const dye = useGlobalDyes((state) => state.dye3);
   const setDye = useGlobalDyes((state) => state.setDye);
+
   let steps = 11;
   const dyes: string[] = [];
   let last = chroma
@@ -45,7 +44,7 @@ export const LerpColors = () => {
       dye4: dyes[3],
       dye5: dyes[4],
     });
-  }, [rightColor, colorSpace, leftColor]);
+  }, [colorSpace]);
   return (
     <>
       <div className="flex w-11/12 h-1/3 py-8 justify-end mx-auto">
@@ -103,18 +102,6 @@ export const LerpColors = () => {
             colorSpace={colorSpace}
             setColorSpace={setColorSpace}
           />
-          <div>
-            <ColorPicker
-              color={leftColor}
-              setColor={setLeftColor}
-              label="Left color"
-            />
-            <ColorPicker
-              color={rightColor}
-              setColor={setRightColor}
-              label="Right color"
-            />
-          </div>
         </div>
       </div>
       <ColorContainer colors={last} steps={steps} />

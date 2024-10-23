@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-import { useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useGlobalDyes } from "../store/global_dyes";
 import { tw_color_scale } from "../constants";
 import { usePointers } from "../store/pointers";
@@ -23,10 +23,40 @@ interface Props {
   label?: string;
 }
 
+function onlyNumberHex(hex: string) {
+  if (hex[0] === "#") {
+    return hex.slice(1);
+  }
+  return hex;
+}
+
 export const ColorPicker = ({ color, label, index }: Props) => {
-  const [colorInput, setColorInput] = useState<string>((() => color)());
-  const dye = useGlobalDyes((state) => state.dye3);
+  const [colorInput, setColorInput] = useState<string>(() =>
+    onlyNumberHex(color)
+  );
+
   const setPointer = usePointers((state) => state.setPointer);
+
+  useEffect(() => {
+    setColorInput(() => onlyNumberHex(color));
+  }, [color]);
+
+  const handleColorPicker = (v: string | ChangeEvent<HTMLInputElement>) => {
+    let hex;
+    if (typeof v === "string") {
+      hex = v;
+    } else {
+      hex = v.target.value;
+    }
+    if (hex[0] !== "#") {
+      hex = "#".concat(hex);
+    }
+
+    if (chroma.valid(hex)) {
+      setPointer(index, hex);
+    }
+    setColorInput(hex.slice(1));
+  };
 
   return (
     <Popover>
@@ -43,127 +73,23 @@ export const ColorPicker = ({ color, label, index }: Props) => {
         </span>
       </div>
 
-      {/* </PopoverTrigger> */}
       <PopoverContent>
-        <div className="fixed top-0 size-full" />
-
         <HexColorPicker
           color={chroma(color).hex()}
-          onChange={(v) => {
-            let hex = v;
-            if (hex[0] !== "#") {
-              hex = "#".concat(hex);
-            }
-            if (chroma.valid(hex)) {
-              setPointer(index, hex);
-            }
-            setColorInput(hex.slice(1));
-          }}
+          onChange={handleColorPicker}
         />
-        <div className="relative">
+        <div className="relative mt-1">
           <HashIcon
             className="absolute stroke-slate-500 top-2.5 left-[5px]"
             size={15}
           />
           <Input
             className="pl-5 pb-[6px]"
-            id={"dañls".toLowerCase().replace(/ /g, "_")}
-            onChange={(e) => {
-              let hex = e.target.value;
-              if (hex[0] !== "#") {
-                hex = "#".concat(hex);
-              }
-              if (chroma.valid(hex)) {
-                setPointer(index, hex);
-              }
-              setColorInput(hex.slice(1));
-            }}
+            onChange={handleColorPicker}
             value={colorInput}
           />
         </div>
       </PopoverContent>
     </Popover>
   );
-
-  // return (
-  //   <div className="flex flex-col">
-  //     <Label
-  //       htmlFor={label.toLowerCase().replace(/ /g, "_")}
-  //       className="font-bold text-gray-700 ml-2"
-  //     >
-  //       {label}
-  //     </Label>
-  //     <div className="flex m-1 space-x-2 items-center">
-  //       <div className="relative">
-  //         <HashIcon
-  //           className="absolute stroke-slate-500 top-2.5 left-[5px]"
-  //           size={15}
-  //         />
-  //         <Input
-  //           className="pl-5 pb-[6px]"
-  //           id={label.toLowerCase().replace(/ /g, "_")}
-  //           style={
-  //             dye
-  //               ? {
-  //                   outline: 0,
-  //                   boxShadow: `0px 0px 0px 2px ${chroma(dye)
-  //                     .alpha(0.4)
-  //                     .hex()}`,
-  //                   borderColor: dye,
-  //                 }
-  //               : {}
-  //           }
-  //           onChange={(e) => {
-  //             let hex = e.target.value;
-  //             if (hex[0] !== "#") {
-  //               hex = "#".concat(hex);
-  //             }
-  //             if (chroma.valid(hex)) {
-  //               setColor(hex);
-  //             }
-  //             setColorInput(hex.slice(1));
-  //           }}
-  //           value={colorInput}
-  //         />
-  //       </div>
-  //       <Popover>
-  //         <PopoverTrigger
-  //           className="size-8 rounded-sm border box-focused"
-  //           style={
-  //             dye
-  //               ? {
-  //                   outline: 0,
-  //                   boxShadow: `0px 0px 0px 2px ${chroma(dye)
-  //                     .alpha(0.4)
-  //                     .hex()}`,
-  //                   borderColor: dye,
-  //                   background: chroma(color).hex(),
-  //                 }
-  //               : {
-  //                   background: chroma(color).hex(),
-  //                   borderColor: chroma(color).darken(1).hex(),
-  //                 }
-  //           }
-  //         />
-  //         <PopoverContent>
-  //           <div className="fixed top-0 size-full" />
-
-  //           <HexColorPicker
-  //             color={color}
-  //             onChange={(v) => {
-  //               let hex = v;
-  //               if (hex[0] !== "#") {
-  //                 hex = "#".concat(hex);
-  //               }
-  //               if (chroma.valid(hex)) {
-  //                 setColor(hex);
-  //               }
-  //               setColorInput(hex.slice(1));
-  //             }}
-  //           />
-  //         </PopoverContent>
-  //       </Popover>
-  //     </div>
-  //   </div>
-  // );
 };
