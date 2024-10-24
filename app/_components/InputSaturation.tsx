@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { useVariables } from "@/app/store/variables";
 
 export const InputSaturation = () => {
-  const dye = useGlobalDyes((state) => state.dye3);
+  const border_shadow_dye = useGlobalDyes((state) => state.border_shadow_dye);
   const saturation = useVariables((state) => state.saturation);
   const setSaturation = useVariables((state) => state.setSaturation);
 
@@ -20,11 +20,13 @@ export const InputSaturation = () => {
         id="saturation"
         className="max-w-48 m-1"
         style={
-          dye
+          border_shadow_dye
             ? {
                 outline: 0,
-                boxShadow: `0px 0px 0px 2px ${chroma(dye).alpha(0.4).hex()}`,
-                borderColor: dye,
+                boxShadow: `0px 0px 0px 2px ${chroma(border_shadow_dye)
+                  .alpha(0.4)
+                  .hex()}`,
+                borderColor: border_shadow_dye,
               }
             : {}
         }

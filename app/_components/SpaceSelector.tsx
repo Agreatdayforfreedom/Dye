@@ -14,7 +14,7 @@ import { useGlobalDyes } from "@/app/store/global_dyes";
 import { useVariables } from "@/app/store/variables";
 
 export const SpaceSelector = () => {
-  const dye = useGlobalDyes((state) => state.dye3);
+  const border_shadow_dye = useGlobalDyes((state) => state.border_shadow_dye);
   const colorSpace = useVariables((state) => state.colorSpace);
   const setColorSpace = useVariables((state) => state.setColorSpace);
 
@@ -30,11 +30,13 @@ export const SpaceSelector = () => {
         <SelectTrigger
           id="space"
           style={
-            dye
+            border_shadow_dye
               ? {
                   outline: 0,
-                  boxShadow: `0px 0px 0px 2px ${chroma(dye).alpha(0.4).hex()}`,
-                  borderColor: dye,
+                  boxShadow: `0px 0px 0px 2px ${chroma(border_shadow_dye)
+                    .alpha(0.4)
+                    .hex()}`,
+                  borderColor: border_shadow_dye,
                 }
               : {}
           }

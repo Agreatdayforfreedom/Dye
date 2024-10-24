@@ -7,7 +7,7 @@ import { useGlobalDyes } from "@/app/store/global_dyes";
 import { useVariables } from "@/app/store/variables";
 
 export const InputName = () => {
-  const dye = useGlobalDyes((state) => state.dye3);
+  const border_shadow_dye = useGlobalDyes((state) => state.border_shadow_dye);
   const name = useVariables((state) => state.name);
   const setName = useVariables((state) => state.setName);
 
@@ -20,11 +20,13 @@ export const InputName = () => {
         id="name"
         className="w-64 m-1"
         style={
-          dye
+          border_shadow_dye
             ? {
                 outline: 0,
-                boxShadow: `0px 0px 0px 2px ${chroma(dye).alpha(0.4).hex()}`,
-                borderColor: dye,
+                boxShadow: `0px 0px 0px 2px ${chroma(border_shadow_dye)
+                  .alpha(0.4)
+                  .hex()}`,
+                borderColor: border_shadow_dye,
               }
             : {}
         }

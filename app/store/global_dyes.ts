@@ -1,24 +1,24 @@
 import { create } from "zustand";
 
 interface GlobalDyesState {
-  dye1: string;
-  dye2: string;
-  dye3: string;
-  dye4: string;
-  dye5: string;
+  border_dye: string;
+  title_dye: string;
+  border_shadow_dye: string;
+  text_dye: string;
+  bg_dye: string;
 }
 interface GlobalDyesAction {
-  setDye: (dyes: GlobalDyesState) => void;
+  setDyes: (dyes: GlobalDyesState) => void;
 }
 
 export const useGlobalDyes = create<GlobalDyesState & GlobalDyesAction>(
   (set) => ({
-    dye1: "",
-    dye2: "",
-    dye3: "",
-    dye4: "",
-    dye5: "",
-    setDye: (dyes: GlobalDyesState) =>
+    border_dye: "",
+    title_dye: "",
+    border_shadow_dye: "",
+    text_dye: "",
+    bg_dye: "",
+    setDyes: (dyes: GlobalDyesState) =>
       set(() => ({
         ...dyes,
       })),
