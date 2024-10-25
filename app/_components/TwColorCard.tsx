@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import chroma from "chroma-js";
 
 import {
   Tooltip,
@@ -6,10 +7,10 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useCopy } from "@/app/_hooks/useCopy";
+
 import { ColorPicker } from "./ColorPicker";
-import chroma from "chroma-js";
 import { Pointer } from "./Pointer";
-import { useCopy } from "../_hooks/useCopy";
 
 interface Props {
   color: chroma.Color;
@@ -17,7 +18,7 @@ interface Props {
   index: number;
 }
 
-export const ColorCard = ({ color, pointer, index }: Props) => {
+export const TwColorCard = ({ color, pointer, index }: Props) => {
   const [isCopied, onCopy] = useCopy(2000);
 
   return (

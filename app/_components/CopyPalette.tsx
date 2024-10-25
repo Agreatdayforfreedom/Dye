@@ -1,55 +1,95 @@
 import chroma from "chroma-js";
 import { CheckIcon, CopyIcon } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useVariables } from "@/app/store/variables";
 import { tw_color_scale } from "@/app/constants";
 import { useCopy } from "@/app/_hooks/useCopy";
 import { f_oklch, f_rgb } from "@/app/_utils/formatters";
-import { useGlobalDyes } from "../store/global_dyes";
+import { useGlobalDyes } from "@/app/store/global_dyes";
 
 interface Props {
   colors: chroma.Color[];
 }
 
-interface Palette {
+interface TwPalette {
   [key: string]: string;
 }
 
+type CustomPalette = string[];
+
 type CopySpaces = "hex" | "rgb" | "oklch";
 
-export const CopyPalette = ({ colors }: Props) => {
+export const CopyPalette = () => {
   const [selected, setSelected] = useState<CopySpaces>("rgb");
+  const [codeFormatted, setCodeFormatted] = useState<string>("");
+
   const border_dye = useGlobalDyes((state) => state.border_dye);
   const name = useVariables((state) => state.name);
+  const colors = useVariables((state) => state.colors);
+  const type = useVariables((state) => state.type);
+
   const [isCopied, onCopy] = useCopy();
-  const body = {
-    colors: {
-      [name.toLowerCase()]: {},
-    },
-  };
-  const palette: Palette = {};
 
-  let i = 0;
+  useEffect(() => {
+    let body: any = {
+      colors: {
+        [name.toLowerCase()]: {},
+      },
+    };
+    let tw_palette: TwPalette = {};
+    let custom_palette: CustomPalette = [];
 
-  while (i < tw_color_scale.length) {
-    if (selected === "hex") palette[tw_color_scale[i]] = colors[i][selected]();
-    if (selected === "rgb")
-      palette[tw_color_scale[i]] = f_rgb(colors[i][selected]());
-    if (selected === "oklch")
-      palette[tw_color_scale[i]] = f_oklch(colors[i][selected]());
+    let i = 0;
 
-    i++;
-  }
-  body.colors[name.toLowerCase()] = palette;
+    if (colors.length > 0) {
+      while (i < colors.length) {
+        if (colors[i]) {
+          if (type === "tw") {
+            if (selected === "hex")
+              tw_palette[tw_color_scale[i]] = colors[i][selected]();
+            if (selected === "rgb")
+              tw_palette[tw_color_scale[i]] = f_rgb(colors[i][selected]());
+            if (selected === "oklch")
+              tw_palette[tw_color_scale[i]] = f_oklch(colors[i][selected]());
+          } else {
+            if (selected === "hex") custom_palette.push(colors[i][selected]());
+            if (selected === "rgb")
+              custom_palette.push(f_rgb(colors[i][selected]()));
+            if (selected === "oklch")
+              custom_palette.push(f_oklch(colors[i][selected]()));
+          }
+        }
+        i++;
+      }
+    }
+    if (type == "tw") {
+      body.colors[name.toLowerCase()] = tw_palette;
+    } else {
+      // override body to avoid tailwind format
+      delete body.colors;
+      body[name.toLowerCase()] = custom_palette;
+    }
+
+    setCodeFormatted(JSON.stringify(body, null, 2));
+  }, [colors, selected]);
+
   function handlePalette() {
-    onCopy(JSON.stringify(body, null, 2));
+    onCopy(codeFormatted);
   }
 
   return (
     <div>
       <h2 className=" text-slate-700 text-semibold p-2">
-        Paste this code into your <b>tailwind.config.ts</b> file
+        {type == "tw" ? (
+          <>
+            Paste this code into your <b>tailwind.config.ts</b> file.
+          </>
+        ) : (
+          <>
+            <b className="capitalize">{selected}</b> css formatted colors.
+          </>
+        )}
       </h2>
       <div className="w-96 bg-slate-50 border rounded pb-2">
         <div className="p-4 flex justify-between">
@@ -86,7 +126,7 @@ export const CopyPalette = ({ colors }: Props) => {
         </div>
 
         <pre className="text-sm text-gray-700 mx-4 font-semibold">
-          {JSON.stringify(body, null, 2)}
+          {codeFormatted}
         </pre>
       </div>
     </div>

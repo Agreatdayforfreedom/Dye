@@ -102,3 +102,13 @@
     animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
   }
 }
+
+.raw_palette_card_animation {
+  flex-grow: 1;
+}
+.raw_palette_card_animation:hover {
+  flex-grow: 3;
+}
+.raw_palette_card_animation:hover > span {
+  display: block;
+}

@@ -15,7 +15,7 @@ interface PointersAction {
 }
 
 export const usePointers = create<PointersState & PointersAction>((set) => ({
-  pointers: ["red", "", "", "", "", "", "", "", "", "", "blue"],
+  pointers: ["black", "", "", "", "", "", "", "", "", "", "white"],
   setPointer: (index: number, color: string) =>
     set((state) => ({
       pointers: state.pointers.map((p: string, i: number) =>
