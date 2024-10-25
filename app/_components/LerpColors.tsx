@@ -12,6 +12,7 @@ import { useGlobalDyes } from "../store/global_dyes";
 import { usePointersDomain } from "../store/pointers";
 import { InputName } from "./InputName";
 import { InputSaturation } from "./InputSaturation";
+import { InputHue } from "./InputHue";
 
 export const LerpColors = () => {
   return (
@@ -20,6 +21,7 @@ export const LerpColors = () => {
         <div className="flex items-end space-x-2">
           <InputName />
           <InputSaturation />
+          <InputHue />
           <SpaceSelector />
         </div>
       </div>

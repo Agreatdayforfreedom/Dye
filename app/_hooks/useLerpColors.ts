@@ -10,6 +10,7 @@ export const useLerpColors = () => {
 
   const saturation = useVariables((state) => state.saturation);
   const colorSpace = useVariables((state) => state.colorSpace);
+  const hue = useVariables((state) => state.hue);
   const { indices, hex } = usePointersDomain();
 
   // let steps = 11;
@@ -22,11 +23,16 @@ export const useLerpColors = () => {
         .mode(colorSpace)
         .domain([...indices])
         .colors(steps)
-        .map((x, i) => {
-          return chroma(x).saturate(saturation);
+        .map((c, i) => {
+          let color = chroma(c);
+          let current_hue = color.get("hsv.h") || 0;
+
+          return color
+            .saturate(saturation / 50)
+            .set("hsv.h", current_hue + hue);
         })
     );
-  }, [hex, colorSpace, saturation]);
+  }, [hex, colorSpace, saturation, hue]);
 
   return { colors, steps };
 };
