@@ -8,7 +8,7 @@ import { usePointers } from "@/app/store/pointers";
 import { TwColorCard } from "./TwColorCard";
 
 export const TwPaletteSection = () => {
-  const colors = useLerpColors();
+  const { colors } = useLerpColors();
   const setDyes = useGlobalDyes((state) => state.setDyes);
   const pointers = usePointers((state) => state.pointers);
   const setColors = useVariables((state) => state.setColors);

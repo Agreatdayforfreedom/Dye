@@ -9,7 +9,7 @@ interface Props {
 export const CustomColorCard = ({ color }: Props) => {
   return (
     <div
-      className="flex raw_palette_card_animation h-36 items-center cursor-pointer transition-all duration-300"
+      className="flex raw_palette_card_animation h-32 items-center cursor-pointer transition-all duration-300"
       style={{ background: color.hex() }}
     >
       <span

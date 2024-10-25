@@ -28,5 +28,5 @@ export const useLerpColors = () => {
     );
   }, [hex, colorSpace, saturation]);
 
-  return colors;
+  return { colors, steps };
 };

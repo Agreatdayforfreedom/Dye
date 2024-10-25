@@ -7,7 +7,7 @@ import { useVariables } from "@/app/store/variables";
 import { CustomColorCard } from "./CustomColorCard";
 
 export const CustomPaletteSection = () => {
-  const colors = useLerpColors();
+  const { colors, steps } = useLerpColors();
   const setDyes = useGlobalDyes((state) => state.setDyes);
   const setColors = useVariables((state) => state.setColors);
   useEffect(() => {
@@ -22,7 +22,7 @@ export const CustomPaletteSection = () => {
   }, [colors]);
 
   return (
-    <div className="flex w-[80%] mx-auto ">
+    <div style={{ width: 48 * steps }} className="flex mx-auto ">
       {colors.map((color: chroma.Color, i: number) => (
         <CustomColorCard key={i} color={color} />
       ))}
