@@ -37,10 +37,6 @@ export const ColorPicker = ({ color, label, index }: Props) => {
 
   const setPointer = usePointers((state) => state.setPointer);
 
-  useEffect(() => {
-    setColorInput(() => onlyNumberHex(color));
-  }, [color]);
-
   const handleColorPicker = (v: string | ChangeEvent<HTMLInputElement>) => {
     let hex;
     if (typeof v === "string") {

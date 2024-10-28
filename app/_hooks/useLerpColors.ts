@@ -16,6 +16,7 @@ export const useLerpColors = () => {
   // let steps = 11;
 
   let colors = useMemo(() => {
+    let no_update_pointer_index = 0;
     return (
       chroma
         // .bezier([...hex])
@@ -27,9 +28,15 @@ export const useLerpColors = () => {
           let color = chroma(c);
           let current_hue = color.get("hsv.h") || 0;
 
-          return color
-            .saturate(saturation / 50)
-            .set("hsv.h", current_hue + hue);
+          let new_hue = current_hue;
+
+          if (indices[no_update_pointer_index] != i) {
+            console.log(indices[i], i);
+            new_hue += hue;
+          } else {
+            no_update_pointer_index++;
+          }
+          return color.saturate(saturation / 50).set("hsv.h", new_hue);
         })
     );
   }, [hex, colorSpace, saturation, hue]);
