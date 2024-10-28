@@ -4,6 +4,7 @@ import React from "react";
 
 import { useGlobalDyes } from "@/app/store/global_dyes";
 import { useVariables } from "@/app/store/variables";
+import { getContrastYIQ } from "../_utils/yiq";
 
 export const Header = () => {
   const title_dye = useGlobalDyes((state) => state.title_dye);
@@ -28,16 +29,27 @@ export const Header = () => {
             Palette generator
           </p>
         </div>
-        <div>
+        <div className="space-x-2">
+          <span className="font-bold text-gray-700 text-sm">Mode: </span>
           <button
             onClick={() => setType("tw")}
-            style={type == "tw" ? { background: bg_dye } : {}}
+            className="p-2 font-semibold rounded-lg text-sm"
+            style={
+              type == "tw"
+                ? { background: bg_dye, color: getContrastYIQ(bg_dye) }
+                : {}
+            }
           >
             Tailwind
           </button>
           <button
             onClick={() => setType("custom")}
-            style={type == "custom" ? { background: bg_dye } : {}}
+            className="p-2 font-semibold rounded-lg text-sm"
+            style={
+              type == "custom"
+                ? { background: bg_dye, color: getContrastYIQ(bg_dye) }
+                : {}
+            }
           >
             Custom
           </button>
