@@ -13,16 +13,20 @@ import { usePointersDomain } from "../store/pointers";
 import { InputName } from "./InputName";
 import { InputSaturation } from "./InputSaturation";
 import { InputHue } from "./InputHue";
+import { InputBrightness } from "./InputBrightness";
 
 export const LerpColors = () => {
   return (
     <>
       <div className="flex w-11/12 h-1/3 py-8 justify-end mx-auto">
-        <div className="flex items-end space-x-2">
+        <div className="space-x-2">
           <InputName />
-          <InputSaturation />
-          <InputHue />
-          <SpaceSelector />
+          <div className="flex items-end space-x-2">
+            <InputSaturation />
+            <InputBrightness />
+            <InputHue />
+            <SpaceSelector />
+          </div>
         </div>
       </div>
       <ColorContainer />

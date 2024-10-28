@@ -16,6 +16,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { useGlobalDyes } from "../store/global_dyes";
 import { tw_color_scale } from "../constants";
 import { usePointers } from "../store/pointers";
+import debounce from "../_utils/debounce";
 
 interface Props {
   color: string;
@@ -31,28 +32,33 @@ function onlyNumberHex(hex: string) {
 }
 
 export const ColorPicker = ({ color, label, index }: Props) => {
-  const [colorInput, setColorInput] = useState<string>(() =>
-    onlyNumberHex(color)
+  const [colorInput, setColorInput] = useState<string>(
+    () =>
+      // onlyNumberHex(color)
+      "ffffff"
   );
 
   const setPointer = usePointers((state) => state.setPointer);
 
-  const handleColorPicker = (v: string | ChangeEvent<HTMLInputElement>) => {
-    let hex;
-    if (typeof v === "string") {
-      hex = v;
-    } else {
-      hex = v.target.value;
-    }
-    if (hex[0] !== "#") {
-      hex = "#".concat(hex);
-    }
+  const handleColorPicker = debounce(
+    (v: string | ChangeEvent<HTMLInputElement>) => {
+      let hex;
+      if (typeof v === "string") {
+        hex = v;
+      } else {
+        hex = v.target.value;
+      }
+      if (hex[0] !== "#") {
+        hex = "#".concat(hex);
+      }
 
-    if (chroma.valid(hex)) {
-      setPointer(index, hex);
-    }
-    setColorInput(hex.slice(1));
-  };
+      if (chroma.valid(hex)) {
+        setPointer(index, hex);
+      }
+      setColorInput(hex.slice(1));
+    },
+    1000
+  );
 
   return (
     <Popover>

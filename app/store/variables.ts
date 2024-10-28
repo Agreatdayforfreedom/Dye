@@ -7,6 +7,7 @@ interface VariablesState {
   name: string;
   hue: number;
   saturation: number;
+  brightness: number;
   colorSpace: chroma.InterpolationMode;
 }
 
@@ -16,6 +17,7 @@ interface VariablesAction {
   setType: (type: Type) => void;
   setHue: (hue: number) => void;
   setSaturation: (saturation: number) => void;
+  setBrightness: (brightness: number) => void;
   setColorSpace: (colorSpace: chroma.InterpolationMode) => void;
 }
 
@@ -27,12 +29,14 @@ export const useVariables = create<VariablesState & VariablesAction>((set) => ({
   name: "Autumn",
   hue: 0,
   saturation: 0,
+  brightness: 0,
   colorSpace: "rgb",
 
   setColors: (colors: Array<chroma.Color>) => set((_) => ({ colors })),
   setName: (name: string) => set((_) => ({ name })),
   setType: (type: Type) => set((_) => ({ type })),
   setSaturation: (saturation: number) => set((_) => ({ saturation })),
+  setBrightness: (brightness: number) => set((_) => ({ brightness })),
   setHue: (hue: number) => set((_) => ({ hue })),
   setColorSpace: (colorSpace: chroma.InterpolationMode) =>
     set((_) => ({ colorSpace })),
