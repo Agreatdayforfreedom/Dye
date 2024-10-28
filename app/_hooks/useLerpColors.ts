@@ -26,7 +26,7 @@ export const useLerpColors = () => {
         .map((c, i) => {
           let color = chroma(c);
           let current_hue = color.get("hsv.h") || 0;
-          let current_brh = color.get("lab.l") || 0;
+          let current_brh = color.get("hsv.v") || 0;
           let current_sat = color.get("hsv.s") || 0;
 
           let new_hue = current_hue;
@@ -35,16 +35,15 @@ export const useLerpColors = () => {
 
           if (indices[no_update_pointer_index] != i) {
             new_hue += hue;
-            new_brh += (brightness / current_brh) * 10;
-            new_sat += saturation;
+            new_brh += brightness / 25;
+            new_sat += saturation / 50;
           } else {
             no_update_pointer_index++;
           }
-
           return color
-            .saturate(new_sat)
-            .set("lab.l", new_brh)
-            .set("hsv.h", new_hue);
+            .set("hsv.h", new_hue)
+            .set("hsv.s", new_sat)
+            .set("hsv.v", new_brh);
         })
     );
   }, [hex, colorSpace, saturation, hue, brightness]);

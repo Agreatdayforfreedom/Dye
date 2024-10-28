@@ -57,7 +57,7 @@ export const ColorPicker = ({ color, label, index }: Props) => {
       }
       setColorInput(hex.slice(1));
     },
-    1000
+    300
   );
 
   return (

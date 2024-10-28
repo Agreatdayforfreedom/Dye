@@ -48,12 +48,25 @@ export const usePointersDomain = (): Domain => {
   let hex: Array<string> = [];
   while (i < pointers.length) {
     let color = pointers[i];
+
     if (color !== "") {
       hex.push(color);
       indices.push(i);
     }
 
     i++;
+  }
+
+  // set black color as default if there is not pointer on the right side
+  if (pointers.at(-1) === "") {
+    hex.push("#000000");
+    indices.push(pointers.length - 1);
+  }
+
+  // set white color as default if there is not pointer on the left side
+  if (pointers.at(0) === "") {
+    hex.unshift("#ffffff");
+    indices.unshift(0);
   }
 
   return {
