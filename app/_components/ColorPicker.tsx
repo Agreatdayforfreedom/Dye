@@ -58,8 +58,6 @@ export const ColorPicker = ({ color, label, index }: Props) => {
     300
   );
 
-  // const handleInputColor()
-
   return (
     <Popover>
       <div className="w-16">
