@@ -12,7 +12,9 @@ export const LerpColors = () => {
     <>
       <section className="flex h-1/3 py-8 justify-end mx-auto">
         <div className=" lg:w-3/4 mx-auto">
-          <InputName />
+          <div className="flex space-x-2">
+            <InputName />
+          </div>
           <div className="flex items-end space-x-2 mt-2">
             <InputSaturation />
             <InputBrightness />

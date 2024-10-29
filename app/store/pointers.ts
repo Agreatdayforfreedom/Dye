@@ -1,16 +1,16 @@
 import { create } from "zustand";
 
+import { DomainLayout } from "@/app/types";
+
+const TW_STEPS: number = 11;
+
 interface PointersState {
   pointers: Array<string>;
 }
 
-interface Domain {
-  indices: Array<number>;
-  hex: Array<string>;
-}
-
 interface PointersAction {
   setPointer: (index: number, color: string) => void;
+  setPointerFromDomain: (domain: DomainLayout) => void;
   undoPointer: (index: number) => void;
 }
 
@@ -34,14 +34,29 @@ export const usePointers = create<PointersState & PointersAction>((set) => ({
         i === index ? color : p
       ),
     })),
+  setPointerFromDomain: (domain: DomainLayout) =>
+    set((state) => {
+      let iterated = 0;
+      return {
+        pointers: state.pointers.map((_, i: number) => {
+          if (domain.indices[iterated] === i) {
+            return domain.hex[iterated++];
+          } else {
+            return "";
+          }
+        }),
+      };
+    }),
   undoPointer: (index: number) => {
     set((state) => ({
-      pointers: state.pointers.map((p, i) => (i === index ? "" : p)),
+      pointers: state.pointers.map((p: string, i: number) =>
+        i === index ? "" : p
+      ),
     }));
   },
 }));
 
-export const usePointersDomain = (): Domain => {
+export const usePointersDomain = (): DomainLayout => {
   let i = 0;
   let pointers = usePointers((state) => state.pointers);
   let indices: Array<number> = [];
@@ -72,5 +87,5 @@ export const usePointersDomain = (): Domain => {
   return {
     indices,
     hex,
-  } as Domain;
+  } as DomainLayout;
 };

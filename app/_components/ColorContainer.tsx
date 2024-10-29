@@ -8,6 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { CopyPalette } from "./CopyPalette";
 import { TwPaletteSection } from "./TwPaletteSection";
 import { CustomPaletteSection } from "./CustomPaletteSection";
+import { Palettes } from "./Palettes";
 
 export const ColorContainer = () => {
   const border_dye = useGlobalDyes((state) => state.border_dye);
@@ -30,7 +31,7 @@ export const ColorContainer = () => {
         decorative={true}
       />
       <div className="flex justify-between w-11/12 mx-auto mt-5">
-        <div></div>
+        <Palettes />
         <CopyPalette />
       </div>
     </div>
