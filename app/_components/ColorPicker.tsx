@@ -1,5 +1,6 @@
 "use client";
 
+import { ChangeEvent, useEffect, useState } from "react";
 import { HexColorPicker } from "react-colorful";
 import { HashIcon } from "lucide-react";
 import chroma from "chroma-js";
@@ -10,13 +11,10 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
-import { ChangeEvent, useEffect, useState } from "react";
-import { useGlobalDyes } from "../store/global_dyes";
-import { tw_color_scale } from "../constants";
-import { usePointers } from "../store/pointers";
-import debounce from "../_utils/debounce";
+import { tw_color_scale } from "@/app/constants";
+import { usePointers } from "@/app/store/pointers";
+import debounce from "@/app/_utils/debounce";
 
 interface Props {
   color: string;
@@ -32,13 +30,13 @@ function onlyNumberHex(hex: string) {
 }
 
 export const ColorPicker = ({ color, label, index }: Props) => {
-  const [colorInput, setColorInput] = useState<string>(
-    () =>
-      // onlyNumberHex(color)
-      "ffffff"
-  );
+  const [colorInput, setColorInput] = useState<string>("");
 
   const setPointer = usePointers((state) => state.setPointer);
+
+  useEffect(() => {
+    setColorInput(onlyNumberHex(color));
+  }, [color]);
 
   const handleColorPicker = debounce(
     (v: string | ChangeEvent<HTMLInputElement>) => {
@@ -59,6 +57,8 @@ export const ColorPicker = ({ color, label, index }: Props) => {
     },
     300
   );
+
+  // const handleInputColor()
 
   return (
     <Popover>
@@ -87,7 +87,12 @@ export const ColorPicker = ({ color, label, index }: Props) => {
           />
           <Input
             className="pl-5 pb-[6px]"
-            onChange={handleColorPicker}
+            onChange={(e) => {
+              if (chroma.valid(e.target.value)) {
+                setPointer(index, e.target.value);
+              }
+              setColorInput(onlyNumberHex(e.target.value));
+            }}
             value={colorInput}
           />
         </div>

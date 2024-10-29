@@ -1,15 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import chroma from "chroma-js";
-
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-
 import { ColorContainer } from "./ColorContainer";
 import { SpaceSelector } from "./SpaceSelector";
-import { useGlobalDyes } from "../store/global_dyes";
-import { usePointersDomain } from "../store/pointers";
 import { InputName } from "./InputName";
 import { InputSaturation } from "./InputSaturation";
 import { InputHue } from "./InputHue";
@@ -18,17 +10,17 @@ import { InputBrightness } from "./InputBrightness";
 export const LerpColors = () => {
   return (
     <>
-      <div className="flex w-11/12 h-1/3 py-8 justify-end mx-auto">
-        <div className="space-x-2">
+      <section className="flex h-1/3 py-8 justify-end mx-auto">
+        <div className=" lg:w-3/4 mx-auto">
           <InputName />
-          <div className="flex items-end space-x-2">
+          <div className="flex items-end space-x-2 mt-2">
             <InputSaturation />
             <InputBrightness />
             <InputHue />
             <SpaceSelector />
           </div>
         </div>
-      </div>
+      </section>
       <ColorContainer />
     </>
   );
