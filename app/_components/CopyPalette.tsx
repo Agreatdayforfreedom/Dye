@@ -34,7 +34,7 @@ export const CopyPalette = () => {
   useEffect(() => {
     let body: any = {
       colors: {
-        [name.toLowerCase()]: {},
+        [name.toLowerCase().replace(/ /g, "_")]: {},
       },
     };
     let tw_palette: TwPalette = {};
@@ -64,11 +64,11 @@ export const CopyPalette = () => {
       }
     }
     if (type == "tw") {
-      body.colors[name.toLowerCase()] = tw_palette;
+      body.colors[name.toLowerCase().replace(/ /g, "_")] = tw_palette;
     } else {
       // override body to avoid tailwind format
       delete body.colors;
-      body[name.toLowerCase()] = custom_palette;
+      body[name.toLowerCase().replace(/ /g, "_")] = custom_palette;
     }
 
     setCodeFormatted(JSON.stringify(body, null, 2));
