@@ -11,6 +11,7 @@ import { useCopy } from "@/app/_hooks/useCopy";
 
 import { ColorPicker } from "./ColorPicker";
 import { Pointer } from "./Pointer";
+import { getContrastYIQ } from "../_utils/yiq";
 
 interface Props {
   color: chroma.Color;
@@ -26,7 +27,7 @@ export const TwColorCard = ({ color, pointer, index }: Props) => {
       {pointer ? <Pointer color={color} index={index} /> : null}
       <TooltipProvider>
         <Tooltip delayDuration={0.2}>
-          <TooltipTrigger className="cursor-pointer" asChild>
+          <TooltipTrigger className="cursor-pointer " asChild>
             <div>
               <ColorPicker color={color.hex()} index={index} />
             </div>
@@ -34,6 +35,7 @@ export const TwColorCard = ({ color, pointer, index }: Props) => {
           <TooltipContent
             style={{
               background: color.darken(2).hex(),
+              color: getContrastYIQ(color.darken(2).hex()),
             }}
             className="cursor-pointer"
             onClick={() => onCopy(color.hex())}

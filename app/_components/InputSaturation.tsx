@@ -13,7 +13,7 @@ export const InputSaturation = () => {
 
   return (
     <div className="flex flex-col">
-      <Label htmlFor="saturation" className="font-bold text-gray-700 ml-2">
+      <Label htmlFor="saturation" className="font-bold text-foreground ml-2">
         Saturation
       </Label>
       <Input

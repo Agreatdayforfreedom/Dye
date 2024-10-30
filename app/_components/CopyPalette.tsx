@@ -125,7 +125,7 @@ export const CopyPalette = () => {
           </button>
         </div>
 
-        <pre className="text-sm text-gray-700 mx-4 font-semibold">
+        <pre className="text-sm text-foreground mx-4 font-semibold">
           {codeFormatted}
         </pre>
       </div>

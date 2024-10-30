@@ -68,7 +68,7 @@ export const ColorPicker = ({ color, label, index }: Props) => {
             borderColor: chroma(color).darken(1).hex(),
           }}
         />
-        <span className="text-slate-700 font-semibold text-sm">
+        <span className="text-foreground font-semibold text-sm">
           {tw_color_scale[index]}
         </span>
       </div>

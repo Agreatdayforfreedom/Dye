@@ -6,8 +6,15 @@ import { InputName } from "./InputName";
 import { InputSaturation } from "./InputSaturation";
 import { InputHue } from "./InputHue";
 import { InputBrightness } from "./InputBrightness";
+import { useEffect } from "react";
+import { useDarkMode } from "../store/dark_mode";
 
 export const LerpColors = () => {
+  const mode = useDarkMode((state) => state.mode);
+
+  useEffect(() => {
+    document.documentElement.className = mode;
+  }, [mode]);
   return (
     <>
       <section className="flex h-1/3 py-8 justify-end mx-auto">

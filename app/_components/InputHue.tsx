@@ -13,7 +13,7 @@ export const InputHue = () => {
 
   return (
     <div className="flex flex-col">
-      <Label htmlFor="hue" className="font-bold text-gray-700 ml-2">
+      <Label htmlFor="hue" className="font-bold text-foreground ml-2">
         Hue
       </Label>
       <Input

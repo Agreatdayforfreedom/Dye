@@ -20,7 +20,7 @@ export const SpaceSelector = () => {
 
   return (
     <div className="flex flex-col">
-      <Label htmlFor="space" className="font-bold text-gray-700 ml-2">
+      <Label htmlFor="space" className="font-bold text-foreground ml-2">
         Space
       </Label>
       <Select

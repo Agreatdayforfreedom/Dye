@@ -13,7 +13,7 @@ export const InputBrightness = () => {
 
   return (
     <div className="flex flex-col">
-      <Label htmlFor="brightness" className="font-bold text-gray-700 ml-2">
+      <Label htmlFor="brightness" className="font-bold text-foreground ml-2">
         Brightness
       </Label>
       <Input

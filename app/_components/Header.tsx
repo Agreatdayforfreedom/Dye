@@ -5,6 +5,7 @@ import React from "react";
 import { useGlobalDyes } from "@/app/store/global_dyes";
 import { useVariables } from "@/app/store/variables";
 import { getContrastYIQ } from "../_utils/yiq";
+import ToggleDarkMode from "./ToggleDarkMode";
 
 export const Header = () => {
   const title_dye = useGlobalDyes((state) => state.title_dye);
@@ -29,8 +30,9 @@ export const Header = () => {
             Palette generator
           </p>
         </div>
-        <div className="space-x-2">
-          <span className="font-bold text-gray-700 text-sm">Mode: </span>
+        <div className="space-x-2 flex items-center">
+          <ToggleDarkMode />
+          <span className="font-bold text-foreground text-sm">Mode: </span>
           <button
             onClick={() => setType("tw")}
             className="p-2 font-semibold rounded-lg text-sm"
