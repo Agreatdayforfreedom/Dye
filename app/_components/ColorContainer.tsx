@@ -24,6 +24,10 @@ export const ColorContainer = () => {
 
   return (
     <div className="space-y-10">
+      <div className="flex justify-between w-[80%] mx-auto">
+        <div></div>
+        <CopyPalette />
+      </div>
       {palette}
       <Separator
         style={{ background: border_dye }}
@@ -32,7 +36,6 @@ export const ColorContainer = () => {
       />
       <div className="flex justify-between w-11/12 mx-auto mt-5">
         <Palettes />
-        <CopyPalette />
       </div>
     </div>
   );

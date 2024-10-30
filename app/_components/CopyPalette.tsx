@@ -7,6 +7,12 @@ import { tw_color_scale } from "@/app/constants";
 import { useCopy } from "@/app/_hooks/useCopy";
 import { f_oklch, f_rgb } from "@/app/_utils/formatters";
 import { useGlobalDyes } from "@/app/store/global_dyes";
+import { Popover, PopoverTrigger } from "../../components/ui/popover";
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "../../components/ui/dialog";
 
 interface Props {
   colors: chroma.Color[];
@@ -79,56 +85,59 @@ export const CopyPalette = () => {
   }
 
   return (
-    <div>
-      <h2 className=" text-slate-700 text-semibold p-2">
-        {type == "tw" ? (
-          <>
-            Paste this code into your <b>tailwind.config.ts</b> file.
-          </>
-        ) : (
-          <>
-            <b className="capitalize">{selected}</b> css formatted colors.
-          </>
-        )}
-      </h2>
-      <div className="w-96 bg-slate-50 border rounded pb-2">
-        <div className="p-4 flex justify-between">
-          <div className="flex space-x-2">
-            <button
-              onClick={() => setSelected("hex")}
-              style={selected === "hex" ? { borderColor: border_dye } : {}}
-              className="border px-2 font-semibold"
-            >
-              hex
-            </button>
-            <button
-              onClick={() => setSelected("rgb")}
-              style={selected === "rgb" ? { borderColor: border_dye } : {}}
-              className="border px-2 font-semibold"
-            >
-              rgb
-            </button>
-            <button
-              onClick={() => setSelected("oklch")}
-              style={selected === "oklch" ? { borderColor: border_dye } : {}}
-              className="border px-2 font-semibold"
-            >
-              oklch
+    <Dialog>
+      <DialogTrigger className="text-bold text-lg">Export</DialogTrigger>
+      <DialogContent>
+        <h2 className="text-semibold p-2">
+          {type == "tw" ? (
+            <>
+              Paste this code into your <b>tailwind.config.ts</b> file.
+            </>
+          ) : (
+            <>
+              <b className="capitalize">{selected}</b> css formatted colors.
+            </>
+          )}
+        </h2>
+        <div className="w-full border rounded pb-2">
+          <div className="p-4 flex justify-between">
+            <div className="flex space-x-2">
+              <button
+                onClick={() => setSelected("hex")}
+                style={selected === "hex" ? { borderColor: border_dye } : {}}
+                className="border px-2 font-semibold"
+              >
+                hex
+              </button>
+              <button
+                onClick={() => setSelected("rgb")}
+                style={selected === "rgb" ? { borderColor: border_dye } : {}}
+                className="border px-2 font-semibold"
+              >
+                rgb
+              </button>
+              <button
+                onClick={() => setSelected("oklch")}
+                style={selected === "oklch" ? { borderColor: border_dye } : {}}
+                className="border px-2 font-semibold"
+              >
+                oklch
+              </button>
+            </div>
+            <button onClick={handlePalette}>
+              {isCopied ? (
+                <CheckIcon size={20} stroke="green" />
+              ) : (
+                <CopyIcon size={20} />
+              )}
             </button>
           </div>
-          <button onClick={handlePalette}>
-            {isCopied ? (
-              <CheckIcon size={20} stroke="green" />
-            ) : (
-              <CopyIcon size={20} />
-            )}
-          </button>
-        </div>
 
-        <pre className="text-sm text-foreground mx-4 font-semibold">
-          {codeFormatted}
-        </pre>
-      </div>
-    </div>
+          <pre className="text-sm text-foreground mx-4 font-semibold">
+            {codeFormatted}
+          </pre>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 };
