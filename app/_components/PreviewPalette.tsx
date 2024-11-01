@@ -30,8 +30,8 @@ export const PreviewPalette = ({ name, domain, setSelected }: Props) => {
         setName(name.split("_").join(" "));
       }}
     >
-      {colors.map((c) => (
-        <div className="h-8 w-6" style={{ background: c }}></div>
+      {colors.map((c, index) => (
+        <div key={index} className="h-8 w-6" style={{ background: c }}></div>
       ))}
     </div>
   );

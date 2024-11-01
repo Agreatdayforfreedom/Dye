@@ -53,6 +53,7 @@ export const Palettes = () => {
         <SelectContent className="overflow-visible">
           {asComponentArray().map(([keyname, domain]) => (
             <PreviewPalette
+              key={keyname}
               domain={domain}
               name={keyname}
               setSelected={handleSelected}
