@@ -1,11 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
 import { useVariables } from "../store/variables";
-import { usePointersDomain } from "../store/pointers";
+import { usePointers, usePointersDomain } from "../store/pointers";
 import chroma from "chroma-js";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export const useLerpColors = () => {
-  const type = useVariables((state) => state.type);
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
+  const type = useVariables((state) => state.type);
   const [steps, setSteps] = useState<number>(() => (type === "tw" ? 11 : 8));
 
   const saturation = useVariables((state) => state.saturation);
@@ -14,8 +19,20 @@ export const useLerpColors = () => {
   const hue = useVariables((state) => state.hue);
   const { indices, hex } = usePointersDomain();
 
+  const params = new URLSearchParams(searchParams);
+
   let colors = useMemo(() => {
     let no_update_pointer_index = 0;
+
+    params.set("p", JSON.stringify(hex));
+    params.set("i", JSON.stringify(indices));
+    params.set("b", brightness.toString());
+    params.set("s", saturation.toString());
+    params.set("h", hue.toString());
+    params.set("cs", colorSpace);
+
+    router.replace(`${pathname}?${params.toString()}`);
+
     return (
       chroma
         // .bezier([...hex])
@@ -40,6 +57,7 @@ export const useLerpColors = () => {
           } else {
             no_update_pointer_index++;
           }
+
           return color
             .set("hsv.h", new_hue)
             .set("hsv.s", new_sat)
