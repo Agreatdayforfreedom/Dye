@@ -1,48 +1,57 @@
-import { create } from "zustand";
+import { createContext, useContext } from "react";
+import { createStore, useStore } from "zustand";
 
 import { DomainLayout } from "@/app/types";
+import { d2p } from "@/app/_utils/d2p";
 
 const TW_STEPS: number = 11;
 
-interface PointersState {
+interface PointersProps {
   pointers: Array<string>;
 }
 
-interface PointersAction {
+interface PointersState extends PointersProps {
   setPointer: (index: number, color: string) => void;
   setPointerFromDomain: (domain: DomainLayout) => void;
   undoPointer: (index: number) => void;
 }
 
-export const usePointers = create<PointersState & PointersAction>((set) => ({
-  pointers: ["", "", "", "", "", "", "", "", "", "", ""],
-  setPointer: (index: number, color: string) =>
-    set((state) => ({
-      pointers: state.pointers.map((p: string, i: number) =>
-        i === index ? color : p
-      ),
-    })),
-  setPointerFromDomain: (domain: DomainLayout) =>
-    set((state) => {
-      let iterated = 0;
-      return {
-        pointers: state.pointers.map((_, i: number) => {
-          if (domain.indices[iterated] === i) {
-            return domain.hex[iterated++];
-          } else {
-            return "";
-          }
-        }),
-      };
-    }),
-  undoPointer: (index: number) => {
-    set((state) => ({
-      pointers: state.pointers.map((p: string, i: number) =>
-        i === index ? "" : p
-      ),
-    }));
-  },
-}));
+type PointerStore = ReturnType<typeof createPointersStore>;
+
+export const PointersContext = createContext<PointerStore | null>(null);
+
+export const createPointersStore = (initProps?: Partial<PointersProps>) => {
+  const DEFAULT_PROPS: PointersProps = {
+    pointers: ["", "", "", "", "", "", "", "", "", "", ""],
+  };
+  return createStore<PointersState>()((set) => ({
+    ...DEFAULT_PROPS,
+    ...initProps,
+    setPointer: (index: number, color: string) =>
+      set((state) => ({
+        pointers: state.pointers.map((p: string, i: number) =>
+          i === index ? color : p
+        ),
+      })),
+    setPointerFromDomain: (domain: DomainLayout) =>
+      set(() => ({
+        pointers: d2p(domain, TW_STEPS),
+      })),
+    undoPointer: (index: number) => {
+      set((state) => ({
+        pointers: state.pointers.map((p: string, i: number) =>
+          i === index ? "" : p
+        ),
+      }));
+    },
+  }));
+};
+
+export const usePointers = <T>(selector: (state: PointersState) => T) => {
+  const store = useContext(PointersContext);
+  if (!store) throw new Error("Missing BearContext.Provider in the tree");
+  return useStore(store, selector);
+};
 
 export const usePointersDomain = (): DomainLayout => {
   let i = 0;

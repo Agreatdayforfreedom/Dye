@@ -6,26 +6,12 @@ import { useGlobalDyes } from "@/app/store/global_dyes";
 import { usePointers } from "@/app/store/pointers";
 
 import { TwColorCard } from "./TwColorCard";
-import { useSearchParams } from "next/navigation";
-import { DomainLayout } from "../types";
 
 export const TwPaletteSection = () => {
   const { colors } = useLerpColors();
   const setDyes = useGlobalDyes((state) => state.setDyes);
   const pointers = usePointers((state) => state.pointers);
   const setColors = useVariables((state) => state.setColors);
-  const setPointerFromDomain = usePointers(
-    (state) => state.setPointerFromDomain
-  );
-  const searchParams = useSearchParams();
-  useEffect(() => {
-    let domain: DomainLayout = {
-      hex: JSON.parse(searchParams.get("p") || "[]"),
-      indices: JSON.parse(searchParams.get("i") || "[]"),
-    };
-
-    setPointerFromDomain(domain);
-  }, []);
 
   useEffect(() => {
     setDyes({
