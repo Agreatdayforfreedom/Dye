@@ -1,17 +1,46 @@
 import type { Metadata } from "next";
+import { Fira_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Header } from "./_components/Header";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
+const font = Fira_Mono({
+  weight: ["400", "500", "700"],
+  subsets: ["latin"],
+  display: "swap",
 });
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+
+const firaMono = localFont({
+  src: [
+    {
+      path: "./fonts/Inconsolata-ExtraLight.ttf",
+      weight: "200",
+    },
+    {
+      path: "./fonts/Inconsolata-Light.ttf",
+      weight: "300",
+    },
+    {
+      path: "./fonts/Inconsolata-Regular.ttf",
+      weight: "400",
+    },
+    {
+      path: "./fonts/Inconsolata-Medium.ttf",
+      weight: "500",
+    },
+    {
+      path: "./fonts/Inconsolata-SemiBold.ttf",
+      weight: "600",
+    },
+    {
+      path: "./fonts/Inconsolata-Bold.ttf",
+      weight: "700",
+    },
+    {
+      path: "./fonts/Inconsolata-ExtraBold.ttf",
+      weight: "900",
+    },
+  ],
 });
 
 export const metadata: Metadata = {
@@ -26,9 +55,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen`}
-      >
+      <body className={`${firaMono.className} antialiased h-screen`}>
         <Header />
 
         {children}
