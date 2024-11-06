@@ -12,7 +12,7 @@ export const useLerpColors = () => {
   const router = useRouter();
 
   const type = useVariables((state) => state.type);
-  const [steps, setSteps] = useState<number>(() => (type === "tw" ? 11 : 8));
+  const [steps] = useState<number>(() => (type === "tw" ? 11 : 8));
 
   const saturation = useVariables((state) => state.saturation);
   const brightness = useVariables((state) => state.brightness);
@@ -22,7 +22,7 @@ export const useLerpColors = () => {
 
   const params = new URLSearchParams(searchParams);
 
-  let colors = useMemo(() => {
+  const colors = useMemo(() => {
     let no_update_pointer_index = 0;
 
     return chroma
@@ -31,10 +31,10 @@ export const useLerpColors = () => {
       .domain([...indices])
       .colors(steps)
       .map((c, i) => {
-        let color = chroma(c);
-        let current_hue = color.get("hsv.h") || 0;
-        let current_brh = color.get("hsv.v") || 0;
-        let current_sat = color.get("hsv.s") || 0;
+        const color = chroma(c);
+        const current_hue = color.get("hsv.h") || 0;
+        const current_brh = color.get("hsv.v") || 0;
+        const current_sat = color.get("hsv.s") || 0;
 
         let new_hue = current_hue;
         let new_brh = current_brh;

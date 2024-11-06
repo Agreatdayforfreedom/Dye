@@ -1,5 +1,5 @@
 import { MoonIcon, SunIcon } from "lucide-react";
-import React, { useState } from "react";
+import React from "react";
 import { useDarkMode } from "../store/dark_mode";
 
 const ToggleDarkMode = () => {

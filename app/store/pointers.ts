@@ -55,11 +55,11 @@ export const usePointers = <T>(selector: (state: PointersState) => T) => {
 
 export const usePointersDomain = (): DomainLayout => {
   let i = 0;
-  let pointers = usePointers((state) => state.pointers);
-  let indices: Array<number> = [];
-  let hex: Array<string> = [];
+  const pointers = usePointers((state) => state.pointers);
+  const indices: Array<number> = [];
+  const hex: Array<string> = [];
   while (i < pointers.length) {
-    let color = pointers[i];
+    const color = pointers[i];
 
     if (color !== "") {
       hex.push(color);

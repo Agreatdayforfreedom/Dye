@@ -16,7 +16,7 @@ export const PreviewPalette = ({ name, domain, setSelected }: Props) => {
   );
   const setName = useVariables((state) => state.setName);
 
-  let colors = chroma
+  const colors = chroma
     .scale([...domain.hex])
     .mode("rgb")
     .domain([...domain.indices])

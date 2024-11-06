@@ -22,7 +22,7 @@ export const LerpColors = () => {
   }, [mode]);
 
   const searchParams = useSearchParams();
-  let domain: DomainLayout = {
+  const domain: DomainLayout = {
     hex: JSON.parse(searchParams.get("p") || "[]"),
     indices: JSON.parse(searchParams.get("i") || "[]"),
   };

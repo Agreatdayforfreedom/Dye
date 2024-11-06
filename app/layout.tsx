@@ -1,14 +1,7 @@
 import type { Metadata } from "next";
-import { Fira_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Header } from "./_components/Header";
-
-const font = Fira_Mono({
-  weight: ["400", "500", "700"],
-  subsets: ["latin"],
-  display: "swap",
-});
 
 const firaMono = localFont({
   src: [

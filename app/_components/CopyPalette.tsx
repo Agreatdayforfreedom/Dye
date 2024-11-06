@@ -1,4 +1,3 @@
-import chroma from "chroma-js";
 import { CheckIcon, CopyIcon } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
@@ -7,16 +6,7 @@ import { tw_color_scale } from "@/app/constants";
 import { useCopy } from "@/app/_hooks/useCopy";
 import { f_oklch, f_rgb } from "@/app/_utils/formatters";
 import { useGlobalDyes } from "@/app/store/global_dyes";
-import { Popover, PopoverTrigger } from "../../components/ui/popover";
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "../../components/ui/dialog";
-
-interface Props {
-  colors: chroma.Color[];
-}
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 interface TwPalette {
   [key: string]: string;
@@ -38,13 +28,13 @@ export const CopyPalette = () => {
   const [isCopied, onCopy] = useCopy();
 
   useEffect(() => {
-    let body: any = {
+    const body: any = {
       colors: {
         [name.toLowerCase().replace(/ /g, "_")]: {},
       },
     };
-    let tw_palette: TwPalette = {};
-    let custom_palette: CustomPalette = [];
+    const tw_palette: TwPalette = {};
+    const custom_palette: CustomPalette = [];
 
     let i = 0;
 

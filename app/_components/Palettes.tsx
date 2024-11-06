@@ -16,7 +16,7 @@ export const Palettes = () => {
   };
 
   const asComponentArray = () => {
-    let palettes: [string, DomainLayout][] = [];
+    const palettes: [string, DomainLayout][] = [];
 
     for (const keyname in default_tw_color_domains) {
       palettes.push([keyname, default_tw_color_domains[keyname]]);

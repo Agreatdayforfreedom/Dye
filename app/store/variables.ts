@@ -32,12 +32,12 @@ export const useVariables = create<VariablesState & VariablesAction>((set) => ({
   brightness: 0,
   colorSpace: "rgb",
 
-  setColors: (colors: Array<chroma.Color>) => set((_) => ({ colors })),
-  setName: (name: string) => set((_) => ({ name })),
-  setType: (type: Type) => set((_) => ({ type })),
-  setSaturation: (saturation: number) => set((_) => ({ saturation })),
-  setBrightness: (brightness: number) => set((_) => ({ brightness })),
-  setHue: (hue: number) => set((_) => ({ hue })),
+  setColors: (colors: Array<chroma.Color>) => set(() => ({ colors })),
+  setName: (name: string) => set(() => ({ name })),
+  setType: (type: Type) => set(() => ({ type })),
+  setSaturation: (saturation: number) => set(() => ({ saturation })),
+  setBrightness: (brightness: number) => set(() => ({ brightness })),
+  setHue: (hue: number) => set(() => ({ hue })),
   setColorSpace: (colorSpace: chroma.InterpolationMode) =>
-    set((_) => ({ colorSpace })),
+    set(() => ({ colorSpace })),
 }));

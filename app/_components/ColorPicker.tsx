@@ -19,7 +19,6 @@ import debounce from "@/app/_utils/debounce";
 interface Props {
   color: string;
   index: number;
-  label?: string;
 }
 
 function onlyNumberHex(hex: string) {
@@ -29,7 +28,7 @@ function onlyNumberHex(hex: string) {
   return hex;
 }
 
-export const ColorPicker = ({ color, label, index }: Props) => {
+export const ColorPicker = ({ color, index }: Props) => {
   const [colorInput, setColorInput] = useState<string>("");
 
   const setPointer = usePointers((state) => state.setPointer);
