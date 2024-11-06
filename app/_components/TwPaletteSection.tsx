@@ -25,7 +25,7 @@ export const TwPaletteSection = () => {
   }, [colors]);
 
   return (
-    <div className="flex w-fit space-x-2 mx-auto">
+    <div className="flex w-[90%] mx-auto justify-center space-x-1 md:space-x-2">
       {colors.map((color: chroma.Color, i: number) => (
         <TwColorCard
           key={i}

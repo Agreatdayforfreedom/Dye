@@ -23,11 +23,16 @@ export const TwColorCard = ({ color, pointer, index }: Props) => {
   const [isCopied, onCopy] = useCopy(2000);
 
   return (
-    <div className="flex flex-col items-center relative">
+    <div
+      className="flex flex-col items-center relative
+       lg:h-[3.25rem] lg:w-20 
+          md:h-12        md:w-16 
+          h-10         w-full"
+    >
       {pointer ? <Pointer color={color} index={index} /> : null}
       <TooltipProvider>
         <Tooltip delayDuration={0.2}>
-          <TooltipTrigger className="cursor-pointer " asChild>
+          <TooltipTrigger className="cursor-pointer size-full" asChild>
             <div>
               <ColorPicker color={color.hex()} index={index} />
             </div>

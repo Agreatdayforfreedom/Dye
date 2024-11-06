@@ -12,13 +12,13 @@ export const InputHue = () => {
   const setHue = useVariables((state) => state.setHue);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col mx-2">
       <Label htmlFor="hue" className="font-bold text-foreground ml-2">
         Hue
       </Label>
       <Input
         id="hue"
-        className="max-w-48 m-1"
+        className="xs:max-w-48 m-1"
         style={
           border_shadow_dye
             ? {

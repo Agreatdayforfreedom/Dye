@@ -12,13 +12,13 @@ export const InputName = () => {
   const setName = useVariables((state) => state.setName);
 
   return (
-    <div className="flex flex-col ">
+    <div className="flex flex-col w-full mx-2">
       <Label htmlFor="name" className={"font-bold text-foreground ml-2"}>
         Name
       </Label>
       <Input
         id="name"
-        className="w-64 m-1"
+        className="xs:w-64 m-1"
         style={
           border_shadow_dye
             ? {

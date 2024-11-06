@@ -35,12 +35,12 @@ export const LerpColors = () => {
 
   return (
     <PointersContext.Provider value={store}>
-      <section className="flex h-1/3 py-8 justify-end mx-auto">
-        <div className=" lg:w-3/4 mx-auto">
+      <section className="flex  py-8 justify-end mx-auto">
+        <div className="w-full md:w-3/4 mx-auto">
           <div className="flex space-x-2">
             <InputName />
           </div>
-          <div className="flex items-end space-x-2 mt-2">
+          <div className="flex flex-col xs:flex-row xs:items-end mt-2">
             <InputSaturation />
             <InputBrightness />
             <InputHue />

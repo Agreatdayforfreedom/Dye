@@ -19,7 +19,7 @@ export const SpaceSelector = () => {
   const setColorSpace = useVariables((state) => state.setColorSpace);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col mx-2">
       <Label htmlFor="space" className="font-bold text-foreground ml-2">
         Space
       </Label>
@@ -40,7 +40,7 @@ export const SpaceSelector = () => {
                 }
               : {}
           }
-          className="m-1 w-[180px]"
+          className="m-1 xs:w-[180px]"
         >
           <SelectValue placeholder="Space" />
         </SelectTrigger>

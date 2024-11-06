@@ -60,9 +60,12 @@ export const ColorPicker = ({ color, label, index }: Props) => {
 
   return (
     <Popover>
-      <div className="w-20">
+      <div className="size-full">
         <PopoverTrigger
-          className="h-[3.25rem] w-20 rounded border transition-colors"
+          // prettier-ignore
+          className="
+          size-full
+          rounded border transition-colors"
           style={{
             background: chroma(color).hex(),
             borderColor: chroma(color).darken(1).hex(),
