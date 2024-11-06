@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import chroma from "chroma-js";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
@@ -24,16 +24,6 @@ export const useLerpColors = () => {
 
   let colors = useMemo(() => {
     let no_update_pointer_index = 0;
-
-    //todo
-    params.set("p", JSON.stringify(hex));
-    params.set("i", JSON.stringify(indices));
-    params.set("b", brightness.toString());
-    params.set("s", saturation.toString());
-    params.set("h", hue.toString());
-    params.set("cs", colorSpace);
-
-    router.replace(`${pathname}?${params.toString()}`);
 
     return chroma
       .scale([...hex])
@@ -63,6 +53,17 @@ export const useLerpColors = () => {
           .set("hsv.s", new_sat)
           .set("hsv.v", new_brh);
       });
+  }, [hex, colorSpace, saturation, hue, brightness]);
+
+  useEffect(() => {
+    params.set("p", JSON.stringify(hex));
+    params.set("i", JSON.stringify(indices));
+    params.set("b", brightness.toString());
+    params.set("s", saturation.toString());
+    params.set("h", hue.toString());
+    params.set("cs", colorSpace);
+
+    router.replace(`${pathname}?${params.toString()}`);
   }, [hex, colorSpace, saturation, hue, brightness]);
 
   return { colors, steps };
