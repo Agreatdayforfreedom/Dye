@@ -49,8 +49,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${firaMono.className} antialiased h-screen`}>
-        <Header />
-
         {children}
       </body>
     </html>

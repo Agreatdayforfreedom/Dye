@@ -49,7 +49,7 @@ export const createPointersStore = (initProps?: Partial<PointersProps>) => {
 
 export const usePointers = <T>(selector: (state: PointersState) => T) => {
   const store = useContext(PointersContext);
-  if (!store) throw new Error("Missing BearContext.Provider in the tree");
+  if (!store) throw new Error("Missing PointerContext.Provider in the tree");
   return useStore(store, selector);
 };
 
