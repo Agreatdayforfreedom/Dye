@@ -7,6 +7,7 @@ import { InputSaturation } from "./InputSaturation";
 import { InputHue } from "./InputHue";
 import { InputBrightness } from "./InputBrightness";
 import { Header } from "./Header";
+import PreviewSection from "./preview_components/PreviewSection";
 
 export const MainContent = () => {
   return (
@@ -27,6 +28,7 @@ export const MainContent = () => {
         </div>
       </section>
       <ColorContainer />
+      <PreviewSection />
     </>
   );
 };
