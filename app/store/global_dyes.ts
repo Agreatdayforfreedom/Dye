@@ -9,7 +9,7 @@ interface GlobalDyesProps {
   bg_dye: string;
 }
 
-interface GlobalDyesState extends GlobalDyesProps {
+export interface GlobalDyesState extends GlobalDyesProps {
   setDyes: (dyes: GlobalDyesState) => void;
 }
 

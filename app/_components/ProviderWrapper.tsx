@@ -1,13 +1,7 @@
 "use client";
+import chroma from "chroma-js";
 import { useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
-
-import { ColorContainer } from "./ColorContainer";
-import { SpaceSelector } from "./SpaceSelector";
-import { InputName } from "./InputName";
-import { InputSaturation } from "./InputSaturation";
-import { InputHue } from "./InputHue";
-import { InputBrightness } from "./InputBrightness";
 
 import { useDarkMode } from "@/app/store/dark_mode";
 import { createPointersStore, PointersContext } from "@/app/store/pointers";
@@ -17,9 +11,10 @@ import {
 } from "@/app/store/global_dyes";
 import { DomainLayout } from "@/app/types";
 import { d2p } from "@/app/_utils/d2p";
-import { Header } from "./Header";
 
-export const LerpColors = () => {
+import { MainContent } from "./MainContent";
+
+export const ProviderWrapper = () => {
   const mode = useDarkMode((state) => state.mode);
 
   useEffect(() => {
@@ -38,35 +33,25 @@ export const LerpColors = () => {
     })
   ).current;
 
+  let lerp = chroma
+    .scale([...domain.hex])
+    .domain([...domain.indices])
+    .mode("rgb")
+    .colors(11); // todo
   const global_dyes_store = useRef(
     createGlobalDyesStore({
-      bg_dye: "red",
-      border_dye: "blue",
-      border_shadow_dye: "cyan",
-      text_dye: "yellow",
-      title_dye: "orange",
+      border_dye: lerp[1],
+      text_dye: lerp[3],
+      border_shadow_dye: lerp[5],
+      title_dye: lerp[7],
+      bg_dye: lerp[9],
     })
   ).current;
 
   return (
     <PointersContext.Provider value={pointers_store}>
       <GlobalDyesContext.Provider value={global_dyes_store}>
-        <Header />
-
-        <section className="flex  py-8 justify-end mx-auto">
-          <div className="w-full md:w-3/4 mx-auto">
-            <div className="flex space-x-2">
-              <InputName />
-            </div>
-            <div className="flex flex-col xs:flex-row xs:items-end mt-2">
-              <InputSaturation />
-              <InputBrightness />
-              <InputHue />
-              <SpaceSelector />
-            </div>
-          </div>
-        </section>
-        <ColorContainer />
+        <MainContent />
       </GlobalDyesContext.Provider>
     </PointersContext.Provider>
   );

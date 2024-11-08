@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
 import { useLerpColors } from "@/app/_hooks/useLerpColors";
-import { useGlobalDyes } from "@/app/store/global_dyes";
+import { GlobalDyesState, useGlobalDyes } from "@/app/store/global_dyes";
 import { useVariables } from "@/app/store/variables";
 
 import { CustomColorCard } from "./CustomColorCard";
@@ -17,7 +17,7 @@ export const CustomPaletteSection = () => {
       border_shadow_dye: colors[5].hex(),
       title_dye: colors[7].hex(),
       bg_dye: colors[2].hex(),
-    });
+    } as GlobalDyesState);
     setColors(colors);
   }, [colors]);
 
