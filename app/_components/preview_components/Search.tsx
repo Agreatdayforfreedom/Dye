@@ -17,7 +17,11 @@ export const Search = () => {
           size={18}
           strokeWidth={2}
         />
-        <Input className="pl-8" style={{ borderColor: border_dye }} />
+        <Input
+          className="pl-8"
+          style={{ borderColor: border_dye }}
+          defaultValue={"Custom palette"}
+        />
       </div>
       <Button
         className="rounded-none font-semibold"
