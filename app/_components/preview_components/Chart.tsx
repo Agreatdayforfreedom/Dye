@@ -17,20 +17,20 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { useGlobalDyes } from "../../store/global_dyes";
+import { useGlobalDyes } from "@/app/store/global_dyes";
 const chartData = [
-  { month: "January", palettes: 186, dyes: 80 },
-  { month: "February", palettes: 305, dyes: 200 },
-  { month: "March", palettes: 237, dyes: 120 },
-  { month: "April", palettes: 73, dyes: 190 },
-  { month: "May", palettes: 209, dyes: 130 },
-  { month: "June", palettes: 214, dyes: 140 },
+  { month: "January", palettes: 163, dyes: 74, other: 87 },
+  { month: "February", palettes: 150, dyes: 23, other: 192 },
+  { month: "March", palettes: 245, dyes: 23, other: 45 },
+  { month: "April", palettes: 45, dyes: 31, other: 132 },
+  { month: "May", palettes: 209, dyes: 132, other: 78 },
+  { month: "June", palettes: 114, dyes: 140, other: 157 },
 ];
 
 export function Chart() {
   const c1 = useGlobalDyes((state) => state.title_dye);
   const c2 = useGlobalDyes((state) => state.bg_dye);
-  const c3 = useGlobalDyes((state) => state.border_dye);
+  const c3 = useGlobalDyes((state) => state.border_shadow_dye);
 
   const chartConfig = {
     palettes: {
@@ -41,12 +41,16 @@ export function Chart() {
       label: "dyes",
       color: c2,
     },
+    other: {
+      label: "other",
+      color: c3,
+    },
   } satisfies ChartConfig;
   return (
-    <Card className="shadow-none">
+    <Card className="shadow-none w-96">
       <CardHeader>
         <CardTitle>Sales</CardTitle>
-        <CardDescription>Showing sales per month</CardDescription>
+        <CardDescription>Showing sales from the last 6 months</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
@@ -68,6 +72,18 @@ export function Chart() {
             />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <defs>
+              <linearGradient id="fillOther" x1="0" y1="0" x2="0" y2="1">
+                <stop
+                  offset="5%"
+                  stopColor="var(--color-other)"
+                  stopOpacity={0.8}
+                />
+                <stop
+                  offset="95%"
+                  stopColor="var(--color-other)"
+                  stopOpacity={0.1}
+                />
+              </linearGradient>
               <linearGradient id="fillPalettes" x1="0" y1="0" x2="0" y2="1">
                 <stop
                   offset="5%"
@@ -94,6 +110,14 @@ export function Chart() {
               </linearGradient>
             </defs>
             <Area
+              dataKey="other"
+              type="natural"
+              fill="url(#fillOther)"
+              fillOpacity={0.4}
+              stroke="var(--color-other)"
+              stackId="a"
+            />
+            <Area
               dataKey="dyes"
               type="natural"
               fill="url(#fillDyes)"
@@ -112,18 +136,13 @@ export function Chart() {
           </AreaChart>
         </ChartContainer>
       </CardContent>
-      {/* <CardFooter>
-        <div className="flex w-full items-start gap-2 text-sm">
-          <div className="grid gap-2">
-            <div className="flex items-center gap-2 font-medium leading-none">
-              Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-            </div>
-            <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              January - June 2024
-            </div>
+      <CardFooter>
+        <div className="flex w-full items-start  text-sm">
+          <div className="flex items-center gap-2 leading-none text-muted-foreground">
+            January - June 2024
           </div>
         </div>
-      </CardFooter> */}
+      </CardFooter>
     </Card>
   );
 }
