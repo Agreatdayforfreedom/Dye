@@ -30,29 +30,23 @@ export const TwColorCard = ({ color, pointer, index }: Props) => {
           h-10         w-full"
     >
       {pointer ? <Pointer color={color} index={index} /> : null}
-      <TooltipProvider>
-        <Tooltip delayDuration={0.2}>
-          <TooltipTrigger className="cursor-pointer size-full" asChild>
-            <div>
-              <ColorPicker color={color.hex()} index={index} />
-            </div>
-          </TooltipTrigger>
-          <TooltipContent
-            style={{
-              background: color.darken(2).hex(),
-              color: getContrastYIQ(color.darken(2).hex()),
-            }}
-            className="cursor-pointer"
-            onClick={() => onCopy(color.hex())}
-          >
-            {isCopied ? (
-              <span className="font-bold">Copied!</span>
-            ) : (
-              color.hex()
-            )}
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+      <Tooltip delayDuration={0.2}>
+        <TooltipTrigger className="cursor-pointer size-full" asChild>
+          <div>
+            <ColorPicker color={color.hex()} index={index} />
+          </div>
+        </TooltipTrigger>
+        <TooltipContent
+          style={{
+            background: color.darken(2).hex(),
+            color: getContrastYIQ(color.darken(2).hex()),
+          }}
+          className="cursor-pointer"
+          onClick={() => onCopy(color.hex())}
+        >
+          {isCopied ? <span className="font-bold">Copied!</span> : color.hex()}
+        </TooltipContent>
+      </Tooltip>
     </div>
   );
 };

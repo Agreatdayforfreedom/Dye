@@ -4,6 +4,7 @@ import { useVariables } from "@/app/store/variables";
 import { useLerpColors } from "@/app/_hooks/useLerpColors";
 import { GlobalDyesState, useGlobalDyes } from "@/app/store/global_dyes";
 import { usePointers } from "@/app/store/pointers";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 import { TwColorCard } from "./TwColorCard";
 
@@ -27,14 +28,16 @@ export const TwPaletteSection = () => {
 
   return (
     <div className="flex w-[90%] mx-auto justify-center space-x-1 md:space-x-2">
-      {colors.map((color: chroma.Color, i: number) => (
-        <TwColorCard
-          key={i}
-          color={color}
-          pointer={pointers[i] !== ""}
-          index={i}
-        />
-      ))}
+      <TooltipProvider>
+        {colors.map((color: chroma.Color, i: number) => (
+          <TwColorCard
+            key={i}
+            color={color}
+            pointer={pointers[i] !== ""}
+            index={i}
+          />
+        ))}
+      </TooltipProvider>
     </div>
   );
 };
