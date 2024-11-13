@@ -11,6 +11,7 @@ export const useLerpColors = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
+  const name = useVariables((state) => state.name);
   const type = useVariables((state) => state.type);
   const [steps] = useState<number>(() => (type === "tw" ? 11 : 8));
 
@@ -62,6 +63,7 @@ export const useLerpColors = () => {
     params.set("s", saturation.toString());
     params.set("h", hue.toString());
     params.set("cs", colorSpace);
+    params.set("name", name);
 
     router.replace(`${pathname}?${params.toString()}`);
   }, [hex, colorSpace, saturation, hue, brightness]);

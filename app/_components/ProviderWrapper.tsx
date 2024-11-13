@@ -13,6 +13,7 @@ import { DomainLayout } from "@/app/types";
 import { d2p } from "@/app/_utils/d2p";
 
 import { MainContent } from "./MainContent";
+import { createVariablesStore, VariablesContext } from "../store/variables";
 
 export const ProviderWrapper = () => {
   const mode = useDarkMode((state) => state.mode);
@@ -48,11 +49,22 @@ export const ProviderWrapper = () => {
     })
   ).current;
 
+  const variables_store = useRef(
+    createVariablesStore({
+      name: searchParams.get("name") || "",
+      brightness: parseInt(searchParams.get("b") || "0", 10),
+      saturation: parseInt(searchParams.get("s") || "0", 10),
+      hue: parseInt(searchParams.get("h") || "0", 10),
+      colorSpace: (searchParams.get("cs") || "rgb") as chroma.InterpolationMode,
+    })
+  ).current;
   return (
-    <PointersContext.Provider value={pointers_store}>
-      <GlobalDyesContext.Provider value={global_dyes_store}>
-        <MainContent />
-      </GlobalDyesContext.Provider>
-    </PointersContext.Provider>
+    <VariablesContext.Provider value={variables_store}>
+      <PointersContext.Provider value={pointers_store}>
+        <GlobalDyesContext.Provider value={global_dyes_store}>
+          <MainContent />
+        </GlobalDyesContext.Provider>
+      </PointersContext.Provider>
+    </VariablesContext.Provider>
   );
 };

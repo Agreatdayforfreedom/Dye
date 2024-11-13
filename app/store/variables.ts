@@ -1,7 +1,8 @@
 import chroma from "chroma-js";
-import { create } from "zustand";
+import { createContext, useContext } from "react";
+import { create, createStore, useStore } from "zustand";
 
-interface VariablesState {
+interface VariablesProps {
   colors: Array<chroma.Color>;
   type: Type;
   name: string;
@@ -11,7 +12,7 @@ interface VariablesState {
   colorSpace: chroma.InterpolationMode;
 }
 
-interface VariablesAction {
+interface VariablesState extends VariablesProps {
   setColors: (colors: Array<chroma.Color>) => void;
   setName: (name: string) => void;
   setType: (type: Type) => void;
@@ -21,23 +22,38 @@ interface VariablesAction {
   setColorSpace: (colorSpace: chroma.InterpolationMode) => void;
 }
 
+type VariableStore = ReturnType<typeof createVariablesStore>;
+
 type Type = "tw" | "custom";
 
-export const useVariables = create<VariablesState & VariablesAction>((set) => ({
-  colors: [],
-  type: "tw",
-  name: "Autumn",
-  hue: 0,
-  saturation: 0,
-  brightness: 0,
-  colorSpace: "rgb",
+export const VariablesContext = createContext<VariableStore | null>(null);
 
-  setColors: (colors: Array<chroma.Color>) => set(() => ({ colors })),
-  setName: (name: string) => set(() => ({ name })),
-  setType: (type: Type) => set(() => ({ type })),
-  setSaturation: (saturation: number) => set(() => ({ saturation })),
-  setBrightness: (brightness: number) => set(() => ({ brightness })),
-  setHue: (hue: number) => set(() => ({ hue })),
-  setColorSpace: (colorSpace: chroma.InterpolationMode) =>
-    set(() => ({ colorSpace })),
-}));
+export const createVariablesStore = (initProps?: Partial<VariablesProps>) => {
+  const DEFAULT_PROPS: VariablesProps = {
+    colors: [],
+    type: "tw",
+    name: "Autumn",
+    hue: 0,
+    saturation: 0,
+    brightness: 0,
+    colorSpace: "rgb",
+  };
+  return createStore<VariablesState>()((set) => ({
+    ...DEFAULT_PROPS,
+    ...initProps,
+    setColors: (colors: Array<chroma.Color>) => set(() => ({ colors })),
+    setName: (name: string) => set(() => ({ name })),
+    setType: (type: Type) => set(() => ({ type })),
+    setSaturation: (saturation: number) => set(() => ({ saturation })),
+    setBrightness: (brightness: number) => set(() => ({ brightness })),
+    setHue: (hue: number) => set(() => ({ hue })),
+    setColorSpace: (colorSpace: chroma.InterpolationMode) =>
+      set(() => ({ colorSpace })),
+  }));
+};
+
+export const useVariables = <T>(selector: (state: VariablesState) => T) => {
+  const store = useContext(VariablesContext);
+  if (!store) throw new Error("Missing VariablesContext.Provider in the tree");
+  return useStore(store, selector);
+};

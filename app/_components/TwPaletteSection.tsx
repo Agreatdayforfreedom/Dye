@@ -12,6 +12,7 @@ export const TwPaletteSection = () => {
   const setDyes = useGlobalDyes((state) => state.setDyes);
   const pointers = usePointers((state) => state.pointers);
   const setColors = useVariables((state) => state.setColors);
+  const setName = useVariables((state) => state.setName);
 
   useEffect(() => {
     setDyes({

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Select, SelectContent, SelectTrigger } from "@/components/ui/select";
 import { default_tw_color_domains } from "@/app/constants";
@@ -6,11 +6,21 @@ import { useVariables } from "@/app/store/variables";
 import { DomainLayout } from "@/app/types";
 
 import { PreviewPalette } from "./PreviewPalette";
+import chroma from "chroma-js";
+import { useSearchParams } from "next/navigation";
 
 export const Palettes = () => {
-  const [selected, setSelected] = useState<string[]>([]);
   const name = useVariables((state) => state.name);
-
+  const [selected, setSelected] = useState<string[]>(() => {
+    const domain = default_tw_color_domains[name.split(" ").join("_")];
+    if (domain?.hex.length > 0) {
+      return chroma
+        .scale([...domain.hex])
+        .mode("rgb")
+        .domain([...domain.indices])
+        .colors(11);
+    } else return [];
+  });
   const handleSelected = (v: string[]) => {
     setSelected(v);
   };
