@@ -8,9 +8,13 @@ import { DomainLayout } from "@/app/types";
 import { PreviewPalette } from "./PreviewPalette";
 import chroma from "chroma-js";
 import { useSearchParams } from "next/navigation";
+import { usePointers } from "../store/pointers";
 
 export const Palettes = () => {
   const name = useVariables((state) => state.name);
+  const setPointerFromDomain = usePointers(
+    (state) => state.setPointerFromDomain
+  );
   const [selected, setSelected] = useState<string[]>(() => {
     const domain = default_tw_color_domains[name.split(" ").join("_")];
     if (domain?.hex.length > 0) {
@@ -21,6 +25,10 @@ export const Palettes = () => {
         .colors(11);
     } else return [];
   });
+
+  useEffect(() => {
+    console.log(name);
+  }, [name]);
   const handleSelected = (v: string[]) => {
     setSelected(v);
   };
