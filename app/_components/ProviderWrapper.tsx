@@ -25,16 +25,18 @@ export const ProviderWrapper = () => {
 
   const searchParams = useSearchParams();
 
-  let name = searchParams.get("name") || "";
-  let as_palette = default_tw_color_domains[name.split(" ").join("_")];
+  const name = searchParams.get("name") || "";
+  const as_palette = default_tw_color_domains[name.split(" ").join("_")];
 
-  let domain: DomainLayout = {
-    hex: JSON.parse(searchParams.get("p") || "[]"),
-    indices: JSON.parse(searchParams.get("i") || "[]"),
-  };
+  let domain: DomainLayout;
 
   if (as_palette) {
     domain = as_palette;
+  } else {
+    domain = {
+      hex: JSON.parse(searchParams.get("p") || "[]"),
+      indices: JSON.parse(searchParams.get("i") || "[]"),
+    };
   }
 
   const pointers_store = useRef(
@@ -43,11 +45,11 @@ export const ProviderWrapper = () => {
     })
   ).current;
 
-  let lerp = chroma
+  const lerp = chroma
     .scale([...domain.hex])
     .domain([...domain.indices])
     .mode("rgb")
-    .colors(11); // todo
+    .colors(11);
   const global_dyes_store = useRef(
     createGlobalDyesStore({
       border_dye: lerp[1],
