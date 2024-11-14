@@ -23,7 +23,7 @@ export const CheckList = () => {
         backgroundColor: chroma(c2).alpha(0.5).hex(),
         "--before-color": c3,
       }}
-      className="space-y-2 border p-5 pt-3 rounded h-fit relative before:content-[''] before:absolute before:w-16 before:h-12 before:bg-[var(--before-color)] before:top-0 before:right-0 corner_triangle_path"
+      className="space-y-2 max-w-[300px] border p-5 pt-3 rounded h-fit relative before:content-[''] before:absolute before:w-16 before:h-12 before:bg-[var(--before-color)] before:top-0 before:right-0 corner_triangle_path"
     >
       <h1 className="font-bold">Todo List</h1>
       {boxes.map(({ label, checked }) => (
