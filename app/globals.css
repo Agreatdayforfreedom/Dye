@@ -112,3 +112,7 @@
 .raw_palette_card_animation:hover > span {
   display: block;
 }
+
+.corner_triangle_path::before {
+  clip-path: polygon(0% 0%, 100% 0, 100% 100%);
+}
