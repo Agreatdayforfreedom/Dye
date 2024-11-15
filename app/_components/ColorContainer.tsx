@@ -11,7 +11,6 @@ import { CustomPaletteSection } from "./CustomPaletteSection";
 import { Palettes } from "./Palettes";
 
 export const ColorContainer = () => {
-  const border_dye = useGlobalDyes((state) => state.border_dye);
   const type = useVariables((state) => state.type);
 
   let palette = null;
@@ -25,19 +24,11 @@ export const ColorContainer = () => {
   return (
     <div>
       {palette}
-      <div className="flex justify-between w-[80%] mx-auto mt-10">
-        <div></div>
+      <div className="flex justify-between w-[80%] mx-auto mt-14">
+        <Palettes />
         <div>
           <CopyPalette />
         </div>
-      </div>
-      <Separator
-        style={{ background: border_dye }}
-        className="w-11/12 mx-auto"
-        decorative={true}
-      />
-      <div className="flex justify-between w-11/12 mx-auto mt-5">
-        <Palettes />
       </div>
     </div>
   );
