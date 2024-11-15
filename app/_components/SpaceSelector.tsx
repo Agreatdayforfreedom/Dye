@@ -14,7 +14,7 @@ import { useGlobalDyes } from "@/app/store/global_dyes";
 import { useVariables } from "@/app/store/variables";
 
 export const SpaceSelector = () => {
-  const border_shadow_dye = useGlobalDyes((state) => state.border_shadow_dye);
+  const border_shadow_dye = useGlobalDyes((state) => state.l11);
   const colorSpace = useVariables((state) => state.colorSpace);
   const setColorSpace = useVariables((state) => state.setColorSpace);
 

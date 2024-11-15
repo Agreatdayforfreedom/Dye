@@ -4,7 +4,7 @@ import { AlertCircle, AlertOctagonIcon } from "lucide-react";
 import { getContrastYIQ } from "../../_utils/yiq";
 
 export const Alert = () => {
-  const c1 = useGlobalDyes((state) => state.title_dye);
+  const c1 = useGlobalDyes((state) => state.l9);
 
   return (
     <div

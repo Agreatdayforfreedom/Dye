@@ -15,6 +15,7 @@ import { d2p } from "@/app/_utils/d2p";
 import { MainContent } from "./MainContent";
 import { createVariablesStore, VariablesContext } from "../store/variables";
 import { default_tw_color_domains } from "../constants";
+import { luminance } from "../_utils/luminance";
 
 export const ProviderWrapper = () => {
   const mode = useDarkMode((state) => state.mode);
@@ -50,13 +51,32 @@ export const ProviderWrapper = () => {
     .domain([...domain.indices])
     .mode("rgb")
     .colors(11);
+
+  let unordered: { [key: string]: string } = {};
+  for (const key in lerp) {
+    unordered[luminance(lerp[key])] = lerp[key];
+  }
+  console.log(unordered);
+  let ordered = Object.keys(unordered)
+    .sort((a, b) => parseInt(b) - parseInt(a))
+    .reduce((store: string[], key: string) => {
+      store.push(unordered[key]);
+      return store;
+    }, []);
+  console.log({ ordered });
   const global_dyes_store = useRef(
     createGlobalDyesStore({
-      border_dye: lerp[1],
-      text_dye: lerp[3],
-      border_shadow_dye: lerp[5],
-      title_dye: lerp[7],
-      bg_dye: lerp[9],
+      l1: ordered[0],
+      l2: ordered[1],
+      l3: ordered[2],
+      l4: ordered[3],
+      l5: ordered[4],
+      l6: ordered[5],
+      l7: ordered[6],
+      l8: ordered[7],
+      l9: ordered[8],
+      l10: ordered[9],
+      l11: ordered[10],
     })
   ).current;
 

@@ -7,7 +7,7 @@ import { useGlobalDyes } from "@/app/store/global_dyes";
 import { useVariables } from "@/app/store/variables";
 
 export const InputName = () => {
-  const border_shadow_dye = useGlobalDyes((state) => state.border_shadow_dye);
+  const border_shadow_dye = useGlobalDyes((state) => state.l11);
   const name = useVariables((state) => state.name);
   const setName = useVariables((state) => state.setName);
 

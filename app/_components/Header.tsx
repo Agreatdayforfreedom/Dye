@@ -8,25 +8,22 @@ import { getContrastYIQ } from "../_utils/yiq";
 import ToggleDarkMode from "./ToggleDarkMode";
 
 export const Header = () => {
-  const title_dye = useGlobalDyes((state) => state.title_dye);
-  const border_dye = useGlobalDyes((state) => state.border_dye);
-  const text_dye = useGlobalDyes((state) => state.text_dye);
-  const bg_dye = useGlobalDyes((state) => state.bg_dye);
+  const l10 = useGlobalDyes((state) => state.l10);
+  const l8 = useGlobalDyes((state) => state.l8);
+  const l5 = useGlobalDyes((state) => state.l5);
+  const l6 = useGlobalDyes((state) => state.l6);
 
   const type = useVariables((state) => state.type);
   const setType = useVariables((state) => state.setType);
 
   return (
-    <header
-      className="h-12 w-full border-b"
-      style={{ borderColor: border_dye }}
-    >
+    <header className="h-12 w-full border-b" style={{ borderColor: l10 }}>
       <div className="h-full w-11/12 flex items-center justify-between mx-auto">
         <div className="flex space-x-1 items-end">
-          <h1 style={{ color: title_dye }} className="text-xl font-bold">
+          <h1 style={{ color: l5 }} className="text-xl font-bold">
             Dye
           </h1>
-          <p className="text-sm font-semibold" style={{ color: text_dye }}>
+          <p className="text-sm font-semibold" style={{ color: l8 }}>
             Palette generator
           </p>
         </div>
@@ -37,9 +34,7 @@ export const Header = () => {
             onClick={() => setType("tw")}
             className="p-2 font-semibold rounded-lg text-sm"
             style={
-              type == "tw"
-                ? { background: bg_dye, color: getContrastYIQ(bg_dye) }
-                : {}
+              type == "tw" ? { background: l6, color: getContrastYIQ(l6) } : {}
             }
           >
             Tailwind
@@ -49,7 +44,7 @@ export const Header = () => {
             className="p-2 font-semibold rounded-lg text-sm"
             style={
               type == "custom"
-                ? { background: bg_dye, color: getContrastYIQ(bg_dye) }
+                ? { background: l6, color: getContrastYIQ(l6) }
                 : {}
             }
           >

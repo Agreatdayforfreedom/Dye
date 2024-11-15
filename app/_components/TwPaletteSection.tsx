@@ -7,6 +7,7 @@ import { usePointers } from "@/app/store/pointers";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
 import { TwColorCard } from "./TwColorCard";
+import { luminance } from "../_utils/luminance";
 
 export const TwPaletteSection = () => {
   const { colors } = useLerpColors();
@@ -14,14 +15,31 @@ export const TwPaletteSection = () => {
   const pointers = usePointers((state) => state.pointers);
   const setColors = useVariables((state) => state.setColors);
   const setName = useVariables((state) => state.setName);
-
+  let unordered: { [key: string]: string } = {};
+  let lerp = colors.map((c) => c.hex());
+  for (const key in lerp) {
+    unordered[luminance(lerp[key])] = lerp[key];
+  }
+  console.log(unordered);
+  let ordered = Object.keys(unordered)
+    .sort((a, b) => parseInt(b) - parseInt(a))
+    .reduce((store: string[], key: string) => {
+      store.push(unordered[key]);
+      return store;
+    }, []);
   useEffect(() => {
     setDyes({
-      border_dye: colors[1].hex(),
-      text_dye: colors[3].hex(),
-      border_shadow_dye: colors[5].hex(),
-      title_dye: colors[7].hex(),
-      bg_dye: colors[9].hex(),
+      l1: ordered[0],
+      l2: ordered[1],
+      l3: ordered[2],
+      l4: ordered[3],
+      l5: ordered[4],
+      l6: ordered[5],
+      l7: ordered[6],
+      l8: ordered[7],
+      l9: ordered[8],
+      l10: ordered[9],
+      l11: ordered[10],
     } as GlobalDyesState);
     setColors(colors);
   }, [colors]);

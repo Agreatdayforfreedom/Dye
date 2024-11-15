@@ -14,14 +14,13 @@ const boxes: { label: string; checked: boolean }[] = [
 ];
 
 export const CheckList = () => {
-  const c2 = useGlobalDyes((state) => state.border_dye);
-  const c3 = useGlobalDyes((state) => state.title_dye);
-
+  const c1 = useGlobalDyes((state) => state.l6);
+  const c2 = useGlobalDyes((state) => state.l8);
   return (
     <div
       style={{
-        backgroundColor: chroma(c2).alpha(0.5).hex(),
-        "--before-color": c3,
+        backgroundColor: chroma(c1).alpha(0.5).hex(),
+        "--before-color": c2,
       }}
       className="space-y-2 max-w-[300px] border p-5 pt-3 rounded h-fit relative before:content-[''] before:absolute before:w-16 before:h-12 before:bg-[var(--before-color)] before:top-0 before:right-0 corner_triangle_path"
     >
@@ -38,15 +37,17 @@ interface Props extends PropsWithChildren {
 }
 const CheckBoxWithLabel = ({ children, checked }: Props) => {
   const [toggle, setToggle] = useState(checked);
-  const c1 = useGlobalDyes((state) => state.bg_dye);
-  // const c2 = useGlobalDyes((state) => state.border_shadow_dye);
+  const c1 = useGlobalDyes((state) => state.l7);
 
   return (
     <div className="flex gap-1">
       <Checkbox
         checked={toggle}
         onCheckedChange={() => setToggle(!toggle)}
-        style={{ "--color": c1, "--color-border": chroma(c1).alpha(0.5) }}
+        style={{
+          "--color": c1,
+          "--color-border": chroma(c1).alpha(0.5),
+        }}
         className="data-[state=checked]:bg-[var(--color)] data-[state=checked]:border-[var(--color)]"
       />
       <Label

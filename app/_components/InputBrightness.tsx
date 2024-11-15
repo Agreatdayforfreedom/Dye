@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { useVariables } from "@/app/store/variables";
 
 export const InputBrightness = () => {
-  const border_shadow_dye = useGlobalDyes((state) => state.border_shadow_dye);
+  const border_shadow_dye = useGlobalDyes((state) => state.l11);
   const brightness = useVariables((state) => state.brightness);
   const setBrightness = useVariables((state) => state.setBrightness);
 

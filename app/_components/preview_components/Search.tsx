@@ -6,8 +6,8 @@ import { Input } from "@/components/ui/input";
 import { useGlobalDyes } from "@/app/store/global_dyes";
 
 export const Search = () => {
-  const bg_dye = useGlobalDyes((state) => state.bg_dye);
-  const border_dye = useGlobalDyes((state) => state.border_dye);
+  const c1 = useGlobalDyes((state) => state.l6);
+  const c2 = useGlobalDyes((state) => state.l8);
 
   return (
     <div className="max-w-64 flex gap-2">
@@ -19,14 +19,11 @@ export const Search = () => {
         />
         <Input
           className="pl-8"
-          style={{ borderColor: border_dye }}
+          style={{ borderColor: c2 }}
           defaultValue={"Custom palette"}
         />
       </div>
-      <Button
-        className="rounded-none font-semibold"
-        style={{ background: bg_dye }}
-      >
+      <Button className="rounded-none font-semibold" style={{ background: c1 }}>
         Search
       </Button>
     </div>

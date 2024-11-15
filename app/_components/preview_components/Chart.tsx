@@ -28,9 +28,9 @@ const chartData = [
 ];
 
 export function Chart() {
-  const c1 = useGlobalDyes((state) => state.title_dye);
-  const c2 = useGlobalDyes((state) => state.bg_dye);
-  const c3 = useGlobalDyes((state) => state.border_shadow_dye);
+  const c1 = useGlobalDyes((state) => state.l10);
+  const c2 = useGlobalDyes((state) => state.l5);
+  const c3 = useGlobalDyes((state) => state.l2);
 
   const chartConfig = {
     palettes: {

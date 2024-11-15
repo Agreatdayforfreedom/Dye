@@ -20,7 +20,7 @@ export const CopyPalette = () => {
   const [selected, setSelected] = useState<CopySpaces>("rgb");
   const [codeFormatted, setCodeFormatted] = useState<string>("");
 
-  const border_dye = useGlobalDyes((state) => state.border_dye);
+  const border_dye = useGlobalDyes((state) => state.l6);
   const name = useVariables((state) => state.name);
   const colors = useVariables((state) => state.colors);
   const type = useVariables((state) => state.type);

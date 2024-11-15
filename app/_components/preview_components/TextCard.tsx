@@ -2,8 +2,8 @@ import React from "react";
 import { useGlobalDyes } from "../../store/global_dyes";
 
 export const TextCard = () => {
-  const c1 = useGlobalDyes((state) => state.border_dye);
-  const c2 = useGlobalDyes((state) => state.text_dye);
+  const c1 = useGlobalDyes((state) => state.l5);
+  const c2 = useGlobalDyes((state) => state.l8);
 
   return (
     <div

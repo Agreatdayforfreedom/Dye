@@ -13,7 +13,7 @@ import { useGlobalDyes } from "@/app/store/global_dyes";
 import { Separator } from "@/components/ui/separator";
 
 export const MainContent = () => {
-  const border_dye = useGlobalDyes((state) => state.border_dye);
+  const border_dye = useGlobalDyes((state) => state.l6);
 
   return (
     <>
