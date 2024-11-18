@@ -10,8 +10,8 @@ export const Search = () => {
   const c2 = useGlobalDyes((state) => state.l8);
 
   return (
-    <div className="max-w-64 flex gap-2">
-      <div className="flex relative">
+    <div className="w-[80%] sm:max-w-64 flex gap-2">
+      <div className="flex relative  w-full">
         <SearchIcon
           className="absolute left-2 top-2"
           size={18}
