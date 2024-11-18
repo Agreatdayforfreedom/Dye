@@ -2,6 +2,7 @@ import chroma from "chroma-js";
 import { DomainLayout } from "../types";
 
 export function validate_hex(arr: DomainLayout["hex"]): boolean {
+  if (arr.length === 0) return false;
   return arr.every((c: string) => chroma.valid(c) === true);
 }
 
@@ -15,7 +16,7 @@ export function validate_indices(ind: DomainLayout["indices"]): boolean {
       prev = c;
       valid = true;
     } else {
-      valid = false;
+      return false;
     }
   }
 
