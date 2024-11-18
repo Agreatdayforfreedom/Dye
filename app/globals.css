@@ -116,3 +116,35 @@
 .corner_triangle_path::before {
   clip-path: polygon(0% 0%, 100% 0, 100% 100%);
 }
+
+.form_preview_decoration::before {
+  content: "";
+  width: 100%;
+  height: 200px;
+  position: absolute;
+}
+.form_preview_decoration::before {
+  z-index: -1;
+  top: 0;
+  right: 0;
+  clip-path: polygon(
+    100% 0%,
+    0% 0%,
+    0% 0.2%,
+    6.67% 2.85%,
+    13.33% 6.87%,
+    20% 12.1%,
+    26.67% 18.29%,
+    33.33% 25.19%,
+    40% 32.48%,
+    46.67% 39.86%,
+    53.33% 47%,
+    60% 53.58%,
+    66.67% 59.32%,
+    73.33% 63.97%,
+    80% 67.32%,
+    86.67% 69.23%,
+    93.33% 69.62%,
+    100% 68.46%
+  );
+}

@@ -4,6 +4,7 @@ import { Chart } from "./Chart";
 import { CheckList } from "./CheckList";
 import { TextCard } from "./TextCard";
 import { Alert } from "./Alert";
+import { LoginForm } from "./Form";
 
 const PreviewSection = () => {
   return (
@@ -15,6 +16,7 @@ const PreviewSection = () => {
           <div className="sm:flex flex-col ">
             <Chart />
           </div>
+          <LoginForm />
           <div className="flex flex-col space-y-2">
             <Alert />
             <TextCard />
