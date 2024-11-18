@@ -8,19 +8,21 @@ import { LoginForm } from "./Form";
 
 const PreviewSection = () => {
   return (
-    <section>
+    <section className="pb-5">
       <h2 className="text-2xl font-semibold mx-4 p-3">Examples</h2>
       <div className="max-w-[95%] sm:max-w-[90%] mx-auto">
         <Search />
-        <div className="text-center space-y-4 sm:flex mt-5 space-x-4 justify-between">
-          <div className="sm:flex flex-col ">
+        <div className="text-center gap-4 mt-5 flex flex-col lg:flex-row justify-between">
+          <div className="flex flex-col items-center md:items-start md:flex-row gap-4 w-full">
             <Chart />
+            <LoginForm />
           </div>
-          <LoginForm />
-          <div className="flex flex-col space-y-2">
+          <div className="flex flex-col justify-between">
             <Alert />
-            <TextCard />
-            <CheckList />
+            <div className="flex flex-col sm:flex-row lg:flex-col  gap-5 mt-5 items-center justify-center">
+              <TextCard />
+              <CheckList />
+            </div>
           </div>
         </div>
       </div>

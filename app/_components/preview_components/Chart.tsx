@@ -47,7 +47,7 @@ export function Chart() {
     },
   } satisfies ChartConfig;
   return (
-    <Card className="shadow-none w-96">
+    <Card className="shadow-none w-[90%] h-full sm:w-1/2">
       <CardHeader>
         <CardTitle>Sales</CardTitle>
         <CardDescription>Showing sales from the last 6 months</CardDescription>
