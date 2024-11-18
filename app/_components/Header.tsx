@@ -16,9 +16,6 @@ export const Header = () => {
   const type = useVariables((state) => state.type);
   const setType = useVariables((state) => state.setType);
 
-  if (l6) {
-    console.log(l6);
-  }
   return (
     <header className="h-12 w-full border-b" style={{ borderColor: l10 }}>
       <div className="h-full w-11/12 flex items-center justify-between mx-auto">

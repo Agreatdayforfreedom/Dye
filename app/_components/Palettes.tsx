@@ -25,10 +25,6 @@ export const Palettes = () => {
         .colors(11);
     } else return [];
   });
-
-  useEffect(() => {
-    console.log(name);
-  }, [name]);
   const handleSelected = (v: string[]) => {
     setSelected(v);
   };

@@ -16,30 +16,19 @@ import { MainContent } from "./MainContent";
 import { createVariablesStore, VariablesContext } from "../store/variables";
 import { default_tw_color_domains } from "../constants";
 import { luminance } from "../_utils/luminance";
+import { useDomainFromURL } from "../_hooks/useDomainFromURL";
 
 export const ProviderWrapper = () => {
+  const searchParams = useSearchParams();
+  const name = searchParams.get("name") || "mellow berry";
+
   const mode = useDarkMode((state) => state.mode);
 
   useEffect(() => {
     document.documentElement.className = mode;
   }, [mode]);
 
-  const searchParams = useSearchParams();
-
-  const name = searchParams.get("name") || "mellow berry";
-  const as_palette = default_tw_color_domains[name.split(" ").join("_")];
-
-  //todo: prioritize search params hex and indices instead of name
-  let domain: DomainLayout;
-
-  if (as_palette) {
-    domain = as_palette;
-  } else {
-    domain = {
-      hex: JSON.parse(searchParams.get("p") || "[]"),
-      indices: JSON.parse(searchParams.get("i") || "[]"),
-    };
-  }
+  const domain = useDomainFromURL();
 
   const pointers_store = useRef(
     createPointersStore({
@@ -52,19 +41,16 @@ export const ProviderWrapper = () => {
     .domain([...domain.indices])
     .mode("rgb")
     .colors(11);
-
   let unordered: { [key: string]: string } = {};
   for (const key in lerp) {
     unordered[luminance(lerp[key])] = lerp[key];
   }
-  console.log(unordered);
   let ordered = Object.keys(unordered)
     .sort((a, b) => parseInt(b) - parseInt(a))
     .reduce((store: string[], key: string) => {
       store.push(unordered[key]);
       return store;
     }, []);
-  console.log({ ordered });
   const global_dyes_store = useRef(
     createGlobalDyesStore({
       l1: ordered[0],

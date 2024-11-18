@@ -20,7 +20,6 @@ export const TwPaletteSection = () => {
   for (const key in lerp) {
     unordered[luminance(lerp[key])] = lerp[key];
   }
-  console.log(unordered);
   let ordered = Object.keys(unordered)
     .sort((a, b) => parseInt(b) - parseInt(a))
     .reduce((store: string[], key: string) => {

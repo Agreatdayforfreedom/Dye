@@ -27,7 +27,9 @@ export const CheckList = () => {
     >
       <h1 className="font-bold">Todo List</h1>
       {boxes.map(({ label, checked }) => (
-        <CheckBoxWithLabel checked={checked}>{label}</CheckBoxWithLabel>
+        <CheckBoxWithLabel key={label} checked={checked}>
+          {label}
+        </CheckBoxWithLabel>
       ))}
     </div>
   );
