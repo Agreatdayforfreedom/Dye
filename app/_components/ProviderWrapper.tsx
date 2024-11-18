@@ -26,9 +26,10 @@ export const ProviderWrapper = () => {
 
   const searchParams = useSearchParams();
 
-  const name = searchParams.get("name") || "";
+  const name = searchParams.get("name") || "mellow berry";
   const as_palette = default_tw_color_domains[name.split(" ").join("_")];
 
+  //todo: prioritize search params hex and indices instead of name
   let domain: DomainLayout;
 
   if (as_palette) {
@@ -45,7 +46,7 @@ export const ProviderWrapper = () => {
       pointers: d2p(domain, 11),
     })
   ).current;
-
+  // todo
   const lerp = chroma
     .scale([...domain.hex])
     .domain([...domain.indices])

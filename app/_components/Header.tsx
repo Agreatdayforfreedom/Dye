@@ -16,6 +16,9 @@ export const Header = () => {
   const type = useVariables((state) => state.type);
   const setType = useVariables((state) => state.setType);
 
+  if (l6) {
+    console.log(l6);
+  }
   return (
     <header className="h-12 w-full border-b" style={{ borderColor: l10 }}>
       <div className="h-full w-11/12 flex items-center justify-between mx-auto">
@@ -34,7 +37,9 @@ export const Header = () => {
             onClick={() => setType("tw")}
             className="p-2 font-semibold rounded-lg text-sm"
             style={
-              type == "tw" ? { background: l6, color: getContrastYIQ(l6) } : {}
+              type == "tw"
+                ? { background: l6, color: getContrastYIQ(l6 && l6) }
+                : {}
             }
           >
             Tailwind
