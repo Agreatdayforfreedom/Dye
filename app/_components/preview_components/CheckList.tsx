@@ -1,8 +1,9 @@
+import chroma from "chroma-js";
 import React, { PropsWithChildren, useState } from "react";
+
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useGlobalDyes } from "@/app/store/global_dyes";
-import chroma from "chroma-js";
 import { cn } from "@/lib/utils";
 
 const boxes: { label: string; checked: boolean }[] = [

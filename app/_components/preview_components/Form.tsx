@@ -1,11 +1,10 @@
 import React from "react";
+import chroma from "chroma-js";
 
 import { Button } from "@/components/ui/button";
-
 import { Input } from "@/components/ui/input";
-import { Label } from "../../../components/ui/label";
-import { useGlobalDyes } from "../../store/global_dyes";
-import chroma from "chroma-js";
+import { Label } from "@/components/ui/label";
+import { useGlobalDyes } from "@/app/store/global_dyes";
 
 export const LoginForm = () => {
   const l11 = useGlobalDyes((state) => state.l11);

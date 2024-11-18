@@ -1,7 +1,7 @@
 import React from "react";
 import { useGlobalDyes } from "@/app/store/global_dyes";
-import { AlertCircle, AlertOctagonIcon } from "lucide-react";
-import { getContrastYIQ } from "../../_utils/yiq";
+import { AlertOctagonIcon } from "lucide-react";
+import { getContrastYIQ } from "@/app/_utils/yiq";
 
 export const Alert = () => {
   const c1 = useGlobalDyes((state) => state.l9);

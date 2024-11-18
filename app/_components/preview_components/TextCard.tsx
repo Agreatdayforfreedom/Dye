@@ -1,5 +1,5 @@
 import React from "react";
-import { useGlobalDyes } from "../../store/global_dyes";
+import { useGlobalDyes } from "@/app/store/global_dyes";
 
 export const TextCard = () => {
   const c1 = useGlobalDyes((state) => state.l5);
