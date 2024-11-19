@@ -17,6 +17,7 @@ import { createVariablesStore, VariablesContext } from "../store/variables";
 import { default_tw_color_domains } from "../constants";
 import { luminance } from "../_utils/luminance";
 import { useDomainFromURL } from "../_hooks/useDomainFromURL";
+import { order_by_luminance } from "../_utils/order_by_luminance";
 
 export const ProviderWrapper = () => {
   const searchParams = useSearchParams();
@@ -41,16 +42,10 @@ export const ProviderWrapper = () => {
     .domain([...domain.indices])
     .mode("rgb")
     .colors(11);
-  let unordered: { [key: string]: string } = {};
-  for (const key in lerp) {
-    unordered[luminance(lerp[key])] = lerp[key];
-  }
-  let ordered = Object.keys(unordered)
-    .sort((a, b) => parseInt(b) - parseInt(a))
-    .reduce((store: string[], key: string) => {
-      store.push(unordered[key]);
-      return store;
-    }, []);
+
+  const ordered = order_by_luminance(lerp);
+  console.log(ordered);
+
   const global_dyes_store = useRef(
     createGlobalDyesStore({
       l1: ordered[0],
