@@ -20,22 +20,26 @@ test("validate_hex() should return true if all the hexadecimal color are valid",
 });
 
 test("validate_indices() should return true if the next indice is grater than the previous one", () => {
-  let indices = [1, 2, 3, 4, 5];
-  let is_valid = validate_indices(indices);
-  expect(is_valid).toBe(true);
+  let cases = [
+    [0, 5, 10],
+    [1, 2, 3, 4, 5],
+    [9, 10],
+  ];
+  for (const indices of cases) {
+    let is_valid = validate_indices(indices);
+    expect(is_valid).toBe(true);
+  }
 });
 
 test("validate_indices() should return false if the next indice is less than or equal (or invalid) to the previous one", () => {
-  let tests: any[][] = [
+  let cases: any[][] = [
     [1, 2, 3, 3, 4, 3, 5],
-    [0],
     ["asd"],
     [1, 1, 1],
-    [0, 1],
     [undefined],
     [null],
   ];
-  for (const indices of tests) {
+  for (const indices of cases) {
     let is_valid = validate_indices(indices);
     expect(is_valid).toBe(false);
   }

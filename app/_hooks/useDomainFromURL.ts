@@ -5,7 +5,7 @@ import chroma from "chroma-js";
 import { validate_hex, validate_indices } from "@/app/_utils/validators";
 
 // this maybe can be randomly generated, or selected from tw_color_domains, idk.
-const default_domain: DomainLayout = {
+export const default_domain: DomainLayout = {
   hex: ["#cccccc", "#23901e"],
   indices: [0, 10],
 };
