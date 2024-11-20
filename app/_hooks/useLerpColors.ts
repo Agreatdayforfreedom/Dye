@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 
 import { useVariables } from "@/app/store/variables";
 import { usePointersDomain } from "@/app/store/pointers";
+import { lerp_colors } from "../_utils/lerp_colors";
 
 export const useLerpColors = () => {
   const pathname = usePathname();
@@ -24,39 +25,21 @@ export const useLerpColors = () => {
   const params = new URLSearchParams(searchParams);
 
   const colors = useMemo(() => {
-    let no_update_pointer_index = 0;
-
-    return chroma
-      .scale([...hex])
-      .mode(colorSpace)
-      .domain([...indices])
-      .colors(steps)
-      .map((c, i) => {
-        const color = chroma(c);
-        const current_hue = color.get("hsv.h") || 0;
-        const current_brh = color.get("hsv.v") || 0;
-        const current_sat = color.get("hsv.s") || 0;
-
-        let new_hue = current_hue;
-        let new_brh = current_brh;
-        let new_sat = current_sat;
-
-        if (indices[no_update_pointer_index] != i) {
-          new_hue += hue;
-          new_brh += brightness / 25;
-          new_sat += saturation / 50;
-        } else {
-          no_update_pointer_index++;
-        }
-
-        return color
-          .set("hsv.h", new_hue)
-          .set("hsv.s", new_sat)
-          .set("hsv.v", new_brh);
-      });
+    return lerp_colors(
+      {
+        hex,
+        indices,
+      },
+      colorSpace,
+      hue,
+      brightness,
+      saturation,
+      steps
+    );
   }, [hex, colorSpace, saturation, hue, brightness]);
 
   useEffect(() => {
+    //todo : alidate this
     params.set("p", JSON.stringify(hex));
     params.set("i", JSON.stringify(indices));
     params.set("b", brightness.toString());

@@ -9,15 +9,12 @@ import {
   createGlobalDyesStore,
   GlobalDyesContext,
 } from "@/app/store/global_dyes";
-import { DomainLayout } from "@/app/types";
 import { d2p } from "@/app/_utils/d2p";
-
 import { MainContent } from "./MainContent";
-import { createVariablesStore, VariablesContext } from "../store/variables";
-import { default_tw_color_domains } from "../constants";
-import { luminance } from "../_utils/luminance";
-import { useDomainFromURL } from "../_hooks/useDomainFromURL";
-import { order_by_luminance } from "../_utils/order_by_luminance";
+import { createVariablesStore, VariablesContext } from "@/app/store/variables";
+import { useDomainFromURL } from "@/app/_hooks/useDomainFromURL";
+import { order_by_luminance } from "@/app/_utils/order_by_luminance";
+import { lerp_colors } from "@/app/_utils/lerp_colors";
 
 export const ProviderWrapper = () => {
   const searchParams = useSearchParams();
@@ -36,15 +33,28 @@ export const ProviderWrapper = () => {
       pointers: d2p(domain, 11),
     })
   ).current;
-  // todo
-  const lerp = chroma
-    .scale([...domain.hex])
-    .domain([...domain.indices])
-    .mode("rgb")
-    .colors(11);
 
-  const ordered = order_by_luminance(lerp);
-  console.log(ordered);
+  let colorSpace: chroma.InterpolationMode = (searchParams.get("cs") ||
+    "rgb") as chroma.InterpolationMode;
+
+  if (colorSpace !== "rgb") {
+    colorSpace = "rgb";
+  }
+
+  let brightness = parseInt(searchParams.get("b") || "0", 10) || 0;
+  let saturation = parseInt(searchParams.get("s") || "0", 10) || 0;
+  let hue = parseInt(searchParams.get("h") || "0", 10) || 0;
+
+  const colors = lerp_colors(
+    domain,
+    colorSpace,
+    hue,
+    brightness,
+    saturation,
+    11
+  );
+
+  const ordered = order_by_luminance(colors.map((c) => c.hex()));
 
   const global_dyes_store = useRef(
     createGlobalDyesStore({
@@ -62,19 +72,12 @@ export const ProviderWrapper = () => {
     })
   ).current;
 
-  let colorSpace: chroma.InterpolationMode = (searchParams.get("cs") ||
-    "rgb") as chroma.InterpolationMode;
-
-  if (colorSpace !== "rgb") {
-    colorSpace = "rgb";
-  }
-
   const variables_store = useRef(
     createVariablesStore({
       name,
-      brightness: parseInt(searchParams.get("b") || "0", 10) || 0,
-      saturation: parseInt(searchParams.get("s") || "0", 10) || 0,
-      hue: parseInt(searchParams.get("h") || "0", 10) || 0,
+      brightness,
+      saturation,
+      hue,
       colorSpace,
     })
   ).current;

@@ -1,23 +1,21 @@
 import React, { useEffect } from "react";
 
+import { TooltipProvider } from "@/components/ui/tooltip";
+
 import { useVariables } from "@/app/store/variables";
 import { useLerpColors } from "@/app/_hooks/useLerpColors";
 import { GlobalDyesState, useGlobalDyes } from "@/app/store/global_dyes";
 import { usePointers } from "@/app/store/pointers";
-import { TooltipProvider } from "@/components/ui/tooltip";
+import { order_by_luminance } from "@/app/_utils/order_by_luminance";
 
 import { TwColorCard } from "./TwColorCard";
-import { luminance } from "../_utils/luminance";
-import { order_by_luminance } from "../_utils/order_by_luminance";
 
 export const TwPaletteSection = () => {
   const { colors } = useLerpColors();
   const setDyes = useGlobalDyes((state) => state.setDyes);
   const pointers = usePointers((state) => state.pointers);
   const setColors = useVariables((state) => state.setColors);
-  const setName = useVariables((state) => state.setName);
-  let lerp = colors.map((c) => c.hex());
-  const ordered = order_by_luminance(lerp);
+  const ordered = order_by_luminance(colors.map((c) => c.hex()));
 
   useEffect(() => {
     setDyes({
