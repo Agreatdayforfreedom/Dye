@@ -9,7 +9,7 @@ export function lerp_colors(
   saturation: number,
   steps: number
 ) {
-  let { hex, indices } = domain;
+  const { hex, indices } = domain;
   let no_update_pointer_index = 0;
 
   return chroma

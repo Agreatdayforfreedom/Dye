@@ -14,10 +14,10 @@ export const LoginForm = () => {
   return (
     <div
       style={{
-        "--before-color-l": l2,
-        "--before-color-r": l8,
+        "--primary": l2,
+        "--secondary": l8,
       }}
-      className="flex-1 w-[90%] sm:w-[50%]  h-full flex flex-col justify-between border rounded p-4 relative form_preview_decoration before:bg-gradient-to-r before:from-[var(--before-color-l)] before:to-[var(--before-color-r)] "
+      className="flex-1 w-[90%] sm:w-[50%]  h-full flex flex-col justify-between border rounded p-4 relative form_preview_decoration before:bg-gradient-to-r before:from-[var(--primary)] before:to-[var(--secondary)] "
     >
       <header className="mb-5 pb-5 pt-3">
         <h2 className="font-bold text-3xl">Login</h2>

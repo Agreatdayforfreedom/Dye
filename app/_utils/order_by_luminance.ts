@@ -3,7 +3,7 @@ import { luminance } from "./luminance";
 type HexWithLuminance = { hex: string; luminance: number };
 
 export function order_by_luminance(colors: string[]) {
-  let unordered: HexWithLuminance[] = [];
+  const unordered: HexWithLuminance[] = [];
 
   for (const key in colors) {
     unordered.push({
@@ -11,7 +11,7 @@ export function order_by_luminance(colors: string[]) {
       luminance: luminance(colors[key]),
     });
   }
-  let ordered = unordered
+  const ordered = unordered
     .sort((a, b) => b.luminance - a.luminance)
     .map((hl) => hl.hex);
 

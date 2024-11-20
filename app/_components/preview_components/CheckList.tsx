@@ -21,9 +21,9 @@ export const CheckList = () => {
     <div
       style={{
         backgroundColor: chroma(c1).alpha(0.5).hex(),
-        "--before-color": c2,
+        "--primary": c2,
       }}
-      className="space-y-2 max-w-[300px] border p-5 pt-3 rounded h-fit relative before:content-[''] before:absolute before:w-16 before:h-12 before:bg-[var(--before-color)] before:top-0 before:right-0 corner_triangle_path"
+      className="space-y-2 max-w-[300px] border p-5 pt-3 rounded h-fit relative before:content-[''] before:absolute before:w-16 before:h-12 before:bg-[var(--primary)] before:top-0 before:right-0 corner_triangle_path"
     >
       <h1 className="font-bold">Todo List</h1>
       {boxes.map(({ label, checked }) => (
@@ -48,16 +48,16 @@ const CheckBoxWithLabel = ({ children, checked }: Props) => {
         checked={toggle}
         onCheckedChange={() => setToggle(!toggle)}
         style={{
-          "--color": c1,
-          "--color-border": chroma(c1).alpha(0.5),
+          "--primary": c1,
+          "--secondary": chroma(c1).alpha(0.5).hex(),
         }}
         className="data-[state=checked]:bg-[var(--color)] data-[state=checked]:border-[var(--color)]"
       />
       <Label
-        style={{ "--color": c1 }}
+        style={{ "--primary": c1 }}
         className={cn(
           "font-semibold",
-          toggle ? "line-through decoration-[var(--color)]" : ""
+          toggle ? "line-through decoration-[var(--primary)]" : ""
         )}
       >
         {children}

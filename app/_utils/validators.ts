@@ -11,7 +11,7 @@ export function validate_indices(ind: DomainLayout["indices"]): boolean {
   let valid = false;
 
   for (let i = 0; i < ind.length; i++) {
-    let c = ind[i];
+    const c = ind[i];
     if (i === 0 && c === 0) {
       valid = true;
       continue;
