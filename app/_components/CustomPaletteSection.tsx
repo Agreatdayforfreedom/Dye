@@ -6,24 +6,14 @@ import { useVariables } from "@/app/store/variables";
 
 import { CustomColorCard } from "./CustomColorCard";
 import { luminance } from "../_utils/luminance";
+import { order_by_luminance } from "../_utils/order_by_luminance";
 
 export const CustomPaletteSection = () => {
   const { colors, steps } = useLerpColors();
   const setDyes = useGlobalDyes((state) => state.setDyes);
   const setColors = useVariables((state) => state.setColors);
 
-  let unordered: { [key: string]: string } = {};
-  let lerp = colors.map((c) => c.hex());
-  for (const key in lerp) {
-    unordered[luminance(lerp[key])] = lerp[key];
-  }
-  console.log(unordered);
-  let ordered = Object.keys(unordered)
-    .sort((a, b) => parseInt(b) - parseInt(a))
-    .reduce((store: string[], key: string) => {
-      store.push(unordered[key]);
-      return store;
-    }, []);
+  const ordered = order_by_luminance(colors.map((c) => c.hex()));
 
   useEffect(() => {
     setDyes({

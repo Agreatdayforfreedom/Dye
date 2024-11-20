@@ -74,6 +74,7 @@ export const ProviderWrapper = () => {
 
   const variables_store = useRef(
     createVariablesStore({
+      colors,
       name,
       brightness,
       saturation,
