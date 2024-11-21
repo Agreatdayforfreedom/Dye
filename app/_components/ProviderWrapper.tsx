@@ -37,10 +37,6 @@ export const ProviderWrapper = () => {
   let colorSpace: chroma.InterpolationMode = (searchParams.get("cs") ||
     "rgb") as chroma.InterpolationMode;
 
-  if (colorSpace !== "rgb") {
-    colorSpace = "rgb";
-  }
-
   const brightness = parseInt(searchParams.get("b") || "0", 10) || 0;
   const saturation = parseInt(searchParams.get("s") || "0", 10) || 0;
   const hue = parseInt(searchParams.get("h") || "0", 10) || 0;
