@@ -11,20 +11,9 @@ interface Props {
 }
 
 export const PreviewPalette = ({ name, domain }: Props) => {
-  const setPointerFromDomain = usePointers(
-    (state) => state.setPointerFromDomain
-  );
-  const setName = useVariables((state) => state.setName);
-
   const colors = lerp_colors(domain, "rgb", 0, 0, 0, 11);
   return (
-    <div
-      className="w-500 flex cursor-pointer hover:scale-105 transition-transform"
-      onClick={() => {
-        setPointerFromDomain(domain);
-        setName(name.split("_").join(" "));
-      }}
-    >
+    <div className="w-500 flex cursor-pointer hover:scale-105 transition-transform">
       {colors.map((c, index) => (
         <div
           key={index}
