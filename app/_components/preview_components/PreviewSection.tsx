@@ -16,14 +16,14 @@ const PreviewSection = () => {
           <Search />
           <Actions />
         </div>
-        <div className="text-center gap-4 mt-5 flex flex-col lg:flex-row justify-between">
+        <div className="gap-4 mt-5 flex flex-col lg:flex-row justify-between">
           <div className="flex flex-col items-center md:items-start md:flex-row gap-4 w-full">
             <Chart />
             <LoginForm />
           </div>
           <div className="flex flex-col justify-between">
             <Alert />
-            <div className="flex flex-col sm:flex-row lg:flex-col  gap-5 mt-5 items-center justify-center">
+            <div className="flex flex-col sm:flex-row lg:flex-col  gap-5 mt-5 items-center justify-center text-start">
               <TextCard />
               <CheckList />
             </div>
