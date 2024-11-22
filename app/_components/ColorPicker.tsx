@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useEffect, useState } from "react";
 import { HexColorPicker } from "react-colorful";
-import { HashIcon } from "lucide-react";
+import { HashIcon, Lock, LockOpen } from "lucide-react";
 import chroma from "chroma-js";
 
 import {
@@ -30,8 +30,9 @@ function onlyNumberHex(hex: string) {
 
 export const ColorPicker = ({ color, index }: Props) => {
   const [colorInput, setColorInput] = useState<string>("");
-
+  const pointers = usePointers((state) => state.pointers);
   const setPointer = usePointers((state) => state.setPointer);
+  const undoPointer = usePointers((state) => state.undoPointer);
 
   useEffect(() => {
     setColorInput(onlyNumberHex(color));
@@ -63,6 +64,7 @@ export const ColorPicker = ({ color, index }: Props) => {
         <PopoverTrigger
           // prettier-ignore
           className="
+          flex items-center justify-center
           size-full
           rounded border transition-colors"
           style={{
@@ -70,16 +72,35 @@ export const ColorPicker = ({ color, index }: Props) => {
             borderColor: chroma(color).darken(1).hex(),
           }}
         />
+
         <span className="text-foreground font-semibold text-sm">
           {tw_color_scale[index]}
         </span>
       </div>
 
-      <PopoverContent>
-        <HexColorPicker
-          color={chroma(color).hex()}
-          onChange={handleColorPicker}
-        />
+      <PopoverContent className="w-300">
+        <div className="w-full flex items-center justify-center pb-1">
+          {pointers[index] !== "" ? (
+            <button
+              onClick={() => undoPointer(index)}
+              className="flex items-center text-sm gap-1 p-1 rounded hover:bg-foreground/10"
+            >
+              <Lock size={18} />
+              <span className="font-bold">Locked</span>
+            </button>
+          ) : (
+            <button className="flex items-center text-sm p-1 gap-1">
+              <LockOpen size={18} />
+              <span className="font-bold">Unlocked</span>
+            </button>
+          )}
+        </div>
+        <div className="flex w-full">
+          <HexColorPicker
+            color={chroma(color).hex()}
+            onChange={handleColorPicker}
+          />
+        </div>
         <div className="relative mt-1">
           <HashIcon
             className="absolute stroke-slate-500 top-2.5 left-[5px]"

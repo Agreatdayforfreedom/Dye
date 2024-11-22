@@ -13,11 +13,10 @@ export const Pointer = ({ color, index }: Props) => {
   const undoPointer = usePointers((state) => state.undoPointer);
   return (
     <MousePointer2
-      onClick={() => undoPointer(index)}
-      strokeWidth={0.5}
-      className="pointer-down absolute -top-6 cursor-pointer stroke-none"
+      strokeWidth={0.2}
+      className="pointer-down absolute -top-6 cursor-pointer stroke-[hsl(var(--foreground))]"
       style={{
-        fill: color.hex(),
+        fill: color.darken(0.1).hex(),
       }}
     />
   );
