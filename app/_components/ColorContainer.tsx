@@ -9,6 +9,7 @@ import { CopyPalette } from "./CopyPalette";
 import { TwPaletteSection } from "./TwPaletteSection";
 import { CustomPaletteSection } from "./CustomPaletteSection";
 import { Palettes } from "./Palettes";
+import { SavePalette } from "./SavePalette";
 
 export const ColorContainer = () => {
   const type = useVariables((state) => state.type);
@@ -26,7 +27,8 @@ export const ColorContainer = () => {
       {palette}
       <div className="flex justify-between w-[80%] mx-auto mt-14">
         <Palettes />
-        <div>
+        <div className="flex items-end">
+          <SavePalette />
           <CopyPalette />
         </div>
       </div>

@@ -6,23 +6,29 @@ import {
   SelectGroup,
   SelectItem,
   SelectTrigger,
+  SelectLabel,
 } from "@/components/ui/select";
 import { default_tw_color_domains } from "@/app/constants";
 import { useVariables } from "@/app/store/variables";
 import { DomainLayout } from "@/app/types";
 
 import { PreviewPalette } from "./PreviewPalette";
-import { SelectLabel } from "@radix-ui/react-select";
-import { usePointers, usePointersDomain } from "../store/pointers";
+import { usePointers, usePointersDomain } from "@/app/store/pointers";
+import { usePersistentStore } from "@/app/store/persistent_domain";
+
+const SELECT_KEY: string = "__$ls";
 
 export const Palettes = () => {
   const name = useVariables((state) => state.name);
   const colors = useVariables((state) => state.colors);
+  const setName = useVariables((state) => state.setName);
+
   const setPointerFromDomain = usePointers(
     (state) => state.setPointerFromDomain
   );
+
+  const { domains } = usePersistentStore();
   const domain = usePointersDomain();
-  const setName = useVariables((state) => state.setName);
 
   const asComponentArray = useCallback(() => {
     const palettes: [string, DomainLayout][] = [];
@@ -33,11 +39,20 @@ export const Palettes = () => {
 
     return palettes;
   }, []);
+  console.log(domains);
   return (
     <div>
       <Select
         onValueChange={(v: string) => {
           if (v === "0") return;
+          if (v.includes(SELECT_KEY) && domains) {
+            const domain = domains[v.split(SELECT_KEY)[1]];
+            if (domain) {
+              setPointerFromDomain(domain);
+              setName(v.split(SELECT_KEY)[1]);
+            }
+            return;
+          }
           setPointerFromDomain(default_tw_color_domains[v]);
           setName(v.split("_").join(" "));
         }}
@@ -78,14 +93,28 @@ export const Palettes = () => {
             </SelectItem>
           </SelectGroup>
 
-          <SelectGroup>
+          <SelectGroup className="border-t mt-2">
             <SelectLabel>Your palettes</SelectLabel>
-            <SelectItem className="p-0" value="0">
-              {/*TODO <PreviewPalette key={0} domain={domain} name={name} /> */}
-            </SelectItem>
+            {Object.keys(domains).length > 0 ? (
+              Object.keys(domains).map((key) => {
+                return (
+                  <SelectItem
+                    className="p-0"
+                    key={SELECT_KEY + key}
+                    value={SELECT_KEY + key}
+                  >
+                    <PreviewPalette domain={domains[key]} name={name} />
+                  </SelectItem>
+                );
+              })
+            ) : (
+              <span className="block font-semibold text-sm w-[90%] mx-auto">
+                You don't have any palettes saved yet.
+              </span>
+            )}
           </SelectGroup>
 
-          <SelectGroup>
+          <SelectGroup className="border-t  mt-2">
             <SelectLabel>Explore</SelectLabel>
 
             {asComponentArray().map(([keyname, domain]) => (
