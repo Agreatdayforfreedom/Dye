@@ -11,7 +11,6 @@ import {
 import { default_tw_color_domains } from "@/app/constants";
 import { useVariables } from "@/app/store/variables";
 import { DomainLayout } from "@/app/types";
-
 import { PreviewPalette } from "./PreviewPalette";
 import { usePointers, usePointersDomain } from "@/app/store/pointers";
 import { usePersistentStore } from "@/app/store/persistent_domain";
