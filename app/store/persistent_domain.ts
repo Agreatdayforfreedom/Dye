@@ -1,13 +1,13 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { DomainLayout } from "../types";
-import { experimental_taintObjectReference } from "react";
+import { DomainLayout } from "@/app/types";
 
 type KeyDomain = { [key: string]: DomainLayout };
 
 interface PersistentState {
   domains: KeyDomain;
   setDomain: (key: string, domain: DomainLayout) => void;
+  exists: (key: string) => boolean;
 }
 
 export const usePersistentStore = create<PersistentState>()(
@@ -21,6 +21,9 @@ export const usePersistentStore = create<PersistentState>()(
             [key]: domain,
           },
         }),
+      exists: (key: string) => {
+        return Object.keys(get().domains).some((k) => k === key);
+      },
     }),
     {
       name: "domains",

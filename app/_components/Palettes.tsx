@@ -27,7 +27,7 @@ export const Palettes = () => {
     (state) => state.setPointerFromDomain
   );
 
-  const { domains } = usePersistentStore();
+  const { domains, exists } = usePersistentStore();
   const domain = usePointersDomain();
 
   const asComponentArray = useCallback(() => {
@@ -39,7 +39,6 @@ export const Palettes = () => {
 
     return palettes;
   }, []);
-  console.log(domains);
   return (
     <div>
       <Select
@@ -87,7 +86,9 @@ export const Palettes = () => {
 
         <SelectContent className="max-h-[320px]">
           <SelectGroup>
-            <SelectLabel>Current (Not saved)</SelectLabel>
+            <SelectLabel>
+              Current {exists(name) ? "(Saved)" : "(Not saved)"}
+            </SelectLabel>
             <SelectItem className="p-0" value="0">
               <PreviewPalette key={0} domain={domain} name={name} />
             </SelectItem>
@@ -114,7 +115,7 @@ export const Palettes = () => {
             )}
           </SelectGroup>
 
-          <SelectGroup className="border-t  mt-2">
+          <SelectGroup className="border-t mt-2">
             <SelectLabel>Explore</SelectLabel>
 
             {asComponentArray().map(([keyname, domain]) => (
