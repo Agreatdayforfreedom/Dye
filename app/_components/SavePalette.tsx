@@ -1,5 +1,5 @@
 import chroma from "chroma-js";
-import React from "react";
+import React, { useState } from "react";
 
 import { usePointersDomain } from "@/app/store/pointers";
 import { useVariables } from "@/app/store/variables";
@@ -17,9 +17,11 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useGlobalDyes } from "@/app/store/global_dyes";
 import { useDarkMode } from "@/app/store/dark_mode";
+import { cn } from "@/lib/utils";
 
 export const SavePalette = () => {
   const { setDomain, exists } = usePersistentStore();
+  const [saved, setSaved] = useState<boolean>(false); // add toast
   const mode = useDarkMode((state) => state.mode);
   const name = useVariables((state) => state.name);
   const domain = usePointersDomain();
@@ -28,20 +30,29 @@ export const SavePalette = () => {
     darken === "darken"
       ? useGlobalDyes((state) => state.l2)
       : useGlobalDyes((state) => state.l10);
+
   if (!exists(name)) {
     return (
       <button
         onClick={() => setDomain(name, domain)}
-        className="text-bold text-lg p-2 pb-0"
+        className={cn(
+          "text-bold text-lg p-2 pb-0",
+          saved ? "font-bold text-green-500" : ""
+        )}
       >
-        Save
+        {saved ? "Saved" : "Save"}
       </button>
     );
   }
   return (
     <AlertDialog>
-      <AlertDialogTrigger className="text-bold text-lg p-2 pb-0">
-        Save
+      <AlertDialogTrigger
+        className={cn(
+          "text-bold text-lg p-2 pb-0",
+          saved ? "font-bold text-green-500" : ""
+        )}
+      >
+        {saved ? "Saved" : "Save"}
       </AlertDialogTrigger>
       <AlertDialogContent style={{ borderColor: chroma(l10)[darken](2).hex() }}>
         <AlertDialogHeader>
@@ -63,7 +74,13 @@ export const SavePalette = () => {
           <AlertDialogAction
             style={{ background: l10 }}
             className="hover:opacity-90 transition-all"
-            onClick={() => setDomain(name, domain)}
+            onClick={() => {
+              setDomain(name, domain);
+              setSaved(true);
+              setTimeout(() => {
+                setSaved(false);
+              }, 2000);
+            }}
           >
             Replace
           </AlertDialogAction>
