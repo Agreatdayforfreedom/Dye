@@ -57,7 +57,7 @@ export const SavePalette = () => {
       <AlertDialogContent style={{ borderColor: chroma(l10)[darken](2).hex() }}>
         <AlertDialogHeader>
           <AlertDialogTitle className="font-medium">
-            Palette <span style={{ color: l10 }}>{name}</span> already saved.
+            <span style={{ color: l10 }}>{name}</span> palette already saved.
           </AlertDialogTitle>
           <AlertDialogDescription>
             You already have a palette with the name{" "}
