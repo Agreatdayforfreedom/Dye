@@ -109,7 +109,7 @@ export const Palettes = () => {
               })
             ) : (
               <span className="block font-semibold text-sm w-[90%] mx-auto">
-                You don't have any palettes saved yet.
+                You don&apos;t have any palettes saved yet.
               </span>
             )}
           </SelectGroup>

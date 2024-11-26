@@ -26,10 +26,10 @@ export const SavePalette = () => {
   const name = useVariables((state) => state.name);
   const domain = usePointersDomain();
   const darken = mode === "dark" ? "darken" : "brighten"; //todo
-  const l10 =
-    darken === "darken"
-      ? useGlobalDyes((state) => state.l2)
-      : useGlobalDyes((state) => state.l10);
+  const l2 = useGlobalDyes((state) => state.l2)
+  const l10 = useGlobalDyes((state) => state.l10);
+  const c1 = darken === "darken" ? l2 : l10;
+
 
   if (!exists(name)) {
     return (
@@ -54,25 +54,25 @@ export const SavePalette = () => {
       >
         {saved ? "Saved" : "Save"}
       </AlertDialogTrigger>
-      <AlertDialogContent style={{ borderColor: chroma(l10)[darken](2).hex() }}>
+      <AlertDialogContent style={{ borderColor: chroma(c1)[darken](2).hex() }}>
         <AlertDialogHeader>
           <AlertDialogTitle className="font-medium">
-            <span style={{ color: l10 }}>{name}</span> palette already saved.
+            <span style={{ color: c1 }}>{name}</span> palette already saved.
           </AlertDialogTitle>
           <AlertDialogDescription>
             You already have a palette with the name{" "}
-            <span className="font-semibold" style={{ color: l10 }}>
+            <span className="font-semibold" style={{ color: c1 }}>
               {name}
             </span>{" "}
             saved. Are you sure you want to replace it?
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel style={{ borderColor: l10 }}>
+          <AlertDialogCancel style={{ borderColor: c1 }}>
             Cancel
           </AlertDialogCancel>
           <AlertDialogAction
-            style={{ background: l10 }}
+            style={{ background: c1 }}
             className="hover:opacity-90 transition-all"
             onClick={() => {
               setDomain(name, domain);
