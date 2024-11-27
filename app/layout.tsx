@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { Header } from "./_components/Header";
+
+import { Toaster } from "@/components/ui/toaster";
 
 const firaMono = localFont({
   src: [
@@ -50,6 +51,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${firaMono.className} antialiased h-screen`}>
         {children}
+        <Toaster />
       </body>
     </html>
   );

@@ -18,41 +18,46 @@ import {
 import { useGlobalDyes } from "@/app/store/global_dyes";
 import { useDarkMode } from "@/app/store/dark_mode";
 import { cn } from "@/lib/utils";
+import { useToast } from "@/hooks/use-toast";
 
 export const SavePalette = () => {
   const { setDomain, exists } = usePersistentStore();
-  const [saved, setSaved] = useState<boolean>(false); // add toast
+
+  const { toast } = useToast();
   const mode = useDarkMode((state) => state.mode);
   const name = useVariables((state) => state.name);
   const domain = usePointersDomain();
+
   const darken = mode === "dark" ? "darken" : "brighten"; //todo
-  const l2 = useGlobalDyes((state) => state.l2)
+  const l2 = useGlobalDyes((state) => state.l2);
   const l10 = useGlobalDyes((state) => state.l10);
   const c1 = darken === "darken" ? l2 : l10;
-
 
   if (!exists(name)) {
     return (
       <button
-        onClick={() => setDomain(name, domain)}
-        className={cn(
-          "text-bold text-lg p-2 pb-0",
-          saved ? "font-bold text-green-500" : ""
-        )}
+        onClick={() => {
+          setDomain(name, domain);
+          toast({
+            title: "Palette saved!",
+            description: (
+              <>
+                You now have <span style={{ color: c1 }}>{name}</span> in your
+                kit!
+              </>
+            ),
+          });
+        }}
+        className="text-bold text-lg p-2 pb-0"
       >
-        {saved ? "Saved" : "Save"}
+        Save
       </button>
     );
   }
   return (
     <AlertDialog>
-      <AlertDialogTrigger
-        className={cn(
-          "text-bold text-lg p-2 pb-0",
-          saved ? "font-bold text-green-500" : ""
-        )}
-      >
-        {saved ? "Saved" : "Save"}
+      <AlertDialogTrigger className="text-bold text-lg p-2 pb-0">
+        Save
       </AlertDialogTrigger>
       <AlertDialogContent style={{ borderColor: chroma(c1)[darken](2).hex() }}>
         <AlertDialogHeader>
@@ -76,10 +81,14 @@ export const SavePalette = () => {
             className="hover:opacity-90 transition-all"
             onClick={() => {
               setDomain(name, domain);
-              setSaved(true);
-              setTimeout(() => {
-                setSaved(false);
-              }, 2000);
+              toast({
+                title: "Palette updated!",
+                description: (
+                  <>
+                    <span style={{ color: c1 }}>{name}</span> was updated
+                  </>
+                ),
+              });
             }}
           >
             Replace
