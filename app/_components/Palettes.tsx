@@ -25,7 +25,11 @@ export const Palettes = () => {
   const setBrightness = useVariables((state) => state.setBrightness);
   const setHue = useVariables((state) => state.setHue);
   const setSaturation = useVariables((state) => state.setSaturation);
-  const setSolorSpace = useVariables((state) => state.setColorSpace);
+  const setColorSpace = useVariables((state) => state.setColorSpace);
+  const hue = useVariables((state) => state.hue);
+  const saturation = useVariables((state) => state.saturation);
+  const brightness = useVariables((state) => state.brightness);
+  const colorSpace = useVariables((state) => state.colorSpace);
 
   const setPointerFromDomain = usePointers(
     (state) => state.setPointerFromDomain
@@ -59,7 +63,7 @@ export const Palettes = () => {
               setBrightness(domain.brightness);
               setHue(domain.hue);
               setSaturation(domain.saturation);
-              setSolorSpace(domain.space);
+              setColorSpace(domain.space);
               setName(v.split(SELECT_KEY)[1]);
             }
             return;
@@ -68,7 +72,7 @@ export const Palettes = () => {
           setBrightness(0);
           setHue(0);
           setSaturation(0);
-          setSolorSpace("rgb");
+          setColorSpace("rgb");
           setName(v.split("_").join(" "));
         }}
       >
@@ -106,7 +110,17 @@ export const Palettes = () => {
               Current {exists(name) ? "(Saved)" : "(Not saved)"}
             </SelectLabel>
             <SelectItem className="p-0" value="0">
-              <PreviewPalette key={0} domain={domain} name={name} />
+              <PreviewPalette
+                key={0}
+                domain={domain}
+                attrs={{
+                  brightness,
+                  hue,
+                  saturation,
+                  space: colorSpace,
+                }}
+                name={name}
+              />
             </SelectItem>
           </SelectGroup>
 
