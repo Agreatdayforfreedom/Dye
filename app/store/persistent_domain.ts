@@ -1,12 +1,12 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { DomainLayout } from "@/app/types";
+import { Attributes, DomainLayout } from "@/app/types";
 
-type KeyDomain = { [key: string]: DomainLayout };
+type KeyDomain = { [key: string]: DomainLayout & Attributes };
 
 interface PersistentState {
   domains: KeyDomain;
-  setDomain: (key: string, domain: DomainLayout) => void;
+  setDomain: (key: string, domain: DomainLayout, attrs: Attributes) => void;
   exists: (key: string) => boolean;
 }
 
@@ -14,11 +14,18 @@ export const usePersistentStore = create<PersistentState>()(
   persist(
     (set, get) => ({
       domains: {},
-      setDomain: (key: string, domain: DomainLayout) =>
+      setDomain: (key: string, domain: DomainLayout, attrs: Attributes) =>
         set({
           domains: {
             ...get().domains,
-            [key]: domain,
+            [key]: {
+              hex: domain.hex,
+              indices: domain.indices,
+              brightness: attrs.brightness,
+              hue: attrs.hue,
+              saturation: attrs.saturation,
+              space: attrs.space,
+            },
           },
         }),
       exists: (key: string) => {

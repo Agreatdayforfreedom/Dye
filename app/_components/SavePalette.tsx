@@ -28,6 +28,11 @@ export const SavePalette = () => {
   const name = useVariables((state) => state.name);
   const domain = usePointersDomain();
 
+  const brightness = useVariables((state) => state.brightness);
+  const hue = useVariables((state) => state.hue);
+  const saturation = useVariables((state) => state.saturation);
+  const colorSpace = useVariables((state) => state.colorSpace);
+
   const darken = mode === "dark" ? "darken" : "brighten"; //todo
   const l2 = useGlobalDyes((state) => state.l2);
   const l10 = useGlobalDyes((state) => state.l10);
@@ -37,7 +42,12 @@ export const SavePalette = () => {
     return (
       <button
         onClick={() => {
-          setDomain(name, domain);
+          setDomain(name, domain, {
+            brightness,
+            hue,
+            saturation,
+            space: colorSpace,
+          });
           toast({
             title: "Palette saved!",
             description: (
@@ -80,7 +90,12 @@ export const SavePalette = () => {
             style={{ background: c1 }}
             className="hover:opacity-90 transition-all"
             onClick={() => {
-              setDomain(name, domain);
+              setDomain(name, domain, {
+                brightness,
+                hue,
+                saturation,
+                space: colorSpace,
+              });
               toast({
                 title: "Palette updated!",
                 description: (

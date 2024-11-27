@@ -22,6 +22,11 @@ export const Palettes = () => {
   const colors = useVariables((state) => state.colors);
   const setName = useVariables((state) => state.setName);
 
+  const setBrightness = useVariables((state) => state.setBrightness);
+  const setHue = useVariables((state) => state.setHue);
+  const setSaturation = useVariables((state) => state.setSaturation);
+  const setSolorSpace = useVariables((state) => state.setColorSpace);
+
   const setPointerFromDomain = usePointers(
     (state) => state.setPointerFromDomain
   );
@@ -45,13 +50,25 @@ export const Palettes = () => {
           if (v === "0") return;
           if (v.includes(SELECT_KEY) && domains) {
             const domain = domains[v.split(SELECT_KEY)[1]];
+            console.log({ domain });
             if (domain) {
-              setPointerFromDomain(domain);
+              setPointerFromDomain({
+                hex: domain.hex,
+                indices: domain.indices,
+              });
+              setBrightness(domain.brightness);
+              setHue(domain.hue);
+              setSaturation(domain.saturation);
+              setSolorSpace(domain.space);
               setName(v.split(SELECT_KEY)[1]);
             }
             return;
           }
           setPointerFromDomain(default_tw_color_domains[v]);
+          setBrightness(0);
+          setHue(0);
+          setSaturation(0);
+          setSolorSpace("rgb");
           setName(v.split("_").join(" "));
         }}
       >
@@ -103,7 +120,19 @@ export const Palettes = () => {
                     key={SELECT_KEY + key}
                     value={SELECT_KEY + key}
                   >
-                    <PreviewPalette domain={domains[key]} name={name} />
+                    <PreviewPalette
+                      domain={{
+                        hex: domains[key].hex,
+                        indices: domains[key].indices,
+                      }}
+                      attrs={{
+                        brightness: domains[key].brightness,
+                        hue: domains[key].hue,
+                        saturation: domains[key].saturation,
+                        space: domains[key].space,
+                      }}
+                      name={name}
+                    />
                   </SelectItem>
                 );
               })
