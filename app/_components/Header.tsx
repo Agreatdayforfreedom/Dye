@@ -42,13 +42,15 @@ export const Header = () => {
             Tailwind
           </button>
           <button
-            onClick={() => setType("custom")}
+            // onClick={() => setType("custom")}
+
             className="p-2 font-semibold rounded-lg text-sm"
             style={
               type == "custom"
                 ? { background: l6, color: getContrastYIQ(l6) }
                 : {}
             }
+            disabled
           >
             Custom
           </button>
