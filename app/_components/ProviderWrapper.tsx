@@ -15,13 +15,14 @@ import { createVariablesStore, VariablesContext } from "@/app/store/variables";
 import { useDomainFromURL } from "@/app/_hooks/useDomainFromURL";
 import { order_by_luminance } from "@/app/_utils/order_by_luminance";
 import { lerp_colors } from "@/app/_utils/lerp_colors";
+import { PointerStage } from "../types";
 
 export const ProviderWrapper = () => {
   const searchParams = useSearchParams();
   const name = searchParams.get("name") || "mellow berry";
+  const stage = (searchParams.get("stage") as PointerStage) || "free";
 
   const mode = useDarkMode((state) => state.mode);
-
   useEffect(() => {
     document.documentElement.className = mode;
   }, [mode]);
@@ -31,6 +32,7 @@ export const ProviderWrapper = () => {
   const pointers_store = useRef(
     createPointersStore({
       pointers: d2p(domain, 11),
+      stage,
     })
   ).current;
 

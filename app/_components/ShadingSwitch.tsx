@@ -5,16 +5,17 @@ import { usePointers } from "@/app/store/pointers";
 
 export const ShadingSwitch = () => {
   const setStage = usePointers((state) => state.setStage);
-
-  const l2 = useGlobalDyes((state) => state.l2);
+  const stage = usePointers((state) => state.stage);
+  const l5 = useGlobalDyes((state) => state.l5);
   const l10 = useGlobalDyes((state) => state.l10);
 
   return (
     <div className="flex items-center space-x-2 mt-2.5">
       <span className="text-sm font-semibold">Free</span>
       <Switch
+        checked={stage === "shade" ? true : false}
         style={{
-          "--primary": l2,
+          "--primary": l5,
           "--secondary": l10,
         }}
         className="

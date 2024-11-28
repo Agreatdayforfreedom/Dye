@@ -4,7 +4,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 
 import { useVariables } from "@/app/store/variables";
-import { usePointersDomain } from "@/app/store/pointers";
+import { usePointers, usePointersDomain } from "@/app/store/pointers";
 import { lerp_colors } from "../_utils/lerp_colors";
 
 export const useLerpColors = () => {
@@ -21,6 +21,7 @@ export const useLerpColors = () => {
   const colorSpace = useVariables((state) => state.colorSpace);
   const hue = useVariables((state) => state.hue);
   const { indices, hex } = usePointersDomain();
+  const stage = usePointers((state) => state.stage);
 
   const params = new URLSearchParams(searchParams);
 
@@ -39,7 +40,7 @@ export const useLerpColors = () => {
   }, [hex, colorSpace, saturation, hue, brightness]);
 
   useEffect(() => {
-    //todo : alidate this
+    params.set("stage", stage);
     params.set("p", JSON.stringify(hex));
     params.set("i", JSON.stringify(indices));
     params.set("b", brightness.toString());
@@ -49,7 +50,7 @@ export const useLerpColors = () => {
     params.set("name", name);
 
     router.replace(`${pathname}?${params.toString()}`);
-  }, [hex, colorSpace, saturation, hue, brightness]);
+  }, [hex, colorSpace, saturation, hue, brightness, stage]);
 
   return { colors, steps };
 };
