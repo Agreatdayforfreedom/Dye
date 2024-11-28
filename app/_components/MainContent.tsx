@@ -11,6 +11,7 @@ import PreviewSection from "./preview_components/PreviewSection";
 
 import { useGlobalDyes } from "@/app/store/global_dyes";
 import { Separator } from "@/components/ui/separator";
+import { ShadingSwitch } from "./ShadingSwitch";
 
 export const MainContent = () => {
   const border_dye = useGlobalDyes((state) => state.l6);
@@ -23,8 +24,9 @@ export const MainContent = () => {
         <section>
           <div className="flex  py-8 justify-end mx-auto">
             <div className="w-full md:w-3/4 mx-auto">
-              <div className="flex space-x-2">
+              <div className="flex space-x-10">
                 <InputName />
+                <ShadingSwitch />
               </div>
               <div className="flex flex-col xs:flex-row xs:items-end mt-2">
                 <InputSaturation />

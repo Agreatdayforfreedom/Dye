@@ -6,11 +6,9 @@ import { usePointers } from "../store/pointers";
 interface Props {
   color: chroma.Color;
   index: number;
-  // setPointer: (index: number) => void;
 }
 
-export const Pointer = ({ color, index }: Props) => {
-  const undoPointer = usePointers((state) => state.undoPointer);
+export const Pointer = ({ color }: Props) => {
   return (
     <MousePointer2
       strokeWidth={0.2}

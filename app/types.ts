@@ -9,3 +9,5 @@ export interface Attributes {
   saturation: number;
   space: chroma.InterpolationMode;
 }
+
+export type PointerStage = "free" | "shade";

@@ -12,7 +12,7 @@ export const InputName = () => {
   const setName = useVariables((state) => state.setName);
 
   return (
-    <div className="flex flex-col w-full mx-2">
+    <div className="flex flex-col mx-2">
       <Label htmlFor="name" className={"font-bold text-foreground ml-2"}>
         Name
       </Label>

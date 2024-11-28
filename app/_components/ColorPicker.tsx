@@ -31,6 +31,7 @@ function onlyNumberHex(hex: string) {
 export const ColorPicker = ({ color, index }: Props) => {
   const [colorInput, setColorInput] = useState<string>("");
   const pointers = usePointers((state) => state.pointers);
+  const stage = usePointers((state) => state.stage);
   const setPointer = usePointers((state) => state.setPointer);
   const undoPointer = usePointers((state) => state.undoPointer);
 
@@ -78,46 +79,48 @@ export const ColorPicker = ({ color, index }: Props) => {
         </span>
       </div>
 
-      <PopoverContent className="w-300">
-        <div className="w-full flex items-center justify-center pb-1">
-          {pointers[index] !== "" ? (
-            <button
-              onClick={() => undoPointer(index)}
-              className="flex items-center text-sm gap-1 p-1 rounded hover:bg-foreground/10"
-            >
-              <Lock size={18} />
-              <span className="font-bold">Locked</span>
-            </button>
-          ) : (
-            <button className="flex items-center text-sm p-1 gap-1">
-              <LockOpen size={18} />
-              <span className="font-bold">Unlocked</span>
-            </button>
-          )}
-        </div>
-        <div className="flex w-full">
-          <HexColorPicker
-            color={chroma(color).hex()}
-            onChange={handleColorPicker}
-          />
-        </div>
-        <div className="relative mt-1">
-          <HashIcon
-            className="absolute stroke-slate-500 top-2.5 left-[5px]"
-            size={15}
-          />
-          <Input
-            className="pl-5 pb-[6px]"
-            onChange={(e) => {
-              if (chroma.valid(e.target.value)) {
-                setPointer(index, e.target.value);
-              }
-              setColorInput(onlyNumberHex(e.target.value));
-            }}
-            value={colorInput}
-          />
-        </div>
-      </PopoverContent>
+      {(stage === "shade" && index === 5) || stage === "free" ? (
+        <PopoverContent className="w-300">
+          <div className="w-full flex items-center justify-center pb-1">
+            {pointers[index] !== "" ? (
+              <button
+                onClick={() => undoPointer(index)}
+                className="flex items-center text-sm gap-1 p-1 rounded hover:bg-foreground/10"
+              >
+                <Lock size={18} />
+                <span className="font-bold">Locked</span>
+              </button>
+            ) : (
+              <button className="flex items-center text-sm p-1 gap-1">
+                <LockOpen size={18} />
+                <span className="font-bold">Unlocked</span>
+              </button>
+            )}
+          </div>
+          <div className="flex w-full">
+            <HexColorPicker
+              color={chroma(color).hex()}
+              onChange={handleColorPicker}
+            />
+          </div>
+          <div className="relative mt-1">
+            <HashIcon
+              className="absolute stroke-slate-500 top-2.5 left-[5px]"
+              size={15}
+            />
+            <Input
+              className="pl-5 pb-[6px]"
+              onChange={(e) => {
+                if (chroma.valid(e.target.value)) {
+                  setPointer(index, e.target.value);
+                }
+                setColorInput(onlyNumberHex(e.target.value));
+              }}
+              value={colorInput}
+            />
+          </div>
+        </PopoverContent>
+      ) : null}
     </Popover>
   );
 };

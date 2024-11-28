@@ -4,14 +4,14 @@ import chroma from "chroma-js";
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { getContrastYIQ } from "@/app/_utils/yiq";
+import { usePointers } from "@/app/store/pointers";
 import { useCopy } from "@/app/_hooks/useCopy";
 
 import { ColorPicker } from "./ColorPicker";
 import { Pointer } from "./Pointer";
-import { getContrastYIQ } from "../_utils/yiq";
 
 interface Props {
   color: chroma.Color;
@@ -21,7 +21,7 @@ interface Props {
 
 export const TwColorCard = ({ color, pointer, index }: Props) => {
   const [isCopied, onCopy] = useCopy(2000);
-
+  const stage = usePointers((state) => state.stage);
   return (
     <div
       className="flex flex-col items-center relative
@@ -29,7 +29,9 @@ export const TwColorCard = ({ color, pointer, index }: Props) => {
           md:h-12        md:w-16 
           h-10         w-full"
     >
-      {pointer ? <Pointer color={color} index={index} /> : null}
+      {stage === "shade" && index !== 5 ? null : pointer ? (
+        <Pointer color={color} index={index} />
+      ) : null}
       <Tooltip delayDuration={0.2}>
         <TooltipTrigger className="cursor-pointer size-full" asChild>
           <div>
