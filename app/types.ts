@@ -8,6 +8,7 @@ export interface Attributes {
   brightness: number;
   saturation: number;
   space: chroma.InterpolationMode;
+  stage: PointerStage;
 }
 
 export type PointerStage = "free" | "shade";

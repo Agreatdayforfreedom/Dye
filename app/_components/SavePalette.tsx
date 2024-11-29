@@ -1,7 +1,7 @@
 import chroma from "chroma-js";
 import React, { useState } from "react";
 
-import { usePointersDomain } from "@/app/store/pointers";
+import { usePointers, usePointersDomain } from "@/app/store/pointers";
 import { useVariables } from "@/app/store/variables";
 import { usePersistentStore } from "@/app/store/persistent_domain";
 import {
@@ -27,6 +27,7 @@ export const SavePalette = () => {
   const mode = useDarkMode((state) => state.mode);
   const name = useVariables((state) => state.name);
   const domain = usePointersDomain();
+  const stage = usePointers((state) => state.stage);
 
   const brightness = useVariables((state) => state.brightness);
   const hue = useVariables((state) => state.hue);
@@ -47,6 +48,7 @@ export const SavePalette = () => {
             hue,
             saturation,
             space: colorSpace,
+            stage,
           });
           toast({
             title: "Palette saved!",
@@ -95,6 +97,7 @@ export const SavePalette = () => {
                 hue,
                 saturation,
                 space: colorSpace,
+                stage,
               });
               toast({
                 title: "Palette updated!",

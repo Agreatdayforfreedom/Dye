@@ -26,11 +26,14 @@ export const Palettes = () => {
   const setHue = useVariables((state) => state.setHue);
   const setSaturation = useVariables((state) => state.setSaturation);
   const setColorSpace = useVariables((state) => state.setColorSpace);
+
   const hue = useVariables((state) => state.hue);
   const saturation = useVariables((state) => state.saturation);
   const brightness = useVariables((state) => state.brightness);
   const colorSpace = useVariables((state) => state.colorSpace);
 
+  const stage = usePointers((state) => state.stage);
+  const setStage = usePointers((state) => state.setStage);
   const setPointerFromDomain = usePointers(
     (state) => state.setPointerFromDomain
   );
@@ -54,12 +57,12 @@ export const Palettes = () => {
           if (v === "0") return;
           if (v.includes(SELECT_KEY) && domains) {
             const domain = domains[v.split(SELECT_KEY)[1]];
-            console.log({ domain });
             if (domain) {
               setPointerFromDomain({
                 hex: domain.hex,
                 indices: domain.indices,
               });
+              setStage(domain.stage);
               setBrightness(domain.brightness);
               setHue(domain.hue);
               setSaturation(domain.saturation);
@@ -68,9 +71,11 @@ export const Palettes = () => {
             }
             return;
           }
+
           setPointerFromDomain(default_tw_color_domains[v]);
           setBrightness(0);
           setHue(0);
+          setStage("free");
           setSaturation(0);
           setColorSpace("rgb");
           setName(v.split("_").join(" "));
@@ -118,6 +123,7 @@ export const Palettes = () => {
                   hue,
                   saturation,
                   space: colorSpace,
+                  stage,
                 }}
                 name={name}
               />
@@ -144,6 +150,7 @@ export const Palettes = () => {
                         hue: domains[key].hue,
                         saturation: domains[key].saturation,
                         space: domains[key].space,
+                        stage: domains[key].stage,
                       }}
                       name={name}
                     />

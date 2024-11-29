@@ -23,7 +23,7 @@ export const ShadingSwitch = () => {
         data-[state=unchecked]:bg-[var(--primary)]
         bg-[var(--primary)]
       "
-        onClick={setStage}
+        onClick={() => setStage()}
       />
       <span className="text-sm font-semibold">500 Shade</span>
     </div>

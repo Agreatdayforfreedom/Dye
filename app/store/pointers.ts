@@ -16,7 +16,7 @@ interface PointersState extends PointersProps {
   setPointer: (index: number, color: string) => void;
   setPointerFromDomain: (domain: DomainLayout) => void;
   undoPointer: (index: number) => void;
-  setStage: () => void;
+  setStage: (stage?: PointerStage) => void;
 }
 
 type PointerStore = ReturnType<typeof createPointersStore>;
@@ -53,17 +53,24 @@ export const createPointersStore = (initProps?: Partial<PointersProps>) => {
         ),
       }));
     },
-    setStage: () =>
-      set((state) => ({
-        stage: state.stage === "free" ? "shade" : "free",
-        pointers: state.pointers.map((p: string, i: number) => {
-          if (state.stage === "free") {
+    setStage: (stage?: PointerStage) =>
+      set((state) => {
+        let det_stage = stage
+          ? stage
+          : state.stage === "free"
+          ? "shade"
+          : "free";
+        return {
+          stage: det_stage,
+          pointers: state.pointers.map((p: string, i: number) => {
+            if (det_stage === "free") {
+              return p ? p : "";
+            }
             let color = p ? p : "#ff00ff"; // pick the near pointer or ???
             return i === 5 ? color : "";
-          }
-          return p ? p : "";
-        }),
-      })),
+          }),
+        };
+      }),
   }));
 };
 
@@ -92,7 +99,6 @@ export const usePointersDomain = (): DomainLayout => {
 
     i++;
   }
-
   if (stage === "free") {
     // set black color as default if there is not pointer on the right side
     if (pointers.at(-1) === "") {

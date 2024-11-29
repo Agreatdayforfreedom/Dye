@@ -25,6 +25,7 @@ export const usePersistentStore = create<PersistentState>()(
               hue: attrs.hue,
               saturation: attrs.saturation,
               space: attrs.space,
+              stage: attrs.stage,
             },
           },
         }),
