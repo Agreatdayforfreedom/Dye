@@ -60,13 +60,20 @@ export const createPointersStore = (initProps?: Partial<PointersProps>) => {
           : state.stage === "free"
           ? "shade"
           : "free";
+
+        let merged = state.pointers.reduce((acc, curr) => {
+          if (curr !== "") {
+            acc = chroma(acc).mix(curr).hex();
+          }
+          return acc;
+        }, "#ffffff");
         return {
           stage: det_stage,
           pointers: state.pointers.map((p: string, i: number) => {
             if (det_stage === "free") {
               return p ? p : "";
             }
-            let color = p ? p : "#ff00ff"; // pick the near pointer or ???
+            let color = merged; // pick the near pointer or ???
             return i === 5 ? color : "";
           }),
         };
