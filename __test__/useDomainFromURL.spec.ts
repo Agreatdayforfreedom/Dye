@@ -92,3 +92,45 @@ test("should return the same params if the domain is valid", () => {
     expect(result.current).toEqual(obj.match);
   }
 });
+
+test("should return the shade domain if the query params stage=shade is present", () => {
+  const cases = [
+    {
+      params: '?p=["#ffffff","#ff0000", "#000000"]&i=[0, 5, 10]&stage=shade',
+      match: { hex: ["#ffffff", "#ff0000", "#000000"], indices: [0, 5, 10] },
+    },
+
+    {
+      params:
+        '?p=["#ffffff","#ff0000", "#000000"]&i=[0, 5, 10]&stage=shade&name=mellow_berry',
+      match: { hex: ["#ffffff", "#ff0000", "#000000"], indices: [0, 5, 10] },
+    },
+    {
+      params: "?stage=shade",
+      match: { hex: ["#00ffff"], indices: [5] },
+    },
+    {
+      params: '?p=["#ffff000000"]&i=[0, 5, 10]&stage=shade&name=mellow_berry',
+      match: { hex: ["#00ffff"], indices: [5] },
+    },
+    {
+      params: '?p=["#ffff0 10]&stage=shade&name=mellow_berry',
+      match: { hex: ["#00ffff"], indices: [5] },
+    },
+    {
+      params: "?stage=shade&p=[%22%23f2ffff%22%2+berry&i=[0%2C5%2C10]",
+      match: { hex: ["#00ffff"], indices: [5] },
+    },
+    {
+      params: "?stage=shade&p=[#ffffff]&i=[0]",
+      match: { hex: ["#00ffff"], indices: [5] },
+    },
+  ];
+
+  for (const test of cases) {
+    setup(test.params);
+
+    const { result } = renderHook(() => useDomainFromURL());
+    expect(result.current).toEqual(test.match);
+  }
+});

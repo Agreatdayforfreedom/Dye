@@ -49,16 +49,20 @@ export const createPointersStore = (initProps?: Partial<PointersProps>) => {
     undoPointer: (index: number) => {
       set((state) => ({
         pointers: state.pointers.map((p: string, i: number) =>
-          i === index ? "" : p
+          state.stage === "free" ? (i === index ? "" : p) : p
         ),
       }));
     },
     setStage: () =>
       set((state) => ({
         stage: state.stage === "free" ? "shade" : "free",
-        pointers: state.pointers.map((p: string, i: number) =>
-          i === 5 ? p : ""
-        ),
+        pointers: state.pointers.map((p: string, i: number) => {
+          if (state.stage === "free") {
+            let color = p ? p : "#ff00ff"; // pick the near pointer or ???
+            return i === 5 ? color : "";
+          }
+          return p ? p : "";
+        }),
       })),
   }));
 };
@@ -70,12 +74,14 @@ export const usePointers = <T>(selector: (state: PointersState) => T) => {
 };
 
 export const usePointersDomain = (): DomainLayout => {
-  let i = 0;
   const pointers = usePointers((state) => state.pointers);
   const stage = usePointers((state) => state.stage);
 
   const indices: Array<number> = [];
   const hex: Array<string> = [];
+
+  let i = 0;
+
   while (i < pointers.length) {
     const color = pointers[i];
 
@@ -102,17 +108,16 @@ export const usePointersDomain = (): DomainLayout => {
   }
 
   if (stage === "shade") {
-    const master_shade = hex[0];
-    // console.log(hex);
-    let lighten_shade = chroma(master_shade).mix("#ffffff", 0.9);
-    let darken_shade = chroma(master_shade).mix("#000000", 0.95);
-    // console.log(lighten_shade);
+    if (hex.length !== 3 && indices.length !== 3) {
+      const master_shade = hex[0] || "#0000ff"; // pick random?
+      let lighten_shade = chroma(master_shade).mix("#ffffff", 0.9);
+      let darken_shade = chroma(master_shade).mix("#000000", 0.95);
 
-    // let darken_shade = ""
-    hex.unshift(chroma(lighten_shade).hex());
-    indices.unshift(0);
-    hex.push(chroma(darken_shade).hex());
-    indices.push(10);
+      hex.unshift(chroma(lighten_shade).hex());
+      indices.unshift(0);
+      hex.push(chroma(darken_shade).hex());
+      indices.push(10);
+    }
   }
 
   return {

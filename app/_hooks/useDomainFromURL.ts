@@ -1,5 +1,5 @@
 import { useSearchParams } from "next/navigation";
-import { DomainLayout } from "../types";
+import { DomainLayout, PointerStage } from "../types";
 import { default_tw_color_domains } from "@/app/constants";
 import chroma from "chroma-js";
 import { validate_hex, validate_indices } from "@/app/_utils/validators";
@@ -12,6 +12,7 @@ export const default_domain: DomainLayout = {
 
 export const useDomainFromURL = (): DomainLayout => {
   const searchParams = useSearchParams();
+  const stage = (searchParams.get("stage") as PointerStage) || "free";
 
   const name = searchParams.get("name") || "mellow berry";
   const as_palette = default_tw_color_domains[name.split(" ").join("_")];
@@ -22,8 +23,8 @@ export const useDomainFromURL = (): DomainLayout => {
     hex = JSON.parse(searchParams.get("p") || "[]");
     indices = JSON.parse(searchParams.get("i") || "[]");
   } catch {
-    hex = default_domain.hex;
-    indices = default_domain.indices;
+    // hex = default_domain.hex;
+    // indices = default_domain.indices;
   }
 
   const valid_hex = validate_hex(hex);
@@ -34,11 +35,16 @@ export const useDomainFromURL = (): DomainLayout => {
     indices: [],
   };
 
-  if (valid_hex && valid_indices && hex.length === indices.length) {
+  const is_valid_domain =
+    valid_hex && valid_indices && hex.length === indices.length;
+  if (is_valid_domain) {
     domain = {
       hex,
       indices,
     };
+  } else if (stage === "shade") {
+    domain.hex = ["#00ffff"];
+    domain.indices = [5];
   } else if (as_palette) {
     domain.hex = as_palette.hex;
     domain.indices = as_palette.indices;
