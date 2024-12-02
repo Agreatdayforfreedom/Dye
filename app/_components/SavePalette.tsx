@@ -26,7 +26,7 @@ import {
   AccordionTrigger,
 } from "../../components/ui/accordion";
 import { Attributes } from "../types";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { tw_color_scale } from "../constants";
 
 export const SavePalette = () => {
   const { setDomain, exists, is_equal } = usePersistentStore();
@@ -183,6 +183,23 @@ const ChangesAccordion = () => {
       saved: saved.stage.toString(),
     },
   };
+  let hex_changes: { [key: string]: string } = {};
+
+  let i = stage === "shade" ? 1 : 0;
+  let n = stage === "shade" ? domain.hex.length - 1 : domain.hex.length;
+  while (i < n) {
+    let plus = "+";
+    let minus = "-";
+    let pkey = `${plus}${tw_color_scale[domain.indices[i]]}`;
+    let mkey = `${minus}${tw_color_scale[domain.indices[i]]}`;
+    const modified = domain.hex[i];
+    const saved = domains[name].hex[i];
+    if (modified !== saved) {
+      hex_changes[pkey] = modified;
+      hex_changes[mkey] = saved;
+    }
+    i++;
+  }
 
   return (
     <Accordion className="w-full" type="single" collapsible>
@@ -213,25 +230,29 @@ const ChangesAccordion = () => {
                 </span>
               );
             })}
-            {/* TODO: both index conditions should be considered ONLY when the stage is setted to shade */}
             {/* FIXME: refactor the whole file */}
-            {/* TODO: match only for valid pointers (the middle pointer in case of shade stage) */}
             <span className="flex flex-col">
-              colors:
-              <span>
-                {domain.hex.map((hex: string, i: number) => {
-                  if (i > 0 && i < domain.hex.length - 1) {
-                    return <span>{hex}</span>;
-                  }
+              colors: [
+              <span className="flex flex-col mx-4">
+                {Object.keys(hex_changes).map((hex: string, i: number) => {
+                  if (hex_changes[hex] === undefined) return null;
+                  return (
+                    <span>
+                      <span
+                        className={cn(
+                          "font-bold",
+                          hex[0] === "-" ? "text-red-500" : "text-green-500"
+                        )}
+                      >
+                        {" "}
+                        {hex[0]}
+                      </span>{" "}
+                      {hex.slice(1)}: {hex_changes[hex]},
+                    </span>
+                  );
                 })}
               </span>
-              <span>
-                {domains[name].hex.map((hex: string, i: number) => {
-                  if (i > 0 && i < domains[name].hex.length - 1) {
-                    return <span>{hex}</span>;
-                  }
-                })}
-              </span>
+              ]
             </span>
           </div>
         </AccordionContent>
