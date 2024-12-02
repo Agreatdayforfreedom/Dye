@@ -61,12 +61,20 @@ export const createPointersStore = (initProps?: Partial<PointersProps>) => {
           ? "shade"
           : "free";
 
-        let merged = state.pointers.reduce((acc, curr) => {
-          if (curr !== "") {
-            acc = chroma(acc).mix(curr).hex();
-          }
-          return acc;
-        }, "#ffffff");
+        const available_pointers = state.pointers.filter((x) => x !== "");
+        let merged = "";
+
+        if (available_pointers.length === 1) {
+          merged = available_pointers[0];
+        } else {
+          merged = state.pointers.reduce((acc, curr) => {
+            if (curr !== "") {
+              acc = chroma(acc).mix(curr).hex();
+            }
+            return acc;
+          }, "#ffffff");
+        }
+
         return {
           stage: det_stage,
           pointers: state.pointers.map((p: string, i: number) => {
