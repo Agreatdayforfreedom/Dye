@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/select";
 import { default_tw_color_domains } from "@/app/constants";
 import { useVariables } from "@/app/store/variables";
-import { DomainLayout } from "@/app/types";
+import { DomainLayout, Attributes } from "@/app/types";
 import { PreviewPalette } from "./PreviewPalette";
 import { usePointers, usePointersDomain } from "@/app/store/pointers";
 import { usePersistentStore } from "@/app/store/persistent_domain";
@@ -38,7 +38,7 @@ export const Palettes = () => {
     (state) => state.setPointerFromDomain
   );
 
-  const { domains, exists } = usePersistentStore();
+  const { domains, is_equal } = usePersistentStore();
   const domain = usePointersDomain();
 
   const asComponentArray = useCallback(() => {
@@ -50,6 +50,7 @@ export const Palettes = () => {
 
     return palettes;
   }, []);
+
   return (
     <div>
       <Select
@@ -112,7 +113,18 @@ export const Palettes = () => {
         <SelectContent className="max-h-[320px]">
           <SelectGroup>
             <SelectLabel>
-              Current {exists(name) ? "(Saved)" : "(Not saved)"}
+              Current{" "}
+              {is_equal(name, {
+                hex: [...domain.hex],
+                indices: [...domain.indices],
+                brightness,
+                hue,
+                saturation,
+                space: colorSpace,
+                stage,
+              } as DomainLayout & Attributes)
+                ? "(Saved)"
+                : "(Not saved)"}
             </SelectLabel>
             <SelectItem className="p-0" value="0">
               <PreviewPalette

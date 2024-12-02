@@ -21,7 +21,7 @@ import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 
 export const SavePalette = () => {
-  const { setDomain, exists } = usePersistentStore();
+  const { setDomain, exists, is_equal } = usePersistentStore();
 
   const { toast } = useToast();
   const mode = useDarkMode((state) => state.mode);
@@ -66,53 +66,67 @@ export const SavePalette = () => {
       </button>
     );
   }
+
   return (
     <AlertDialog>
       <AlertDialogTrigger className="text-bold text-lg p-2 pb-0">
         Save
       </AlertDialogTrigger>
-      <AlertDialogContent style={{ borderColor: chroma(c1)[darken](2).hex() }}>
-        <AlertDialogHeader>
-          <AlertDialogTitle className="font-medium">
-            <span style={{ color: c1 }}>{name}</span> palette already saved.
-          </AlertDialogTitle>
-          <AlertDialogDescription>
-            You already have a palette with the name{" "}
-            <span className="font-semibold" style={{ color: c1 }}>
-              {name}
-            </span>{" "}
-            saved. Are you sure you want to replace it?
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel style={{ borderColor: c1 }}>
-            Cancel
-          </AlertDialogCancel>
-          <AlertDialogAction
-            style={{ background: c1 }}
-            className="hover:opacity-90 transition-all"
-            onClick={() => {
-              setDomain(name, domain, {
-                brightness,
-                hue,
-                saturation,
-                space: colorSpace,
-                stage,
-              });
-              toast({
-                title: "Palette updated!",
-                description: (
-                  <>
-                    <span style={{ color: c1 }}>{name}</span> was updated
-                  </>
-                ),
-              });
-            }}
-          >
-            Replace
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
+      {is_equal(name, {
+        brightness,
+        hex: domain.hex,
+        hue,
+        indices: domain.indices,
+        saturation,
+        space: colorSpace,
+        stage,
+      }) ? null : (
+        <AlertDialogContent
+          style={{ borderColor: chroma(c1)[darken](2).hex() }}
+        >
+          <AlertDialogHeader>
+            <AlertDialogTitle className="font-medium">
+              <span style={{ color: c1 }}>{name}</span> has unsaved changes.
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              You have changes in your palette{" "}
+              <span className="font-semibold" style={{ color: c1 }}>
+                {name}.
+              </span>
+              <br />
+              Are you sure you want to replace it?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel style={{ borderColor: c1 }}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              style={{ background: c1 }}
+              className="hover:opacity-90 transition-all"
+              onClick={() => {
+                setDomain(name, domain, {
+                  brightness,
+                  hue,
+                  saturation,
+                  space: colorSpace,
+                  stage,
+                });
+                toast({
+                  title: "Palette updated!",
+                  description: (
+                    <>
+                      <span style={{ color: c1 }}>{name}</span> was updated
+                    </>
+                  ),
+                });
+              }}
+            >
+              Save
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      )}
     </AlertDialog>
   );
 };
