@@ -27,7 +27,7 @@ export const ChangesAccordion = () => {
   const hue = useVariables((state) => state.hue);
   const saturation = useVariables((state) => state.saturation);
   const colorSpace = useVariables((state) => state.colorSpace);
-  let saved = domains[name];
+  const saved = domains[name];
   const attr_changes: Changes = {
     hue: {
       modified: hue.toString(),
@@ -50,10 +50,7 @@ export const ChangesAccordion = () => {
       saved: saved.stage,
     },
   };
-  let hex_changes = filter_domains(domain, domains[name]);
-
-  let i = stage === "shade" ? 1 : 0;
-  let n = stage === "shade" ? domain.hex.length - 1 : domain.hex.length;
+  const hex_changes = filter_domains(domain, domains[name]);
 
   return (
     <Accordion className="w-full" type="single" collapsible>
@@ -64,10 +61,10 @@ export const ChangesAccordion = () => {
         <AccordionContent>
           <div className="flex flex-col">
             {Object.keys(attr_changes).map((k: string) => {
-              let attr = attr_changes[k as keyof Attributes];
+              const attr = attr_changes[k as keyof Attributes];
               if (attr.saved !== attr.modified) {
                 return (
-                  <div>
+                  <div key={k}>
                     <span>{k}:</span>
                     <span className="font-bold text-red-600">{attr.saved}</span>
                     <span className="font-bold text-xs mx-1 tracking-tighter">
@@ -83,7 +80,7 @@ export const ChangesAccordion = () => {
             <span className="flex flex-col">
               colors: [
               <span className="flex flex-col mx-4">
-                {Object.keys(hex_changes).map((hex: string) => {
+                {Object.keys(hex_changes).map((hex: string, i: number) => {
                   if (hex_changes[hex] === undefined) return null;
 
                   const tw_scale = hex;
@@ -91,7 +88,7 @@ export const ChangesAccordion = () => {
                   const color_minus = hex_changes[hex]["-"];
 
                   // we mark as deleted insead of replaced the 50 and 950 scale because in the UI it isn't replaced, is deleted, i mean, we add the pointers default 0, 10 but in the UI they does not appears if it's in shade stage.
-                  let shade_condition =
+                  const shade_condition =
                     stage === "shade" &&
                     (tw_scale === "50" || tw_scale === "950");
                   if (shade_condition) {
@@ -99,7 +96,7 @@ export const ChangesAccordion = () => {
                   }
                   if (color_plus !== color_minus)
                     return (
-                      <div>
+                      <div key={i}>
                         {color_plus !== undefined ? (
                           <div>
                             <span className="font-bold text-green-500 ">+</span>

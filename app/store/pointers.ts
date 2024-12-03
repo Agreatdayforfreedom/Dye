@@ -55,7 +55,7 @@ export const createPointersStore = (initProps?: Partial<PointersProps>) => {
     },
     setStage: (stage?: PointerStage) =>
       set((state) => {
-        let det_stage = stage
+        const det_stage = stage
           ? stage
           : state.stage === "free"
           ? "shade"
@@ -81,7 +81,7 @@ export const createPointersStore = (initProps?: Partial<PointersProps>) => {
             if (det_stage === "free") {
               return p ? p : "";
             }
-            let color = merged; // pick the near pointer or ???
+            const color = merged; // pick the near pointer or ???
             return i === 5 ? color : "";
           }),
         };
@@ -131,8 +131,8 @@ export const usePointersDomain = (): DomainLayout => {
   if (stage === "shade") {
     if (hex.length !== 3 && indices.length !== 3) {
       const master_shade = hex[0] || "#0000ff"; // pick random?
-      let lighten_shade = chroma(master_shade).mix("#ffffff", 0.9);
-      let darken_shade = chroma(master_shade).mix("#000000", 0.95);
+      const lighten_shade = chroma(master_shade).mix("#ffffff", 0.9);
+      const darken_shade = chroma(master_shade).mix("#000000", 0.95);
 
       hex.unshift(chroma(lighten_shade).hex());
       indices.unshift(0);

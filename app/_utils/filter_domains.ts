@@ -1,7 +1,7 @@
 import { tw_color_scale } from "../constants";
 import { DomainLayout } from "../types";
 
-type XD = {
+type DomainSaveFilter = {
   [key: string]: {
     "+": string | undefined;
     "-": string | undefined;
@@ -9,7 +9,7 @@ type XD = {
 };
 
 export function filter_domains(a: DomainLayout, b: DomainLayout) {
-  let fixed_to_tw_layout: XD = {};
+  const fixed_to_tw_layout: DomainSaveFilter = {};
   let i = 0;
   let j = 0;
 
@@ -40,7 +40,7 @@ export function filter_domains(a: DomainLayout, b: DomainLayout) {
   }
 
   i = 0;
-  let result: XD = {};
+  const result: DomainSaveFilter = {};
   while (i < 11) {
     if (
       fixed_to_tw_layout[tw_color_scale[i]]["-"] !==
