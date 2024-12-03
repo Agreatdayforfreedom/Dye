@@ -10,7 +10,6 @@ import { usePointers, usePointersDomain } from "@/app/store/pointers";
 import { useVariables } from "@/app/store/variables";
 import { usePersistentStore } from "@/app/store/persistent_domain";
 import { Attributes } from "@/app/types";
-import { tw_color_scale } from "@/app/constants";
 import { filter_domains } from "../_utils/filter_domains";
 
 type Changes = {
@@ -88,8 +87,16 @@ export const ChangesAccordion = () => {
                   if (hex_changes[hex] === undefined) return null;
 
                   const tw_scale = hex;
-                  const color_plus = hex_changes[hex]["+"];
+                  let color_plus = hex_changes[hex]["+"];
                   const color_minus = hex_changes[hex]["-"];
+
+                  // we mark as deleted insead of replaced the 50 and 950 scale because in the UI it isn't replaced, is deleted, i mean, we add the pointers default 0, 10 but in the UI they does not appears if it's in shade stage.
+                  let shade_condition =
+                    stage === "shade" &&
+                    (tw_scale === "50" || tw_scale === "950");
+                  if (shade_condition) {
+                    color_plus = undefined;
+                  }
                   if (color_plus !== color_minus)
                     return (
                       <div>

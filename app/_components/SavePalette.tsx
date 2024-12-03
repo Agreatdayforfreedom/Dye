@@ -103,34 +103,36 @@ export const SavePalette = () => {
             Are you sure you want to replace it?
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter>
+        <AlertDialogFooter className="flex flex-col w-full sm:flex sm:items-end">
           <ChangesAccordion />
-          <AlertDialogCancel style={{ borderColor: c1 }}>
-            Cancel
-          </AlertDialogCancel>
-          <AlertDialogAction
-            style={{ background: c1 }}
-            className="hover:opacity-90 transition-all"
-            onClick={() => {
-              setDomain(name, domain, {
-                brightness,
-                hue,
-                saturation,
-                space: colorSpace,
-                stage,
-              });
-              toast({
-                title: "Palette updated!",
-                description: (
-                  <>
-                    <span style={{ color: c1 }}>{name}</span> was updated
-                  </>
-                ),
-              });
-            }}
-          >
-            Save
-          </AlertDialogAction>
+          <div className="flex space-x-2 justify-end">
+            <AlertDialogCancel style={{ borderColor: c1 }}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              style={{ background: c1 }}
+              className="hover:opacity-90 transition-all"
+              onClick={() => {
+                setDomain(name, domain, {
+                  brightness,
+                  hue,
+                  saturation,
+                  space: colorSpace,
+                  stage,
+                });
+                toast({
+                  title: "Palette updated!",
+                  description: (
+                    <>
+                      <span style={{ color: c1 }}>{name}</span> was updated
+                    </>
+                  ),
+                });
+              }}
+            >
+              Save
+            </AlertDialogAction>
+          </div>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
