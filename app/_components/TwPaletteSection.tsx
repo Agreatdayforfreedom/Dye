@@ -35,7 +35,7 @@ export const TwPaletteSection = () => {
   }, [colors]);
 
   return (
-    <div className="flex w-[90%] mx-auto justify-center space-x-1 md:space-x-2">
+    <div className="flex w-[90%] mx-auto justify-center space-x-1 mt-5 md:space-x-2">
       <TooltipProvider>
         {colors.map((color: chroma.Color, i: number) => (
           <TwColorCard

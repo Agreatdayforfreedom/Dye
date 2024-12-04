@@ -27,7 +27,7 @@ export const TwColorCard = ({ color, pointer, index }: Props) => {
       className="flex flex-col items-center relative
        lg:h-[3.25rem] lg:w-20 
           md:h-12        md:w-16 
-          h-10         w-full"
+          h-11         w-full"
     >
       {stage === "shade" && index !== 5 ? null : pointer ? (
         <Pointer color={color} index={index} />
