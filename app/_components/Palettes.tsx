@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useLayoutEffect } from "react";
 
 import {
   Select,
@@ -148,10 +148,13 @@ export const Palettes = () => {
               Object.keys(domains).map((key) => {
                 return (
                   <SelectItem
-                    className="p-0"
+                    className="p-0 focus:bg-transparent"
                     key={SELECT_KEY + key}
                     value={SELECT_KEY + key}
                   >
+                    <h3 className="capitalize font-semibold">
+                      {key.split("_").join(" ")}
+                    </h3>
                     <PreviewPalette
                       domain={{
                         hex: domains[key].hex,
@@ -180,7 +183,14 @@ export const Palettes = () => {
             <SelectLabel>Explore</SelectLabel>
 
             {asComponentArray().map(([keyname, domain]) => (
-              <SelectItem value={keyname} className="p-0" key={keyname}>
+              <SelectItem
+                value={keyname}
+                className="p-0 mt-0.5 focus:bg-transparent"
+                key={keyname}
+              >
+                <h3 className="capitalize font-semibold">
+                  {keyname.split("_").join(" ")}
+                </h3>
                 <PreviewPalette domain={domain} name={keyname} />
               </SelectItem>
             ))}
