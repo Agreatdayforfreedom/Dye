@@ -31,17 +31,24 @@ export const createPointersStore = (initProps?: Partial<PointersProps>) => {
   return createStore<PointersState>()((set) => ({
     ...DEFAULT_PROPS,
     ...initProps,
-    setPointer: (index: number, color: string) =>
-      set((state) => ({
-        pointers:
-          state.stage === "free"
-            ? state.pointers.map((p: string, i: number) =>
-                i === index ? color : p
-              )
-            : state.pointers.map((p: string, i: number) =>
-                i === 5 ? color : ""
-              ),
-      })),
+    setPointer: (index: number, hcolor: string) =>
+      set((state) => {
+        let color = hcolor.toLowerCase();
+        if (color[0] !== "#") {
+          color = "#".concat(color);
+        }
+
+        return {
+          pointers:
+            state.stage === "free"
+              ? state.pointers.map((p: string, i: number) =>
+                  i === index ? color : p
+                )
+              : state.pointers.map((p: string, i: number) =>
+                  i === 5 ? color : ""
+                ),
+        };
+      }),
     setPointerFromDomain: (domain: DomainLayout) =>
       set(() => ({
         pointers: d2p(domain, TW_STEPS),

@@ -109,7 +109,7 @@ export const ColorPicker = ({ color, index }: Props) => {
               size={15}
             />
             <Input
-              className="pl-5 pb-[6px]"
+              className="pl-5 pb-[6px] normal-case"
               onChange={(e) => {
                 if (chroma.valid(e.target.value)) {
                   setPointer(index, e.target.value);
