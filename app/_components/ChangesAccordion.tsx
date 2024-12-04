@@ -77,53 +77,57 @@ export const ChangesAccordion = () => {
                 );
               }
             })}
-            <span className="flex flex-col">
-              colors: [
-              <span className="flex flex-col mx-4">
-                {Object.keys(hex_changes).map((hex: string, i: number) => {
-                  if (hex_changes[hex] === undefined) return null;
+            {Object.keys(hex_changes).length > 0 ? (
+              <div className="flex flex-col">
+                colors: [
+                <div className="flex flex-col mx-4">
+                  {Object.keys(hex_changes).map((hex: string, i: number) => {
+                    if (hex_changes[hex] === undefined) return null;
 
-                  const tw_scale = hex;
-                  let color_plus = hex_changes[hex]["+"];
-                  const color_minus = hex_changes[hex]["-"];
+                    const tw_scale = hex;
+                    let color_plus = hex_changes[hex]["+"];
+                    const color_minus = hex_changes[hex]["-"];
 
-                  // we mark as deleted insead of replaced the 50 and 950 scale because in the UI it isn't replaced, is deleted, i mean, we add the pointers default 0, 10 but in the UI they does not appears if it's in shade stage.
-                  const shade_condition =
-                    stage === "shade" &&
-                    (tw_scale === "50" || tw_scale === "950");
-                  if (shade_condition) {
-                    color_plus = undefined;
-                  }
-                  if (color_plus !== color_minus)
-                    return (
-                      <div key={i}>
-                        {color_plus !== undefined ? (
-                          <div>
-                            <span className="font-bold text-green-500 ">+</span>
-                            <span>
-                              {tw_scale}: {color_plus},
-                            </span>
-                          </div>
-                        ) : null}
-                        {/* prev */}
-                        {color_minus !== undefined ? (
-                          <div>
-                            <span className="font-bold text-red-500 ">-</span>
-                            <span
-                              className={cn(
-                                !color_plus ? "line-through opacity-75" : ""
-                              )}
-                            >
-                              {tw_scale}: {color_minus},
-                            </span>
-                          </div>
-                        ) : null}
-                      </div>
-                    );
-                })}
-              </span>
-              ]
-            </span>
+                    // we mark as deleted insead of replaced the 50 and 950 scale because in the UI it isn't replaced, is deleted, i mean, we add the pointers default 0, 10 but in the UI they does not appears if it's in shade stage.
+                    const shade_condition =
+                      stage === "shade" &&
+                      (tw_scale === "50" || tw_scale === "950");
+                    if (shade_condition) {
+                      color_plus = undefined;
+                    }
+                    if (color_plus !== color_minus)
+                      return (
+                        <div key={i}>
+                          {color_plus !== undefined ? (
+                            <div>
+                              <span className="font-bold text-green-500 ">
+                                +
+                              </span>
+                              <span>
+                                {tw_scale}: {color_plus},
+                              </span>
+                            </div>
+                          ) : null}
+                          {/* prev */}
+                          {color_minus !== undefined ? (
+                            <div>
+                              <span className="font-bold text-red-500 ">-</span>
+                              <span
+                                className={cn(
+                                  !color_plus ? "line-through opacity-75" : ""
+                                )}
+                              >
+                                {tw_scale}: {color_minus},
+                              </span>
+                            </div>
+                          ) : null}
+                        </div>
+                      );
+                  })}
+                </div>
+                ]
+              </div>
+            ) : null}
           </div>
         </AccordionContent>
       </AccordionItem>
