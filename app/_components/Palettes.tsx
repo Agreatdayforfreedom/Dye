@@ -52,37 +52,37 @@ export const Palettes = () => {
   }, []);
 
   return (
-    <div>
-      <Select
-        onValueChange={(v: string) => {
-          if (v === "0") return;
-          if (v.includes(SELECT_KEY) && domains) {
-            const domain = domains[v.split(SELECT_KEY)[1]];
-            if (domain) {
-              setPointerFromDomain({
-                hex: domain.hex,
-                indices: domain.indices,
-              });
-              setStage(domain.stage);
-              setBrightness(domain.brightness);
-              setHue(domain.hue);
-              setSaturation(domain.saturation);
-              setColorSpace(domain.space);
-              setName(v.split(SELECT_KEY)[1]);
-            }
-            return;
+    <Select
+      onValueChange={(v: string) => {
+        if (v === "0") return;
+        if (v.includes(SELECT_KEY) && domains) {
+          const domain = domains[v.split(SELECT_KEY)[1]];
+          if (domain) {
+            setPointerFromDomain({
+              hex: domain.hex,
+              indices: domain.indices,
+            });
+            setStage(domain.stage);
+            setBrightness(domain.brightness);
+            setHue(domain.hue);
+            setSaturation(domain.saturation);
+            setColorSpace(domain.space);
+            setName(v.split(SELECT_KEY)[1]);
           }
+          return;
+        }
 
-          setPointerFromDomain(default_tw_color_domains[v]);
-          setBrightness(0);
-          setHue(0);
-          setStage("free");
-          setSaturation(0);
-          setColorSpace("rgb");
-          setName(v.split("_").join(" "));
-        }}
-      >
-        <SelectTrigger className="space-x-2">
+        setPointerFromDomain(default_tw_color_domains[v]);
+        setBrightness(0);
+        setHue(0);
+        setStage("free");
+        setSaturation(0);
+        setColorSpace("rgb");
+        setName(v.split("_").join(" "));
+      }}
+    >
+      <SelectTrigger className="space-x-2 w-auto">
+        <div className="w-full flex items-center justify-between">
           <span className="capitalize">{name ? name : "Preview palette"}</span>
           {colors.length > 0 && (
             <div className="flex size-6">
@@ -108,95 +108,95 @@ export const Palettes = () => {
               </div>
             </div>
           )}
-        </SelectTrigger>
+        </div>
+      </SelectTrigger>
 
-        <SelectContent className="max-h-[320px]">
-          <SelectGroup>
-            <SelectLabel>
-              Current{" "}
-              {is_equal(name, {
-                hex: [...domain.hex],
-                indices: [...domain.indices],
+      <SelectContent className="max-h-[320px]">
+        <SelectGroup>
+          <SelectLabel>
+            Current{" "}
+            {is_equal(name, {
+              hex: [...domain.hex],
+              indices: [...domain.indices],
+              brightness,
+              hue,
+              saturation,
+              space: colorSpace,
+              stage,
+            } as DomainLayout & Attributes)
+              ? "(Saved)"
+              : "(Not saved)"}
+          </SelectLabel>
+          <SelectItem className="p-0" value="0">
+            <PreviewPalette
+              key={0}
+              domain={domain}
+              attrs={{
                 brightness,
                 hue,
                 saturation,
                 space: colorSpace,
                 stage,
-              } as DomainLayout & Attributes)
-                ? "(Saved)"
-                : "(Not saved)"}
-            </SelectLabel>
-            <SelectItem className="p-0" value="0">
-              <PreviewPalette
-                key={0}
-                domain={domain}
-                attrs={{
-                  brightness,
-                  hue,
-                  saturation,
-                  space: colorSpace,
-                  stage,
-                }}
-                name={name}
-              />
+              }}
+              name={name}
+            />
+          </SelectItem>
+        </SelectGroup>
+
+        <SelectGroup className="border-t mt-2">
+          <SelectLabel>Your palettes</SelectLabel>
+          {Object.keys(domains).length > 0 ? (
+            Object.keys(domains).map((key) => {
+              return (
+                <SelectItem
+                  className="p-0 focus:bg-transparent"
+                  key={SELECT_KEY + key}
+                  value={SELECT_KEY + key}
+                >
+                  <h3 className="capitalize font-semibold">
+                    {key.split("_").join(" ")}
+                  </h3>
+                  <PreviewPalette
+                    domain={{
+                      hex: domains[key].hex,
+                      indices: domains[key].indices,
+                    }}
+                    attrs={{
+                      brightness: domains[key].brightness,
+                      hue: domains[key].hue,
+                      saturation: domains[key].saturation,
+                      space: domains[key].space,
+                      stage: domains[key].stage,
+                    }}
+                    name={name}
+                  />
+                </SelectItem>
+              );
+            })
+          ) : (
+            <span className="block font-semibold text-sm w-[90%] mx-auto">
+              You don&apos;t have any palettes saved yet.
+            </span>
+          )}
+        </SelectGroup>
+
+        <SelectGroup className="border-t mt-2">
+          <SelectLabel>Explore</SelectLabel>
+
+          {asComponentArray().map(([keyname, domain]) => (
+            <SelectItem
+              value={keyname}
+              className="p-0 mt-0.5 focus:bg-transparent"
+              key={keyname}
+            >
+              <h3 className="capitalize font-semibold">
+                {keyname.split("_").join(" ")}
+              </h3>
+              <PreviewPalette domain={domain} name={keyname} />
             </SelectItem>
-          </SelectGroup>
-
-          <SelectGroup className="border-t mt-2">
-            <SelectLabel>Your palettes</SelectLabel>
-            {Object.keys(domains).length > 0 ? (
-              Object.keys(domains).map((key) => {
-                return (
-                  <SelectItem
-                    className="p-0 focus:bg-transparent"
-                    key={SELECT_KEY + key}
-                    value={SELECT_KEY + key}
-                  >
-                    <h3 className="capitalize font-semibold">
-                      {key.split("_").join(" ")}
-                    </h3>
-                    <PreviewPalette
-                      domain={{
-                        hex: domains[key].hex,
-                        indices: domains[key].indices,
-                      }}
-                      attrs={{
-                        brightness: domains[key].brightness,
-                        hue: domains[key].hue,
-                        saturation: domains[key].saturation,
-                        space: domains[key].space,
-                        stage: domains[key].stage,
-                      }}
-                      name={name}
-                    />
-                  </SelectItem>
-                );
-              })
-            ) : (
-              <span className="block font-semibold text-sm w-[90%] mx-auto">
-                You don&apos;t have any palettes saved yet.
-              </span>
-            )}
-          </SelectGroup>
-
-          <SelectGroup className="border-t mt-2">
-            <SelectLabel>Explore</SelectLabel>
-
-            {asComponentArray().map(([keyname, domain]) => (
-              <SelectItem
-                value={keyname}
-                className="p-0 mt-0.5 focus:bg-transparent"
-                key={keyname}
-              >
-                <h3 className="capitalize font-semibold">
-                  {keyname.split("_").join(" ")}
-                </h3>
-                <PreviewPalette domain={domain} name={keyname} />
-              </SelectItem>
-            ))}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-    </div>
+          ))}
+        </SelectGroup>
+      </SelectContent>
+    </Select>
   );
 };

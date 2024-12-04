@@ -12,13 +12,15 @@ export const InputSaturation = () => {
   const setSaturation = useVariables((state) => state.setSaturation);
 
   return (
-    <div className="flex flex-col mx-2">
-      <Label htmlFor="saturation" className="font-bold text-foreground ml-2">
+    <div className="flex flex-col w-full mx-2">
+      <Label
+        htmlFor="saturation"
+        className="font-bold text-foreground ml-2 mb-1"
+      >
         Saturation
       </Label>
       <Input
         id="saturation"
-        className="xs:max-w-48 m-1"
         style={
           border_shadow_dye
             ? {

@@ -22,16 +22,5 @@ export const ColorContainer = () => {
     palette = <CustomPaletteSection />;
   }
 
-  return (
-    <div>
-      {palette}
-      <div className="flex justify-between w-[80%] mx-auto mt-14">
-        <Palettes />
-        <div className="flex items-end">
-          <SavePalette />
-          <CopyPalette />
-        </div>
-      </div>
-    </div>
-  );
+  return <div>{palette}</div>;
 };
