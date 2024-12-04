@@ -89,7 +89,7 @@ export const CopyPalette = () => {
             </>
           )}
         </h2>
-        <div className="w-full border rounded pb-2">
+        <div className="w-full overflow-hidden border rounded pb-2">
           <div className="p-4 flex justify-between">
             <div className="flex space-x-2">
               <button
@@ -123,7 +123,7 @@ export const CopyPalette = () => {
             </button>
           </div>
 
-          <pre className="text-sm text-foreground mx-4 font-semibold">
+          <pre className="text-sm  overflow-x-scroll no-scrollbar text-foreground mx-4 font-semibold">
             {codeFormatted}
           </pre>
         </div>

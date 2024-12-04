@@ -90,7 +90,7 @@ export const SavePalette = () => {
       </AlertDialogTrigger>
 
       <AlertDialogContent style={{ borderColor: chroma(c1)[darken](2).hex() }}>
-        <AlertDialogHeader>
+        <AlertDialogHeader className="text-left">
           <AlertDialogTitle className="font-medium">
             <span style={{ color: c1 }}>{name}</span> has unsaved changes.
           </AlertDialogTitle>
@@ -103,9 +103,9 @@ export const SavePalette = () => {
             Are you sure you want to replace it?
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter className="flex flex-col w-full sm:flex sm:items-end">
+        <AlertDialogFooter className="flex flex-col items-center w-full sm:flex sm:items-end">
           <ChangesAccordion />
-          <div className="flex space-x-2 justify-end">
+          <div className="flex mt-4 flex-col-reverse w-full sm:flex sm:flex-row sm:w-auto sm:space-x-2 sm:justify-end">
             <AlertDialogCancel style={{ borderColor: c1 }}>
               Cancel
             </AlertDialogCancel>
