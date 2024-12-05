@@ -20,10 +20,10 @@ export const Randomize = () => {
       return;
     }
 
-    let indices = [];
-    let hex = [];
+    const indices = [];
+    const hex = [];
     let i = 0;
-    let n = 11;
+    const n = 11;
     while (i < n) {
       if (Math.random() < 0.26666) {
         indices.push(i);

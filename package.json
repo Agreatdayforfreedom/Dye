@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "test": "vitest",
+    "test:once": "vitest run",
     "prepare": "husky"
   },
   "dependencies": {
