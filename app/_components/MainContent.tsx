@@ -1,5 +1,8 @@
 import React from "react";
 
+import { useGlobalDyes } from "@/app/store/global_dyes";
+import { Separator } from "@/components/ui/separator";
+
 import { ColorContainer } from "./ColorContainer";
 import { SpaceSelector } from "./SpaceSelector";
 import { InputName } from "./InputName";
@@ -8,13 +11,11 @@ import { InputHue } from "./InputHue";
 import { InputBrightness } from "./InputBrightness";
 import { Header } from "./Header";
 import PreviewSection from "./preview_components/PreviewSection";
-
-import { useGlobalDyes } from "@/app/store/global_dyes";
-import { Separator } from "@/components/ui/separator";
 import { ShadingSwitch } from "./ShadingSwitch";
 import { SavePalette } from "./SavePalette";
 import { CopyPalette } from "./CopyPalette";
 import { Palettes } from "./Palettes";
+import { Randomize } from "./Randomize";
 
 export const MainContent = () => {
   const border_dye = useGlobalDyes((state) => state.l6);
@@ -27,9 +28,24 @@ export const MainContent = () => {
         <section>
           <div className="flex py-8 justify-end mx-auto max-w-[95%]">
             <div className="flex flex-col w-full gap-2 md:w-3/4 md:mx-auto">
-              <div className="flex justify-between items-center sm:justify-normal space-x-4">
-                <InputName />
-                <ShadingSwitch />
+              <div
+                className="
+              flex flex-col-reverse gap-4 justify-between items-end 
+              sm:justify-normal sm:flex-row 
+              space-x-4 "
+              >
+                <div className="flex w-full">
+                  <InputName />
+                </div>
+                <div
+                  className="flex border
+                  distinct-rounded
+                  p-2 
+                 items-center justify-around w-full "
+                >
+                  <ShadingSwitch />
+                  <Randomize />
+                </div>
               </div>
               <div className="flex flex-col gap-2 xs:flex-row">
                 <div className="flex w-full space-x-2">

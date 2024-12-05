@@ -18,7 +18,7 @@ export const InputName = () => {
       </Label>
       <Input
         id="name"
-        className="xs:max-w-80 w-full"
+        className="sm:max-w-80 w-full"
         style={
           border_shadow_dye
             ? {

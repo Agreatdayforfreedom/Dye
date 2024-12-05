@@ -9,6 +9,7 @@ import { usePointers } from "@/app/store/pointers";
 import { order_by_luminance } from "@/app/_utils/order_by_luminance";
 
 import { TwColorCard } from "./TwColorCard";
+import { Shuffle } from "lucide-react";
 
 export const TwPaletteSection = () => {
   const { colors } = useLerpColors();

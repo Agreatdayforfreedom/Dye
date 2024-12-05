@@ -10,7 +10,7 @@ export const ShadingSwitch = () => {
   const l10 = useGlobalDyes((state) => state.l10);
 
   return (
-    <div className="flex items-center space-x-2 mt-4 mx-2 w-full">
+    <div className="flex items-center space-x-2 mx-2 justify-center">
       <span className="text-sm font-semibold">Free</span>
       <Switch
         checked={stage === "shade" ? true : false}

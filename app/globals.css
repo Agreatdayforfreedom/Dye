@@ -153,6 +153,13 @@
   display: none;
 }
 
+.distinct-rounded {
+  border-top-left-radius: 12px 140px;
+  border-top-right-radius: 23px 130px;
+  border-bottom-left-radius: 110px 19px;
+  border-bottom-right-radius: 120px 24px;
+}
+
 /* Hide scrollbar for IE, Edge and Firefox */
 .no-scrollbar {
   -ms-overflow-style: none; /* IE and Edge */
