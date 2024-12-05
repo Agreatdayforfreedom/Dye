@@ -12,11 +12,8 @@ export const InputSaturation = () => {
   const setSaturation = useVariables((state) => state.setSaturation);
 
   return (
-    <div className="flex flex-col w-full mx-2">
-      <Label
-        htmlFor="saturation"
-        className="font-bold text-foreground ml-2 mb-1"
-      >
+    <div className="flex flex-col w-full">
+      <Label htmlFor="saturation" className="font-bold text-foreground mb-1">
         Saturation
       </Label>
       <Input

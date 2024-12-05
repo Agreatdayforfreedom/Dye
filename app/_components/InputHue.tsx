@@ -12,8 +12,8 @@ export const InputHue = () => {
   const setHue = useVariables((state) => state.setHue);
 
   return (
-    <div className="flex flex-col w-full mx-2">
-      <Label htmlFor="hue" className="font-bold text-foreground ml-2 mb-1">
+    <div className="flex flex-col w-full">
+      <Label htmlFor="hue" className="font-bold text-foreground mb-1">
         Hue
       </Label>
       <Input

@@ -12,11 +12,8 @@ export const InputBrightness = () => {
   const setBrightness = useVariables((state) => state.setBrightness);
 
   return (
-    <div className="flex flex-col w-full mx-2">
-      <Label
-        htmlFor="brightness"
-        className="font-bold text-foreground ml-2 mb-1"
-      >
+    <div className="flex flex-col w-full">
+      <Label htmlFor="brightness" className="font-bold text-foreground mb-1">
         Brightness
       </Label>
       <Input

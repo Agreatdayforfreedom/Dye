@@ -25,18 +25,18 @@ export const MainContent = () => {
 
       <main className="space-y-4">
         <section>
-          <div className="flex py-8 justify-end mx-auto">
+          <div className="flex py-8 justify-end mx-auto max-w-[95%]">
             <div className="flex flex-col w-full gap-2 md:w-3/4 md:mx-auto">
-              <div className="flex justify-between sm:justify-normal">
+              <div className="flex justify-between items-center sm:justify-normal space-x-4">
                 <InputName />
                 <ShadingSwitch />
               </div>
               <div className="flex flex-col gap-2 xs:flex-row">
-                <div className="flex w-full">
+                <div className="flex w-full space-x-2">
                   <InputSaturation />
                   <InputBrightness />
                 </div>
-                <div className="flex w-full">
+                <div className="flex w-full space-x-2">
                   <InputHue />
                   <SpaceSelector />
                 </div>
