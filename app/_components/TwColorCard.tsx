@@ -43,7 +43,7 @@ export const TwColorCard = ({ color, pointer, index }: Props) => {
             background: color.darken(2).hex(),
             color: getContrastYIQ(color.darken(2).hex()),
           }}
-          className="cursor-pointer"
+          className="cursor-pointer hidden lg:flex"
           onClick={() => onCopy(color.hex())}
         >
           {isCopied ? <span className="font-bold">Copied!</span> : color.hex()}
