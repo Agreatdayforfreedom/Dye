@@ -8,7 +8,11 @@ const ToggleDarkMode = () => {
 
   return (
     <button onClick={toggleDarkMode}>
-      {mode === "dark" ? <MoonIcon /> : <SunIcon />}
+      {mode === "dark" ? (
+        <MoonIcon className="hover:-rotate-12 transition-transform" />
+      ) : (
+        <SunIcon className="hover:rotate-[65deg] transition-transform" />
+      )}
     </button>
   );
 };
