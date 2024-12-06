@@ -60,7 +60,7 @@ export const MainContent = () => {
             </div>
           </div>
           <ColorContainer />
-          <div className="flex justify-between w-[90%] sm:3/4 mx-auto items-center mt-14">
+          <div className="flex flex-col space-y-3 xs:space-y-0 xs:flex-row justify-between w-[90%] sm:3/4 mx-auto items-center mt-14">
             <Palettes />
             <div className="flex items-end">
               <SavePalette />

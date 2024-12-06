@@ -86,7 +86,7 @@ export const CopyPalette = () => {
 
   return (
     <Dialog>
-      <DialogTrigger className="text-bold text-lg">
+      <DialogTrigger asChild>
         <Button
           variant="border"
           style={{
