@@ -32,6 +32,12 @@ export const Randomize = () => {
       i++;
     }
 
+    // make sure that the first and last pointers always be in the first and last indices.
+    if (indices.length > 1) {
+      indices[0] = 0;
+      indices[indices.length - 1] = 10;
+    }
+
     setPointerFromDomain({
       indices,
       hex,
