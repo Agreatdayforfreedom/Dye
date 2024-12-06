@@ -1,5 +1,5 @@
 import chroma from "chroma-js";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { usePointers, usePointersDomain } from "@/app/store/pointers";
 import { useVariables } from "@/app/store/variables";
@@ -19,9 +19,12 @@ import { useGlobalDyes } from "@/app/store/global_dyes";
 import { useDarkMode } from "@/app/store/dark_mode";
 import { useToast } from "@/hooks/use-toast";
 import { ChangesAccordion } from "./ChangesAccordion";
+import { Button } from "../../components/ui/button";
 
 export const SavePalette = () => {
   const { setDomain, exists, is_equal } = usePersistentStore();
+
+  const [open, setOpen] = useState(false);
 
   const { toast } = useToast();
   const mode = useDarkMode((state) => state.mode);
@@ -34,59 +37,78 @@ export const SavePalette = () => {
   const saturation = useVariables((state) => state.saturation);
   const colorSpace = useVariables((state) => state.colorSpace);
 
-  const darken = mode === "dark" ? "darken" : "brighten"; //todo
+  const darken = mode === "dark" ? "darken" : "brighten";
   const l2 = useGlobalDyes((state) => state.l2);
   const l10 = useGlobalDyes((state) => state.l10);
   const c1 = darken === "darken" ? l2 : l10;
 
-  if (!exists(name)) {
-    return (
-      <button
-        onClick={() => {
-          setDomain(name, domain, {
-            brightness,
-            hue,
-            saturation,
-            space: colorSpace,
-            stage,
-          });
-          toast({
-            title: "Palette saved!",
-            description: (
-              <>
-                You now have <span style={{ color: c1 }}>{name}</span> in your
-                kit!
-              </>
-            ),
-          });
-        }}
-        className="text-bold text-lg p-2 pb-0"
-      >
-        Save
-      </button>
-    );
+  function onClick(dialog: boolean = false) {
+    if (
+      is_equal(name, {
+        brightness,
+        hex: domain.hex,
+        hue,
+        indices: domain.indices,
+        saturation,
+        space: colorSpace,
+        stage,
+      })
+    ) {
+      return;
+    }
+    if (!exists(name) && !open) {
+      setDomain(name, domain, {
+        brightness,
+        hue,
+        saturation,
+        space: colorSpace,
+        stage,
+      });
+      toast({
+        title: "Palette saved!",
+        description: (
+          <>
+            You now have <span style={{ color: c1 }}>{name}</span> in your kit!
+          </>
+        ),
+      });
+    } else {
+      setOpen(true);
+      if (dialog) {
+        setDomain(name, domain, {
+          brightness,
+          hue,
+          saturation,
+          space: colorSpace,
+          stage,
+        });
+        toast({
+          title: "Palette updated!",
+          description: (
+            <>
+              <span style={{ color: c1 }}>{name}</span> was updated
+            </>
+          ),
+        });
+        setOpen(false);
+      }
+    }
   }
-  if (
-    is_equal(name, {
-      brightness,
-      hex: domain.hex,
-      hue,
-      indices: domain.indices,
-      saturation,
-      space: colorSpace,
-      stage,
-    })
-  ) {
-    return (
-      <button disabled className="text-bold text-lg p-2 pb-0">
-        Save
-      </button>
-    );
-  }
+
   return (
-    <AlertDialog>
-      <AlertDialogTrigger className="text-bold text-lg p-2 pb-0">
-        Save
+    <AlertDialog open={open}>
+      <AlertDialogTrigger asChild>
+        <Button
+          onClick={() => onClick()}
+          variant="border"
+          style={{
+            "--primary": c1,
+            "--secondary": chroma(c1).alpha(0.1).hex(),
+          }}
+          className="hover:before:border-[var(--primary)] hover:after:border-[var(--primary)] active:bg-[var(--secondary)]"
+        >
+          Save
+        </Button>
       </AlertDialogTrigger>
 
       <AlertDialogContent style={{ borderColor: chroma(c1)[darken](2).hex() }}>
@@ -106,29 +128,16 @@ export const SavePalette = () => {
         <AlertDialogFooter className="flex flex-col items-center w-full sm:flex sm:items-end">
           <ChangesAccordion />
           <div className="flex mt-4 flex-col-reverse w-full sm:flex sm:flex-row sm:w-auto sm:space-x-2 sm:justify-end">
-            <AlertDialogCancel style={{ borderColor: c1 }}>
+            <AlertDialogCancel
+              style={{ borderColor: c1 }}
+              onClick={() => setOpen(false)}
+            >
               Cancel
             </AlertDialogCancel>
             <AlertDialogAction
               style={{ background: c1 }}
               className="hover:opacity-90 transition-all"
-              onClick={() => {
-                setDomain(name, domain, {
-                  brightness,
-                  hue,
-                  saturation,
-                  space: colorSpace,
-                  stage,
-                });
-                toast({
-                  title: "Palette updated!",
-                  description: (
-                    <>
-                      <span style={{ color: c1 }}>{name}</span> was updated
-                    </>
-                  ),
-                });
-              }}
+              onClick={() => onClick(true)}
             >
               Save
             </AlertDialogAction>

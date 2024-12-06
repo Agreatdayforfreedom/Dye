@@ -7,6 +7,9 @@ import { useCopy } from "@/app/_hooks/useCopy";
 import { f_oklch, f_rgb } from "@/app/_utils/formatters";
 import { useGlobalDyes } from "@/app/store/global_dyes";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Button } from "../../components/ui/button";
+import chroma from "chroma-js";
+import { useDarkMode } from "../store/dark_mode";
 
 interface TwPalette {
   [key: string]: string;
@@ -20,12 +23,19 @@ export const CopyPalette = () => {
   const [selected, setSelected] = useState<CopySpaces>("rgb");
   const [codeFormatted, setCodeFormatted] = useState<string>("");
 
+  const mode = useDarkMode((state) => state.mode);
+
   const border_dye = useGlobalDyes((state) => state.l6);
   const name = useVariables((state) => state.name);
   const colors = useVariables((state) => state.colors);
   const type = useVariables((state) => state.type);
 
   const [isCopied, onCopy] = useCopy();
+
+  const darken = mode === "dark" ? "darken" : "brighten";
+  const l2 = useGlobalDyes((state) => state.l2);
+  const l10 = useGlobalDyes((state) => state.l10);
+  const c1 = darken === "darken" ? l2 : l10;
 
   useEffect(() => {
     const body: any = {
@@ -76,7 +86,18 @@ export const CopyPalette = () => {
 
   return (
     <Dialog>
-      <DialogTrigger className="text-bold text-lg">Export</DialogTrigger>
+      <DialogTrigger className="text-bold text-lg">
+        <Button
+          variant="border"
+          style={{
+            "--primary": c1,
+            "--secondary": chroma(c1).alpha(0.1).hex(),
+          }}
+          className="hover:before:border-[var(--primary)] hover:after:border-[var(--primary)] active:bg-[var(--secondary)]"
+        >
+          Export
+        </Button>
+      </DialogTrigger>
       <DialogContent>
         <h2 className="text-semibold p-2">
           {type == "tw" ? (
