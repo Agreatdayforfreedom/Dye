@@ -1,16 +1,9 @@
-import { afterEach, expect, Mock, test, vi } from "vitest";
+import { expect, Mock, test, vi } from "vitest";
 import { renderHook } from "@testing-library/react-hooks";
 import { useSearchParams } from "next/navigation";
 
-import { validate_hex, validate_indices } from "@/app/_utils/validators";
-
-import {
-  default_domain,
-  useDomainFromURL,
-} from "@/app/_hooks/useDomainFromURL";
-import { default_tw_color_domains } from "../app/constants";
-import { DomainLayout } from "../app/types";
-import { match } from "assert";
+import { useDomainFromURL } from "@/app/_hooks/useDomainFromURL";
+import { default_domain, default_tw_color_domains } from "@/app/constants";
 
 vi.mock("next/navigation", () => ({
   useSearchParams: vi.fn(),

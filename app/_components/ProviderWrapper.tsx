@@ -12,13 +12,22 @@ import {
 import { d2p } from "@/app/_utils/d2p";
 import { MainContent } from "./MainContent";
 import { createVariablesStore, VariablesContext } from "@/app/store/variables";
-import { useDomainFromURL } from "@/app/_hooks/useDomainFromURL";
+// import { useDomainFromURL } from "@/app/_hooks/useDomainFromURL";
 import { order_by_luminance } from "@/app/_utils/order_by_luminance";
 import { lerp_colors } from "@/app/_utils/lerp_colors";
-import { PointerStage } from "../types";
+import { DomainLayout, PointerStage } from "../types";
 
-export const ProviderWrapper = () => {
-  const searchParams = useSearchParams();
+interface Props {
+  domain: DomainLayout;
+}
+
+export const ProviderWrapper = ({ domain }: Props) => {
+  // const searchParams = useSearchParams();
+  const searchParams = {
+    get() {
+      return undefined;
+    },
+  } as any;
   const name = searchParams.get("name") || "mellow berry";
   const stage = (searchParams.get("stage") as PointerStage) || "free";
 
@@ -27,7 +36,8 @@ export const ProviderWrapper = () => {
     document.documentElement.className = mode;
   }, [mode]);
 
-  const domain = useDomainFromURL();
+  // const domain = useDomainFromURL();
+  console.log(domain);
 
   const pointers_store = useRef(
     createPointersStore({

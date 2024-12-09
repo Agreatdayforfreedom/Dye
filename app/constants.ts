@@ -1,5 +1,11 @@
 import { DomainLayout } from "./types";
 
+// this maybe can be randomly generated, or selected from tw_color_domains, idk.
+export const default_domain: DomainLayout = {
+  hex: ["#cccccc", "#23901e"],
+  indices: [0, 10],
+};
+
 export const tw_color_scale = [
   "50",
   "100",
