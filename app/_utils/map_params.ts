@@ -1,10 +1,5 @@
 import chroma from "chroma-js";
-import { Attributes, DomainLayout, PointerStage } from "../types";
-
-type PossibleParamKeys = "p" | "i" | "stage" | "b" | "s" | "h" | "cs" | "name";
-export type Params = {
-  [key in PossibleParamKeys]: string | undefined;
-};
+import { Attributes, DomainLayout, Params, PointerStage } from "@/app/types";
 
 export function map_params(params: Params): DomainLayout & Attributes {
   const domain: DomainLayout = {
@@ -12,6 +7,7 @@ export function map_params(params: Params): DomainLayout & Attributes {
     indices: JSON.parse(params.i || "[]"),
   };
   const attr: Attributes = {
+    name: params.name || "None",
     brightness: parseInt(params.b || "0"),
     saturation: parseInt(params.s || "0"),
     hue: parseInt(params.h || "0"),

@@ -1,7 +1,5 @@
 "use client";
-import chroma from "chroma-js";
 import { useEffect, useRef } from "react";
-import { useSearchParams } from "next/navigation";
 
 import { useDarkMode } from "@/app/store/dark_mode";
 import { createPointersStore, PointersContext } from "@/app/store/pointers";
@@ -12,53 +10,35 @@ import {
 import { d2p } from "@/app/_utils/d2p";
 import { MainContent } from "./MainContent";
 import { createVariablesStore, VariablesContext } from "@/app/store/variables";
-// import { useDomainFromURL } from "@/app/_hooks/useDomainFromURL";
 import { order_by_luminance } from "@/app/_utils/order_by_luminance";
 import { lerp_colors } from "@/app/_utils/lerp_colors";
-import { DomainLayout, PointerStage } from "../types";
+import { Attributes, DomainLayout } from "@/app/types";
 
 interface Props {
   domain: DomainLayout;
+  attrs: Attributes;
 }
 
-export const ProviderWrapper = ({ domain }: Props) => {
-  // const searchParams = useSearchParams();
-  const searchParams = {
-    get() {
-      return undefined;
-    },
-  } as any;
-  const name = searchParams.get("name") || "mellow berry";
-  const stage = (searchParams.get("stage") as PointerStage) || "free";
-
+export const ProviderWrapper = ({ domain, attrs }: Props) => {
   const mode = useDarkMode((state) => state.mode);
   useEffect(() => {
     document.documentElement.className = mode;
   }, [mode]);
 
-  // const domain = useDomainFromURL();
-  console.log(domain);
-
   const pointers_store = useRef(
     createPointersStore({
       pointers: d2p(domain, 11),
-      stage,
+      stage: attrs.stage,
     })
   ).current;
 
-  const colorSpace: chroma.InterpolationMode = (searchParams.get("cs") ||
-    "rgb") as chroma.InterpolationMode;
-
-  const brightness = parseInt(searchParams.get("b") || "0", 10) || 0;
-  const saturation = parseInt(searchParams.get("s") || "0", 10) || 0;
-  const hue = parseInt(searchParams.get("h") || "0", 10) || 0;
-  //todo lerp stage=shade here to avoid color changes on page load
+  //todo lerp stage=shade here to avoid color changes on page load or move to ssr
   const colors = lerp_colors(
     domain,
-    colorSpace,
-    hue,
-    brightness,
-    saturation,
+    attrs.space,
+    attrs.hue,
+    attrs.brightness,
+    attrs.saturation,
     11
   );
 
@@ -83,11 +63,7 @@ export const ProviderWrapper = ({ domain }: Props) => {
   const variables_store = useRef(
     createVariablesStore({
       colors,
-      name,
-      brightness,
-      saturation,
-      hue,
-      colorSpace,
+      ...attrs,
     })
   ).current;
   return (
