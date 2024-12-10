@@ -4,8 +4,6 @@ import { validate_domain } from "./_utils/validators";
 import { Attributes, Params } from "./types";
 
 export default function Home({ searchParams }: { searchParams: Params }) {
-  console.log({ searchParams });
-
   const mapped = map_params(searchParams);
 
   const domain = validate_domain(mapped.hex, mapped.indices, mapped.stage);

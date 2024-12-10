@@ -61,8 +61,8 @@ export const ChangesAccordion = () => {
         <AccordionContent>
           <div className="flex flex-col">
             {Object.keys(attr_changes).map((k: string) => {
-              const attr = attr_changes[k as keyof Attributes];
-              if (attr.saved !== attr.modified) {
+              const attr = attr_changes[k as keyof Omit<Attributes, "name">];
+              if (attr?.saved !== attr?.modified) {
                 return (
                   <div key={k}>
                     <span>{k}:</span>
