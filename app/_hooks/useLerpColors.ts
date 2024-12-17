@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useVariables } from "@/app/store/variables";
 import { usePointers, usePointersDomain } from "@/app/store/pointers";
 import { lerp_colors } from "../_utils/lerp_colors";
+import debounce from "../_utils/debounce";
 
 export const useLerpColors = () => {
   const pathname = usePathname();

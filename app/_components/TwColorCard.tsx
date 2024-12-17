@@ -32,11 +32,11 @@ export const TwColorCard = ({ color, pointer, index }: Props) => {
       {stage === "shade" && index !== 5 ? null : pointer ? (
         <Pointer color={color} index={index} />
       ) : null}
-      <Tooltip delayDuration={0.2}>
+      {/* <Tooltip delayDuration={0.2}>
         <TooltipTrigger className="cursor-pointer size-full" asChild>
-          <div>
-            <ColorPicker color={color.hex()} index={index} />
-          </div>
+          <div> */}
+      <ColorPicker color={color.hex()} index={index} />
+      {/* </div>
         </TooltipTrigger>
         <TooltipContent
           style={{
@@ -48,7 +48,7 @@ export const TwColorCard = ({ color, pointer, index }: Props) => {
         >
           {isCopied ? <span className="font-bold">Copied!</span> : color.hex()}
         </TooltipContent>
-      </Tooltip>
+      </Tooltip> */}
     </div>
   );
 };
