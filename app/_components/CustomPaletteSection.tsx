@@ -9,7 +9,7 @@ import { luminance } from "../_utils/luminance";
 import { order_by_luminance } from "../_utils/order_by_luminance";
 
 export const CustomPaletteSection = () => {
-  const { colors, steps } = useLerpColors();
+  const { colors } = useLerpColors();
   const setDyes = useGlobalDyes((state) => state.setDyes);
   const setColors = useVariables((state) => state.setColors);
 
@@ -33,7 +33,7 @@ export const CustomPaletteSection = () => {
   }, [colors]);
 
   return (
-    <div style={{ width: 48 * steps }} className="flex mx-auto ">
+    <div style={{ width: 48 }} className="flex mx-auto ">
       {colors.map((color: chroma.Color, i: number) => (
         <CustomColorCard key={i} color={color} />
       ))}

@@ -62,7 +62,7 @@ export const Palettes = () => {
               hex: domain.hex,
               indices: domain.indices,
             });
-            setStage(domain.stage);
+            setStage(null, domain.stage);
             setBrightness(domain.brightness);
             setHue(domain.hue);
             setSaturation(domain.saturation);
@@ -75,7 +75,7 @@ export const Palettes = () => {
         setPointerFromDomain(default_tw_color_domains[v]);
         setBrightness(0);
         setHue(0);
-        setStage("free");
+        setStage(null, "free");
         setSaturation(0);
         setColorSpace("rgb");
         setName(v.split("_").join(" "));

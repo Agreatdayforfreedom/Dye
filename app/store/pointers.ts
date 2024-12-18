@@ -17,7 +17,7 @@ interface PointersState extends PointersProps {
   setPointerFromDomain: (domain: DomainLayout) => void;
   undoPointer: (index: number) => void;
   setStage: (
-    cb?: (updatedState: PointersState) => void,
+    cb?: ((updatedState: PointersState) => void) | null,
     stage?: PointerStage
   ) => void;
 }
@@ -64,7 +64,7 @@ export const createPointersStore = (initProps?: Partial<PointersProps>) => {
       }));
     },
     setStage: (
-      cb?: (updatedState: PointersState) => void,
+      cb?: ((updatedState: PointersState) => void) | null,
       stage?: PointerStage
     ) =>
       set((state) => {
