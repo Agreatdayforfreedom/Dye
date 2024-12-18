@@ -3,7 +3,6 @@ import React from "react";
 import { useGlobalDyes } from "@/app/store/global_dyes";
 import { Separator } from "@/components/ui/separator";
 
-import { ColorContainer } from "./ColorContainer";
 import { SpaceSelector } from "./SpaceSelector";
 import { InputName } from "./InputName";
 import { InputSaturation } from "./InputSaturation";
@@ -16,6 +15,7 @@ import { SavePalette } from "./SavePalette";
 import { CopyPalette } from "./CopyPalette";
 import { Palettes } from "./Palettes";
 import { Randomize } from "./Randomize";
+import { TwPaletteSection } from "./TwPaletteSection";
 
 export const MainContent = () => {
   const border_dye = useGlobalDyes((state) => state.l6);
@@ -59,9 +59,9 @@ export const MainContent = () => {
               </div>
             </div>
           </div>
-          <ColorContainer />
+          <TwPaletteSection />
           <div className="flex flex-col space-y-3 xs:space-y-0 xs:flex-row justify-between w-[90%] sm:3/4 mx-auto items-center mt-14">
-            <Palettes />
+            {/* <Palettes /> */}
             <div className="flex items-end">
               <SavePalette />
               <CopyPalette />

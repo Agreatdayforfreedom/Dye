@@ -20,7 +20,6 @@ interface Props {
 }
 
 export const TwColorCard = ({ color, pointer, index }: Props) => {
-  const [isCopied, onCopy] = useCopy(2000);
   const stage = usePointers((state) => state.stage);
   return (
     <div
@@ -32,23 +31,8 @@ export const TwColorCard = ({ color, pointer, index }: Props) => {
       {stage === "shade" && index !== 5 ? null : pointer ? (
         <Pointer color={color} index={index} />
       ) : null}
-      {/* <Tooltip delayDuration={0.2}>
-        <TooltipTrigger className="cursor-pointer size-full" asChild>
-          <div> */}
+
       <ColorPicker color={color.hex()} index={index} />
-      {/* </div>
-        </TooltipTrigger>
-        <TooltipContent
-          style={{
-            background: color.darken(2).hex(),
-            color: getContrastYIQ(color.darken(2).hex()),
-          }}
-          className="cursor-pointer hidden lg:flex"
-          onClick={() => onCopy(color.hex())}
-        >
-          {isCopied ? <span className="font-bold">Copied!</span> : color.hex()}
-        </TooltipContent>
-      </Tooltip> */}
     </div>
   );
 };

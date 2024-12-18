@@ -11,16 +11,17 @@ import { CustomPaletteSection } from "./CustomPaletteSection";
 import { Palettes } from "./Palettes";
 import { SavePalette } from "./SavePalette";
 
-export const ColorContainer = () => {
-  const type = useVariables((state) => state.type);
+//TODO:::::::::::::::::::::::::
+// export const ColorContainer = () => {
+//   const type = useVariables((state) => state.type);
 
-  let palette = null;
+//   let palette = null;
 
-  if (type == "tw") {
-    palette = <TwPaletteSection />;
-  } else if (type == "custom") {
-    palette = <CustomPaletteSection />;
-  }
+//   if (type == "tw") {
+//     palette = <TwPaletteSection />;
+//   } else if (type == "custom") {
+//     palette = <CustomPaletteSection />;
+//   }
 
-  return <div>{palette}</div>;
-};
+//   return <div>{palette}</div>;
+// };

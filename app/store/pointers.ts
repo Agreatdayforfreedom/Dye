@@ -16,7 +16,10 @@ interface PointersState extends PointersProps {
   setPointer: (index: number, color: string) => void;
   setPointerFromDomain: (domain: DomainLayout) => void;
   undoPointer: (index: number) => void;
-  setStage: (stage?: PointerStage) => void;
+  setStage: (
+    cb?: (updatedState: PointersState) => void,
+    stage?: PointerStage
+  ) => void;
 }
 
 type PointerStore = ReturnType<typeof createPointersStore>;
@@ -60,14 +63,17 @@ export const createPointersStore = (initProps?: Partial<PointersProps>) => {
         ),
       }));
     },
-    setStage: (stage?: PointerStage) =>
+    setStage: (
+      cb?: (updatedState: PointersState) => void,
+      stage?: PointerStage
+    ) =>
       set((state) => {
         const det_stage = stage
           ? stage
           : state.stage === "free"
           ? "shade"
           : "free";
-
+        console.log(det_stage);
         const available_pointers = state.pointers.filter((x) => x !== "");
         let merged = "";
 
@@ -82,7 +88,7 @@ export const createPointersStore = (initProps?: Partial<PointersProps>) => {
           }, "#ffffff");
         }
 
-        return {
+        let updatedState = {
           stage: det_stage,
           pointers: state.pointers.map((p: string, i: number) => {
             if (det_stage === "free") {
@@ -91,7 +97,10 @@ export const createPointersStore = (initProps?: Partial<PointersProps>) => {
             const color = merged; // pick the near pointer or ???
             return i === 5 ? color : "";
           }),
-        };
+        } as PointersState;
+
+        if (cb) cb(updatedState);
+        return updatedState;
       }),
   }));
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 
 import { TooltipProvider } from "@/components/ui/tooltip";
 
@@ -14,29 +14,12 @@ import chroma from "chroma-js";
 
 export const TwPaletteSection = () => {
   const { colors } = useLerpColors();
+
   const setDyes = useGlobalDyes((state) => state.setDyes);
-  const sat = useVariables((state) => state.saturation);
   const pointers = usePointers((state) => state.pointers);
   const setColors = useVariables((state) => state.setColors);
-  // const [colors, setColors] = useState([
-  //   chroma.random(),
-  //   chroma.random(),
-  //   chroma.random(),
-  //   chroma.random(),
-  //   chroma.random(),
-  //   chroma.random(),
-  //   chroma.random(),
-  //   chroma.random(),
-  //   chroma.random(),
-  //   chroma.random(),
-  //   chroma.random(),
-  // ]);
 
-  // useEffect(() => {
-  //   setColors((prev) => [...prev.map((v) => chroma.random())]);
-  // }, [sat]);
-
-  useEffect(() => {
+  useLayoutEffect(() => {
     const ordered = order_by_luminance(colors.map((c) => c.hex()));
     setDyes({
       l1: ordered[0],
@@ -56,7 +39,6 @@ export const TwPaletteSection = () => {
 
   return (
     <div className="flex w-[90%] mx-auto justify-center space-x-1 mt-5 md:space-x-2">
-      {/* <TooltipProvider> */}
       {colors.map((color: chroma.Color, i: number) => (
         <TwColorCard
           key={i}
@@ -65,7 +47,6 @@ export const TwPaletteSection = () => {
           index={i}
         />
       ))}
-      {/* </TooltipProvider> */}
     </div>
   );
 };
