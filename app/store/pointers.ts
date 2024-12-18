@@ -73,7 +73,7 @@ export const createPointersStore = (initProps?: Partial<PointersProps>) => {
           : state.stage === "free"
           ? "shade"
           : "free";
-        console.log(det_stage);
+
         const available_pointers = state.pointers.filter((x) => x !== "");
         let merged = "";
 
@@ -88,7 +88,7 @@ export const createPointersStore = (initProps?: Partial<PointersProps>) => {
           }, "#ffffff");
         }
 
-        let updatedState = {
+        const updatedState = {
           stage: det_stage,
           pointers: state.pointers.map((p: string, i: number) => {
             if (det_stage === "free") {
