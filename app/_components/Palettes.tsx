@@ -1,4 +1,9 @@
-import React, { useCallback, useEffect, useLayoutEffect } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from "react";
 
 import {
   Select,
@@ -10,7 +15,7 @@ import {
 } from "@/components/ui/select";
 import { default_tw_color_domains } from "@/app/constants";
 import { useVariables } from "@/app/store/variables";
-import { DomainLayout, Attributes } from "@/app/types";
+import { DomainLayout, Attributes, KeyDomain } from "@/app/types";
 import { PreviewPalette } from "./PreviewPalette";
 import { usePointers, usePointersDomain } from "@/app/store/pointers";
 import { usePersistentStore } from "@/app/store/persistent_domain";
@@ -40,16 +45,6 @@ export const Palettes = () => {
 
   const { domains, is_equal } = usePersistentStore();
   const domain = usePointersDomain();
-
-  const asComponentArray = useCallback(() => {
-    const palettes: [string, DomainLayout][] = [];
-
-    for (const keyname in default_tw_color_domains) {
-      palettes.push([keyname, default_tw_color_domains[keyname]]);
-    }
-
-    return palettes;
-  }, []);
 
   return (
     <Select
@@ -142,61 +137,88 @@ export const Palettes = () => {
             />
           </SelectItem>
         </SelectGroup>
-
-        <SelectGroup className="border-t mt-2">
-          <SelectLabel>Your palettes</SelectLabel>
-          {Object.keys(domains).length > 0 ? (
-            Object.keys(domains).map((key) => {
-              return (
-                <SelectItem
-                  className="p-0 focus:bg-transparent"
-                  key={SELECT_KEY + key}
-                  value={SELECT_KEY + key}
-                >
-                  <h3 className="capitalize font-semibold">
-                    {key.split("_").join(" ")}
-                  </h3>
-                  <PreviewPalette
-                    domain={{
-                      hex: domains[key].hex,
-                      indices: domains[key].indices,
-                    }}
-                    attrs={{
-                      brightness: domains[key].brightness,
-                      hue: domains[key].hue,
-                      saturation: domains[key].saturation,
-                      space: domains[key].space,
-                      stage: domains[key].stage,
-                    }}
-                    name={name}
-                  />
-                </SelectItem>
-              );
-            })
-          ) : (
-            <span className="block font-semibold text-sm w-[90%] mx-auto">
-              You don&apos;t have any palettes saved yet.
-            </span>
-          )}
-        </SelectGroup>
-
-        <SelectGroup className="border-t mt-2">
-          <SelectLabel>Explore</SelectLabel>
-
-          {asComponentArray().map(([keyname, domain]) => (
-            <SelectItem
-              value={keyname}
-              className="p-0 mt-0.5 focus:bg-transparent"
-              key={keyname}
-            >
-              <h3 className="capitalize font-semibold">
-                {keyname.split("_").join(" ")}
-              </h3>
-              <PreviewPalette domain={domain} name={keyname} />
-            </SelectItem>
-          ))}
-        </SelectGroup>
+        <MemoizedYoursGroup domains={domains} name={name} />
+        <MemoizedPreviewGroup />
       </SelectContent>
     </Select>
   );
 };
+
+const YoursGroup = ({
+  domains,
+  name,
+}: {
+  domains: KeyDomain;
+  name: string;
+}) => {
+  return (
+    <SelectGroup className="border-t mt-2">
+      <SelectLabel>Your palettes</SelectLabel>
+      {Object.keys(domains).length > 0 ? (
+        Object.keys(domains).map((key) => {
+          return (
+            <SelectItem
+              className="p-0 focus:bg-transparent"
+              key={SELECT_KEY + key}
+              value={SELECT_KEY + key}
+            >
+              <h3 className="capitalize font-semibold">
+                {key.split("_").join(" ")}
+              </h3>
+              <PreviewPalette
+                domain={{
+                  hex: domains[key].hex,
+                  indices: domains[key].indices,
+                }}
+                attrs={{
+                  brightness: domains[key].brightness,
+                  hue: domains[key].hue,
+                  saturation: domains[key].saturation,
+                  space: domains[key].space,
+                  stage: domains[key].stage,
+                }}
+                name={name}
+              />
+            </SelectItem>
+          );
+        })
+      ) : (
+        <span className="block font-semibold text-sm w-[90%] mx-auto">
+          You don&apos;t have any palettes saved yet.
+        </span>
+      )}
+    </SelectGroup>
+  );
+};
+
+const PreviewGroup = () => {
+  const [palettes] = useState(() => {
+    const palettes: [string, DomainLayout][] = [];
+
+    for (const keyname in default_tw_color_domains) {
+      palettes.push([keyname, default_tw_color_domains[keyname]]);
+    }
+
+    return palettes;
+  });
+  return (
+    <SelectGroup className="border-t mt-2">
+      <SelectLabel>Explore</SelectLabel>
+
+      {palettes.map(([keyname, domain]) => (
+        <SelectItem
+          value={keyname}
+          className="p-0 mt-0.5 focus:bg-transparent"
+          key={keyname}
+        >
+          <h3 className="capitalize font-semibold">
+            {keyname.split("_").join(" ")}
+          </h3>
+          <PreviewPalette domain={domain} name={keyname} />
+        </SelectItem>
+      ))}
+    </SelectGroup>
+  );
+};
+const MemoizedPreviewGroup = React.memo(PreviewGroup);
+const MemoizedYoursGroup = React.memo(YoursGroup);

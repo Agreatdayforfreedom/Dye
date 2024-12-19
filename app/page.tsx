@@ -15,5 +15,6 @@ export default function Home({ searchParams }: { searchParams: Params }) {
     space: mapped.space,
     stage: mapped.stage,
   };
+  console.log("called");
   return <ProviderWrapper domain={domain} attrs={attrs} />;
 }

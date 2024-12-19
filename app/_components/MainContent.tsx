@@ -18,8 +18,8 @@ import { Randomize } from "./Randomize";
 import { TwPaletteSection } from "./TwPaletteSection";
 
 export const MainContent = () => {
-  const border_dye = useGlobalDyes((state) => state.l6);
-
+  // const border_dye = useGlobalDyes((state) => state.l6);
+  console.log("re-render");
   return (
     <>
       <Header />
@@ -61,18 +61,18 @@ export const MainContent = () => {
           </div>
           <TwPaletteSection />
           <div className="flex flex-col space-y-3 xs:space-y-0 xs:flex-row justify-between w-[90%] sm:3/4 mx-auto items-center mt-14">
-            {/* <Palettes /> */}
+            <Palettes />
             <div className="flex items-end">
               <SavePalette />
               <CopyPalette />
             </div>
           </div>
         </section>
-        <Separator
+        {/* <Separator
           style={{ background: border_dye }}
           className="w-11/12 mx-auto"
           decorative={true}
-        />
+        /> */}
         <PreviewSection />
       </main>
     </>

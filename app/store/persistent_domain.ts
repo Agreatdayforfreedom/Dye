@@ -1,8 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { Attributes, DomainLayout } from "@/app/types";
+import { Attributes, DomainLayout, KeyDomain } from "@/app/types";
 import fde from "fast-deep-equal";
-type KeyDomain = { [key: string]: DomainLayout & Attributes };
 
 interface PersistentState {
   domains: KeyDomain;

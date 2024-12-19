@@ -10,23 +10,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { useGlobalDyes } from "@/app/store/global_dyes";
 import { useVariables } from "@/app/store/variables";
-import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 export const SpaceSelector = () => {
-  const border_shadow_dye = useGlobalDyes((state) => state.l11);
   const colorSpace = useVariables((state) => state.colorSpace);
   const setColorSpace = useVariables((state) => state.setColorSpace);
 
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const params = new URLSearchParams(searchParams);
   function onClick(n: chroma.InterpolationMode) {
     setColorSpace(n);
-    params.set("cs", n.toString());
-    router.replace(`${pathname}?${params.toString()}`);
   }
 
   return (
@@ -40,17 +31,11 @@ export const SpaceSelector = () => {
       >
         <SelectTrigger
           id="space"
-          style={
-            border_shadow_dye
-              ? {
-                  outline: 0,
-                  boxShadow: `0px 0px 0px 2px ${chroma(border_shadow_dye)
-                    .alpha(0.4)
-                    .hex()}`,
-                  borderColor: border_shadow_dye,
-                }
-              : {}
-          }
+          style={{
+            outline: 0,
+            boxShadow: `0px 0px 0px 2px rgba(var(--primary), 0.5)`,
+            borderColor: "rgb(var(--primary))",
+          }}
         >
           <SelectValue placeholder="Space" />
         </SelectTrigger>

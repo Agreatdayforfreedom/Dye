@@ -34,11 +34,16 @@ export const TwPaletteSection = () => {
       l10: ordered[9],
       l11: ordered[10],
     } as GlobalDyesState);
+    document.documentElement.style.setProperty(
+      "--border-primary",
+      chroma(ordered[10]).rgb().toString()
+    );
+
     setColors(colors);
   }, [colors]);
 
   return (
-    <div className="flex w-[90%] mx-auto justify-center space-x-1 mt-5 md:space-x-2">
+    <div className="flex  w-[90%] mx-auto justify-center space-x-1 mt-5 md:space-x-2">
       {colors.map((color: chroma.Color, i: number) => (
         <TwColorCard
           key={i}

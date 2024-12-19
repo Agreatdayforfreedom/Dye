@@ -3,6 +3,8 @@ export interface DomainLayout {
   hex: Array<string>;
 }
 
+export type KeyDomain = { [key: string]: DomainLayout & Attributes };
+
 export interface Attributes {
   name?: string;
   hue: number;

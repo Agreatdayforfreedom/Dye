@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 
 import { useDarkMode } from "@/app/store/dark_mode";
 import { createPointersStore, PointersContext } from "@/app/store/pointers";
@@ -13,6 +13,7 @@ import { createVariablesStore, VariablesContext } from "@/app/store/variables";
 import { order_by_luminance } from "@/app/_utils/order_by_luminance";
 import { lerp_colors } from "@/app/_utils/lerp_colors";
 import { Attributes, DomainLayout } from "@/app/types";
+import chroma from "chroma-js";
 
 interface Props {
   domain: DomainLayout;
@@ -21,6 +22,7 @@ interface Props {
 
 export const ProviderWrapper = ({ domain, attrs }: Props) => {
   const mode = useDarkMode((state) => state.mode);
+  console.log("change?");
   useEffect(() => {
     document.documentElement.className = mode;
   }, [mode]);
