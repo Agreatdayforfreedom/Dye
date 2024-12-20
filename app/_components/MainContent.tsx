@@ -18,7 +18,6 @@ import { Randomize } from "./Randomize";
 import { TwPaletteSection } from "./TwPaletteSection";
 
 export const MainContent = () => {
-  // const border_dye = useGlobalDyes((state) => state.l6);
   console.log("re-render");
   return (
     <>
@@ -68,11 +67,7 @@ export const MainContent = () => {
             </div>
           </div>
         </section>
-        {/* <Separator
-          style={{ background: border_dye }}
-          className="w-11/12 mx-auto"
-          decorative={true}
-        /> */}
+
         <PreviewSection />
       </main>
     </>

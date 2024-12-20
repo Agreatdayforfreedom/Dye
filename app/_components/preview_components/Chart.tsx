@@ -17,32 +17,28 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { useGlobalDyes } from "@/app/store/global_dyes";
+import React from "react";
 const chartData = [
-  { month: "January", palettes: 163, dyes: 74, other: 87 },
-  { month: "February", palettes: 150, dyes: 23, other: 192 },
-  { month: "March", palettes: 245, dyes: 23, other: 45 },
-  { month: "April", palettes: 45, dyes: 31, other: 132 },
-  { month: "May", palettes: 209, dyes: 132, other: 78 },
-  { month: "June", palettes: 114, dyes: 140, other: 157 },
+  { month: "January", palettes: 163, dyes: 74 },
+  { month: "February", palettes: 150, dyes: 23 },
+  { month: "March", palettes: 245, dyes: 23 },
+  { month: "April", palettes: 45, dyes: 31 },
+  { month: "May", palettes: 120, dyes: 19 },
+  { month: "June", palettes: 114, dyes: 90 },
 ];
 
-export function Chart() {
+function Chart() {
   const c1 = useGlobalDyes((state) => state.l10);
   const c2 = useGlobalDyes((state) => state.l5);
-  const c3 = useGlobalDyes((state) => state.l2);
 
   const chartConfig = {
-    palettes: {
-      label: "palettes",
-      color: c1,
-    },
     dyes: {
       label: "dyes",
       color: c2,
     },
-    other: {
-      label: "other",
-      color: c3,
+    palettes: {
+      label: "palettes",
+      color: c1,
     },
   } satisfies ChartConfig;
   return (
@@ -71,15 +67,15 @@ export function Chart() {
             />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <defs>
-              <linearGradient id="fillOther" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id="fillDyes" x1="0" y1="0" x2="0" y2="1">
                 <stop
                   offset="5%"
-                  stopColor="var(--color-other)"
+                  stopColor="var(--color-dyes)"
                   stopOpacity={0.8}
                 />
                 <stop
                   offset="95%"
-                  stopColor="var(--color-other)"
+                  stopColor="var(--color-dyes)"
                   stopOpacity={0.1}
                 />
               </linearGradient>
@@ -95,27 +91,7 @@ export function Chart() {
                   stopOpacity={0.1}
                 />
               </linearGradient>
-              <linearGradient id="fillDyes" x1="0" y1="0" x2="0" y2="1">
-                <stop
-                  offset="5%"
-                  stopColor="var(--color-dyes)"
-                  stopOpacity={0.8}
-                />
-                <stop
-                  offset="95%"
-                  stopColor="var(--color-dyes)"
-                  stopOpacity={0.1}
-                />
-              </linearGradient>
             </defs>
-            <Area
-              dataKey="other"
-              type="natural"
-              fill="url(#fillOther)"
-              fillOpacity={0.4}
-              stroke="var(--color-other)"
-              stackId="a"
-            />
             <Area
               dataKey="dyes"
               type="natural"
@@ -145,3 +121,5 @@ export function Chart() {
     </Card>
   );
 }
+
+export default React.memo(Chart);
