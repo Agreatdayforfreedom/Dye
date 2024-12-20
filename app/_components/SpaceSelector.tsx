@@ -33,8 +33,8 @@ export const SpaceSelector = () => {
           id="space"
           style={{
             outline: 0,
-            boxShadow: `0px 0px 0px 2px rgba(var(--primary), 0.5)`,
-            borderColor: "rgb(var(--primary))",
+            boxShadow: `0px 0px 0px 2px rgba(var(--border-primary), 0.5)`,
+            borderColor: "rgb(var(--border-primary))",
           }}
         >
           <SelectValue placeholder="Space" />

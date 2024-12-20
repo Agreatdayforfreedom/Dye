@@ -18,7 +18,7 @@ const PreviewSection = () => {
         </div>
         <div className="gap-4 mt-5 flex flex-col lg:flex-row justify-between">
           <div className="flex flex-col items-center md:items-start md:flex-row gap-4 w-full">
-            <Chart />
+            {/* <Chart /> */}
             <LoginForm />
           </div>
           <div className="flex flex-col justify-between">
